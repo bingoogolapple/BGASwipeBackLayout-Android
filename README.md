@@ -1,7 +1,9 @@
 :running:BGASwipeBackLayout-Android:running:
 ============
 
-通过修改 support-v4 包中 SlidingPaneLayout 的源码来实现滑动返回
+通过修改 support-v4 包中 SlidingPaneLayout 的源码来实现滑动返回布局
+
+## 文档和 Demo 待完善
 
 ## 代码是最好的老师，更多详细用法请查看 [demo](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/tree/master/demo):feet:
 
