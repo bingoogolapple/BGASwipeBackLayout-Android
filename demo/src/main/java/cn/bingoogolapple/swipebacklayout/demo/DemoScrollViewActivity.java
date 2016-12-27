@@ -1,6 +1,7 @@
 package cn.bingoogolapple.swipebacklayout.demo;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com
@@ -13,5 +14,9 @@ public class DemoScrollViewActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrollview);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

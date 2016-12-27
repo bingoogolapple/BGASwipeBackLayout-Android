@@ -15,7 +15,7 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
 
-//    compile 'cn.bingoogolapple:bga-swipebacklayout:1.0.0@aar'
+    compile 'cn.bingoogolapple:bga-swipebacklayout:1.0.0@aar'
 
-    compile project(':library')
+//    compile project(':library')
 }

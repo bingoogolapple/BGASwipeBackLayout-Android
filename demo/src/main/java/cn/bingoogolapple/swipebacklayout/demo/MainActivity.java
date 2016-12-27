@@ -1,6 +1,5 @@
 package cn.bingoogolapple.swipebacklayout.demo;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -19,7 +18,7 @@ public class MainActivity extends BaseActivity {
 
     public void onClick(View v) {
         if (v.getId() == R.id.btn_main_demo1) {
-            startActivity(new Intent(this, DemoScrollViewActivity.class));
+            forward(DemoScrollViewActivity.class);
         }
     }
 }
