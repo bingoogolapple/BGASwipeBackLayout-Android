@@ -2,9 +2,7 @@ package cn.bingoogolapple.swipebacklayout.demo.activity;
 
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -29,26 +27,31 @@ public class TranslucentActivity extends BaseActivity {
     private RecyclerView mContentRv;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_translucent);
+        mToolbar = getViewById(R.id.toolbar);
+        mContentRv = getViewById(R.id.recyclerView);
+    }
 
+    @Override
+    protected void setListener() {
+    }
+
+    @Override
+    protected void processLogic(Bundle savedInstanceState) {
         initToolbar();
         initRecyclerView();
-
         StatusBarUtil.setTranslucentForImageView(this, 0, findViewById(R.id.ll_translucent_content));
     }
 
     private void initToolbar() {
-        Toolbar toolbar = getViewById(R.id.toolbar);
-        toolbar.setBackgroundResource(android.R.color.transparent);
-        setSupportActionBar(toolbar);
+        mToolbar.setBackgroundResource(android.R.color.transparent);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Test Translucent StatusBar");
     }
 
     private void initRecyclerView() {
-        mContentRv = getViewById(R.id.recyclerView);
         mContentRv.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {

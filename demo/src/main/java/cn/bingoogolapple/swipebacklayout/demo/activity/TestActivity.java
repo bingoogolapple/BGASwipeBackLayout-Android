@@ -11,11 +11,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.SwitchCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CompoundButton;
-
-import com.jaeger.library.StatusBarUtil;
 
 import cn.bingoogolapple.swipebacklayout.demo.R;
 import cn.bingoogolapple.swipebacklayout.demo.fragment.ContentFragment;
@@ -26,32 +23,36 @@ import cn.bingoogolapple.swipebacklayout.demo.fragment.ContentFragment;
  * 描述:测试滑动返回布局的接口
  */
 public class TestActivity extends BaseActivity {
-    private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private SwitchCompat mSwipeBackEnableSwitch;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_test);
+        mToolbar = getViewById(R.id.toolbar);
+        mViewPager = getViewById(R.id.viewPager);
         mSwipeBackEnableSwitch = getViewById(R.id.swipeBackEnableSwitch);
+    }
 
-        initToolbar();
-        setUpTabLayoutAndViewPager();
-
+    @Override
+    protected void setListener() {
         testSwipeBackLayout();
     }
 
+    @Override
+    protected void processLogic(Bundle savedInstanceState) {
+        initToolbar();
+        setUpTabLayoutAndViewPager();
+    }
+
     private void initToolbar() {
-        mToolbar = getViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("测试滑动返回布局的接口");
     }
 
     private void setUpTabLayoutAndViewPager() {
-        mViewPager = getViewById(R.id.viewPager);
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -111,8 +112,12 @@ public class TestActivity extends BaseActivity {
         });
     }
 
-    public void onClickFab(View v) {
+    public void onClickTranslucentFab(View v) {
         forward(TranslucentActivity.class);
+    }
+
+    public void onClickWebViewFab(View v) {
+        forward(WebViewActivity.class);
     }
 
     /**
@@ -156,10 +161,6 @@ public class TestActivity extends BaseActivity {
         public CharSequence getPageTitle(int position) {
             return "第" + (position + 1) + "页";
         }
-    }
-
-    private void setStatusBarColor(int color) {
-        StatusBarUtil.setColorForSwipeBack(this, color);
     }
 
     /**

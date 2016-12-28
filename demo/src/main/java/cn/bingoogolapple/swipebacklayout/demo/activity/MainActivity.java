@@ -23,9 +23,16 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void setListener() {
+    }
+
+    @Override
+    protected void processLogic(Bundle savedInstanceState) {
     }
 
     public void onClick(View v) {

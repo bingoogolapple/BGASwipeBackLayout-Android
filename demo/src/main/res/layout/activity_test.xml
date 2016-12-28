@@ -79,10 +79,24 @@
 
     <android.support.design.widget.FloatingActionButton
         style="@style/WrapWrap"
+        android:layout_gravity="bottom|left"
+        android:layout_marginBottom="@dimen/size_level4"
+        android:layout_marginLeft="@dimen/size_level4"
+        android:onClick="onClickWebViewFab"
+        android:src="@mipmap/fab"
+        app:backgroundTint="#ff0000"
+        app:borderWidth="5dp"
+        app:elevation="10dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="50dp"
+        app:rippleColor="#0000ff"/>
+
+    <android.support.design.widget.FloatingActionButton
+        style="@style/WrapWrap"
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="@dimen/size_level4"
         android:layout_marginRight="@dimen/size_level4"
-        android:onClick="onClickFab"
+        android:onClick="onClickTranslucentFab"
         android:src="@mipmap/fab"
         app:backgroundTint="#ff0000"
         app:borderWidth="5dp"
