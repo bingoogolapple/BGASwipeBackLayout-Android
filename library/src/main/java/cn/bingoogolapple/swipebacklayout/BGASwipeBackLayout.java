@@ -181,11 +181,26 @@ public class BGASwipeBackLayout extends ViewGroup {
     }
 
     // ======================== 新加的 START ========================
+    /**
+     * 滑动返回是否可用
+     */
     private boolean mSwipeBackEnable = true;
+    /**
+     * 是否仅仅跟踪左侧边缘的滑动返回
+     */
     private boolean mIsOnlyTrackingLeftEdge = true;
+    /**
+     * 是否显示滑动返回的阴影效果
+     */
     private boolean mIsNeedShowShadow = true;
-    private View mLeftView;
-    private View mRightView;
+    /**
+     * 滑动返回时的阴影视图
+     */
+    private View mShadowView;
+    /**
+     * 内容视图
+     */
+    private View mContentView;
 
     /**
      * 将该滑动返回控件添加到 Activity 上
@@ -195,20 +210,19 @@ public class BGASwipeBackLayout extends ViewGroup {
     public void attachToActivity(Activity activity) {
         setSliderFadeColor(Color.TRANSPARENT);
 
-        mLeftView = new View(activity);
+        mShadowView = new View(activity);
         setIsNeedShowShadow(mIsNeedShowShadow);
-        addView(mLeftView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        addView(mShadowView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-        mRightView = decorView.getChildAt(0);
-        mRightView.setBackgroundColor(Color.WHITE);
-        decorView.removeView(mRightView);
+        mContentView = decorView.getChildAt(0);
+        decorView.removeView(mContentView);
         decorView.addView(this);
-        addView(mRightView, 1, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        addView(mContentView, 1, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
     /**
-     * 设置滑动返回是否可用。默认值为true
+     * 设置滑动返回是否可用。默认值为 true
      *
      * @param swipeBackEnable
      */
@@ -217,7 +231,7 @@ public class BGASwipeBackLayout extends ViewGroup {
     }
 
     /**
-     * 设置是否仅仅跟踪左侧边缘的滑动返回。默认值为true
+     * 设置是否仅仅跟踪左侧边缘的滑动返回。默认值为 true
      *
      * @param isOnlyTrackingLeftEdge
      */
@@ -226,17 +240,17 @@ public class BGASwipeBackLayout extends ViewGroup {
     }
 
     /**
-     * 设置是否显示滑动返回的阴影效果
+     * 设置是否显示滑动返回的阴影效果。默认值为 true
      *
      * @param isNeedShowShadow
      */
     public void setIsNeedShowShadow(boolean isNeedShowShadow) {
         mIsNeedShowShadow = isNeedShowShadow;
-        if (mLeftView != null) {
+        if (mShadowView != null) {
             if (mIsNeedShowShadow) {
-                mLeftView.setBackgroundResource(R.drawable.bga_swipebacklayout_shadow);
+                mShadowView.setBackgroundResource(R.drawable.bga_swipebacklayout_shadow);
             } else {
-                mLeftView.setBackgroundResource(android.R.color.transparent);
+                mShadowView.setBackgroundResource(android.R.color.transparent);
             }
         }
     }
@@ -823,6 +837,13 @@ public class BGASwipeBackLayout extends ViewGroup {
             }
         }
 
+        // ======================== 新加的 START ========================
+        if (!mSwipeBackEnable) {
+            mDragHelper.cancel();
+            return super.onInterceptTouchEvent(ev);
+        }
+        // ======================== 新加的 END ========================
+
         if (!mCanSlide || (mIsUnableToDrag && action != MotionEvent.ACTION_DOWN)) {
             mDragHelper.cancel();
             return super.onInterceptTouchEvent(ev);
@@ -871,6 +892,12 @@ public class BGASwipeBackLayout extends ViewGroup {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+        // ======================== 新加的 START ========================
+        if (!mSwipeBackEnable) {
+            return super.onTouchEvent(ev);
+        }
+        // ======================== 新加的 END ========================
+
         if (!mCanSlide) {
             return super.onTouchEvent(ev);
         }
@@ -1018,9 +1045,9 @@ public class BGASwipeBackLayout extends ViewGroup {
         }
 
         // ======================== 新加的 START ========================
-        if (mIsNeedShowShadow && mLeftView != null) {
-            ViewCompat.setAlpha(mLeftView, 1.0f - mSlideOffset);
-            ViewCompat.setTranslationX(mLeftView, -mLeftView.getMeasuredWidth() + newLeft);
+        if (mIsNeedShowShadow && mShadowView != null) {
+            ViewCompat.setAlpha(mShadowView, 1.0f - mSlideOffset);
+            ViewCompat.setTranslationX(mShadowView, -mShadowView.getMeasuredWidth() + newLeft);
         }
         // ======================== 新加的 END ========================
 
@@ -1373,7 +1400,14 @@ public class BGASwipeBackLayout extends ViewGroup {
                 return false;
             }
 
-            return ((LayoutParams) child.getLayoutParams()).slideable;
+            // ======================== 新加的 START ========================
+//            return ((LayoutParams) child.getLayoutParams()).slideable;
+
+            if (mIsOnlyTrackingLeftEdge) {
+                return false;
+            }
+            return mSwipeBackEnable && ((LayoutParams) child.getLayoutParams()).slideable;
+            // ======================== 新加的 END ========================
         }
 
         @Override
@@ -1456,7 +1490,13 @@ public class BGASwipeBackLayout extends ViewGroup {
 
         @Override
         public void onEdgeDragStarted(int edgeFlags, int pointerId) {
-            mDragHelper.captureChildView(mSlideableView, pointerId);
+            // ======================== 新加的 START ========================
+//            mDragHelper.captureChildView(mSlideableView, pointerId);
+
+            if (mSwipeBackEnable) {
+                mDragHelper.captureChildView(mSlideableView, pointerId);
+            }
+            // ======================== 新加的 END ========================
         }
     }
 

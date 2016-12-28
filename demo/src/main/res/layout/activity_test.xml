@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayout"
+    style="@style/MatchMatch.Vertical"
+    android:background="@android:color/white">
+
+    <android.support.design.widget.AppBarLayout
+        style="@style/MatchWrap"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <include layout="@layout/inc_toolbar"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            style="@style/MatchWrap"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            app:tabIndicatorColor="#aaaa55"
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="#cccccc"
+            app:tabTextColor="@android:color/white"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        style="@style/MatchMatch"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            style="@style/MatchMatch.Vertical"
+            android:gravity="center_horizontal">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:flipInterval="30"
+                android:persistentDrawingCache="animation"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/onlyTrackingLeftEdgeSwitch"
+                style="@style/WrapWrap"
+                android:checked="true"
+                android:padding="@dimen/size_level3"
+                android:text="仅仅跟踪左侧边缘的滑动返回"/>
+
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@mipmap/bga_avatar"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/swipeBackEnableSwitch"
+                style="@style/WrapWrap"
+                android:checked="true"
+                android:padding="@dimen/size_level3"
+                android:text="滑动返回可用"/>
+
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@mipmap/bga_avatar"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/needShowShadowSwitch"
+                style="@style/WrapWrap"
+                android:checked="true"
+                android:padding="@dimen/size_level3"
+                android:text="显示滑动返回的阴影效果"/>
+
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@mipmap/bga_avatar"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        style="@style/WrapWrap"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="@dimen/size_level4"
+        android:layout_marginRight="@dimen/size_level4"
+        android:onClick="onClickFab"
+        android:src="@mipmap/fab"
+        app:backgroundTint="#ff0000"
+        app:borderWidth="5dp"
+        app:elevation="10dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="50dp"
+        app:rippleColor="#0000ff"/>
+</android.support.design.widget.CoordinatorLayout>

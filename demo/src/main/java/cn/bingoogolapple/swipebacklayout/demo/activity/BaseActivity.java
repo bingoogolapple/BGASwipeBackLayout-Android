@@ -1,18 +1,21 @@
-package cn.bingoogolapple.swipebacklayout.demo;
+package cn.bingoogolapple.swipebacklayout.demo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackLayout;
+import cn.bingoogolapple.swipebacklayout.demo.R;
+import cn.bingoogolapple.swipebacklayout.demo.util.KeyboardUtil;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com
  * 创建时间:16/12/27 下午5:35
- * 描述:
+ * 描述:开发者可将该类中的某些方法拷贝到自己的 BaseActivity 中封装成适合自己项目的滑动返回基类
  */
 public class BaseActivity extends AppCompatActivity implements BGASwipeBackLayout.PanelSlideListener {
     protected BGASwipeBackLayout mSwipeBackLayout;
@@ -23,15 +26,6 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackLayou
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     /**
      * 初始化滑动返回
      */
@@ -40,11 +34,14 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackLayou
             mSwipeBackLayout = new BGASwipeBackLayout(this);
             mSwipeBackLayout.attachToActivity(this);
             mSwipeBackLayout.setPanelSlideListener(this);
+
+            mSwipeBackLayout.setIsOnlyTrackingLeftEdge(true);
+            mSwipeBackLayout.setIsNeedShowShadow(true);
         }
     }
 
     /**
-     * 是否支持滑动返回
+     * 是否支持滑动返回。默认支持，如果某个界面不想支持滑动返回则重写该方法返回 false 即可
      *
      * @return
      */
@@ -53,7 +50,7 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackLayou
     }
 
     /**
-     * 设置滑动返回是否可用
+     * 动态设置滑动返回是否可用。
      *
      * @param swipeBackEnable
      */
@@ -62,6 +59,7 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackLayou
             mSwipeBackLayout.setSwipeBackEnable(swipeBackEnable);
         }
     }
+
 
     @Override
     public void onPanelClosed(View view) {
@@ -74,6 +72,16 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackLayou
 
     @Override
     public void onPanelSlide(View view, float v) {
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -172,5 +180,16 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackLayou
      */
     public void executeSwipeBackAnim() {
         overridePendingTransition(R.anim.activity_swipeback_enter, R.anim.activity_swipeback_exit);
+    }
+
+    /**
+     * 查找View
+     *
+     * @param id   控件的id
+     * @param <VT> View类型
+     * @return
+     */
+    protected <VT extends View> VT getViewById(@IdRes int id) {
+        return (VT) findViewById(id);
     }
 }
