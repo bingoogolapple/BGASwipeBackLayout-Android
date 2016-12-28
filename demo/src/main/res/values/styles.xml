@@ -1,5 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- 这里面的内容根据你自己项目做修改 -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--colorPrimaryDark对应状态栏的颜色-->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -14,12 +15,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.Fullscreen">
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
-
-    <!-- 适用于开启滑动返回功能的Activity -->
+    <!-- 适用于开启滑动返回功能的 Activity -->
     <style name="AppTheme.Transparent">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
@@ -28,6 +24,11 @@
     <!-- 适用于欢迎界面避免第一次进来白屏或黑屏 -->
     <style name="AppTheme.Transparent.Splash">
         <item name="android:windowDisablePreview">true</item>
+    </style>
+
+    <style name="AppTheme.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="AppTheme.Transparent.Fullscreen">
