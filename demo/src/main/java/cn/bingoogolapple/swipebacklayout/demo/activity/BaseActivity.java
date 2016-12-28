@@ -35,7 +35,13 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackLayou
             mSwipeBackLayout.attachToActivity(this);
             mSwipeBackLayout.setPanelSlideListener(this);
 
+            // 下面三项可以不配置，这里只是为了讲述接口用法
+
+            // 设置滑动返回是否可用。默认值为 true
+            mSwipeBackLayout.setSwipeBackEnable(true);
+            // 设置是否仅仅跟踪左侧边缘的滑动返回。默认值为 true
             mSwipeBackLayout.setIsOnlyTrackingLeftEdge(true);
+            // 设置是否显示滑动返回的阴影效果。默认值为 true
             mSwipeBackLayout.setIsNeedShowShadow(true);
         }
     }
