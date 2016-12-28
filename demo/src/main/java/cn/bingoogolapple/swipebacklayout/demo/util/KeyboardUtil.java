@@ -1,4 +1,4 @@
-package cn.bingoogolapple.swipebacklayout.demo;
+package cn.bingoogolapple.swipebacklayout.demo.util;
 
 import android.app.Activity;
 import android.app.Dialog;

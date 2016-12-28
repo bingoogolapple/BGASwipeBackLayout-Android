@@ -3,7 +3,16 @@
 
 通过修改 support-v4 包中 SlidingPaneLayout 的源码来实现滑动返回布局
 
-## 文档和 Demo 待完善
+## 效果图与示例 apk
+
+![BGASwipeBackLayoutDemo](https://cloud.githubusercontent.com/assets/8949716/21510933/b334a340-ccd4-11e6-9fce-94c2d783c73e.gif)
+
+[点击下载 BGASwipeBackLayoutDemo.apk](http://fir.im/BGASwipeBackLayout) 或扫描下面的二维码安装
+
+![BGABannerDemo apk文件二维](https://cloud.githubusercontent.com/assets/8949716/21510942/c8e9c9e0-ccd4-11e6-9757-bbc6653cccdb.png)
+
+
+## 文档待完善，着急的猿友就先看 [demo](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/tree/master/demo) 吧
 
 ## 代码是最好的老师，更多详细用法请查看 [demo](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/tree/master/demo):feet:
 

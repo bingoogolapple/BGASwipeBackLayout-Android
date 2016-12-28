@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/banner_bg"/>
+
+    <LinearLayout
+        android:id="@+id/ll_translucent_content"
+        style="@style/MatchMatch.Vertical">
+
+        <include layout="@layout/inc_toolbar"/>
+
+        <TextView
+            style="@style/MatchWrap"
+            android:gravity="center"
+            android:padding="@dimen/size_level9"
+            android:text="测试文本"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textSize_18"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            style="@style/MatchMatch"
+            android:overScrollMode="never"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_test"/>
+    </LinearLayout>
+</RelativeLayout>

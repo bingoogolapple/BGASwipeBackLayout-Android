@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.Transparent.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -19,7 +19,11 @@
         </activity>
 
         <activity
-            android:name=".DemoScrollViewActivity"
+            android:name=".activity.TestActivity"
+            android:theme="@style/AppTheme.Transparent"/>
+
+        <activity
+            android:name=".activity.TranslucentActivity"
             android:theme="@style/AppTheme.Transparent"/>
     </application>
 

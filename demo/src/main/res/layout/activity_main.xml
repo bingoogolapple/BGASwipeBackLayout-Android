@@ -6,8 +6,8 @@
     android:gravity="center">
 
     <Button
-        android:id="@+id/btn_main_demo1"
+        android:id="@+id/btn_main_test"
         style="@style/DemoBtn"
         android:onClick="onClick"
-        android:text="Demo1"/>
+        android:text="测试滑动返回"/>
 </LinearLayout>

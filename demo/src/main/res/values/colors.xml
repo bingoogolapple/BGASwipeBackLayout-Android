@@ -2,11 +2,14 @@
 <resources>
     <color name="colorPrimaryDark">#00ae7d</color>
     <color name="colorPrimary">#00ce7d</color>
-    <color name="navigationBarColor">@color/colorPrimary</color>
+    <color name="navigationBarColor">@android:color/black</color>
     <color name="colorAccent">@color/colorPrimary</color>
     <color name="windowBackground">@android:color/white</color>
 
     <color name="colorPrimaryTrans">#CC00ce7d</color>
 
     <color name="gray_line">#dedede</color>
+
+    <color name="black_dark">#333333</color>
+    <color name="black_middle">#666666</color>
 </resources>
