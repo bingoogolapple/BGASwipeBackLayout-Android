@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.jaeger.library.StatusBarUtil;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackLayout;
 import cn.bingoogolapple.swipebacklayout.demo.R;
@@ -17,13 +20,20 @@ import cn.bingoogolapple.swipebacklayout.demo.util.KeyboardUtil;
  * 创建时间:16/12/27 下午5:35
  * 描述:开发者可将该类中的某些方法拷贝到自己的 BaseActivity 中封装成适合自己项目的滑动返回基类
  */
-public class BaseActivity extends AppCompatActivity implements BGASwipeBackLayout.PanelSlideListener {
+public abstract class BaseActivity extends AppCompatActivity implements BGASwipeBackLayout.PanelSlideListener, View.OnClickListener {
     protected BGASwipeBackLayout mSwipeBackLayout;
+    protected Toolbar mToolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         initSwipeBackFinish();
         super.onCreate(savedInstanceState);
+
+        initView(savedInstanceState);
+        mToolbar = getViewById(R.id.toolbar);
+
+        setListener();
+        processLogic(savedInstanceState);
     }
 
     /**
@@ -186,6 +196,40 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackLayou
      */
     public void executeSwipeBackAnim() {
         overridePendingTransition(R.anim.activity_swipeback_enter, R.anim.activity_swipeback_exit);
+    }
+
+    /**
+     * 设置状态栏颜色
+     *
+     * @param color
+     */
+    protected void setStatusBarColor(int color) {
+        StatusBarUtil.setColorForSwipeBack(this, color);
+    }
+
+    /**
+     * 初始化布局以及View控件
+     */
+    protected abstract void initView(Bundle savedInstanceState);
+
+    /**
+     * 给View控件添加事件监听器
+     */
+    protected abstract void setListener();
+
+    /**
+     * 处理业务逻辑，状态恢复等操作
+     *
+     * @param savedInstanceState
+     */
+    protected abstract void processLogic(Bundle savedInstanceState);
+
+    /**
+     * 需要处理点击事件时，重写该方法
+     *
+     * @param v
+     */
+    public void onClick(View v) {
     }
 
     /**

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              style="@style/MatchMatch.Vertical"
+              android:background="@android:color/white">
+
+    <include layout="@layout/inc_toolbar"/>
+
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/refreshLayout"
+        style="@style/MatchMatch">
+
+        <cn.bingoogolapple.refreshlayout.BGAStickyNavLayout style="@style/MatchAuto">
+
+            <LinearLayout
+                style="@style/MatchWrap.Vertical">
+
+                <cn.bingoogolapple.progressbar.BGAProgressBar
+                    android:id="@+id/progressBar"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="100"
+                    android:visibility="gone"
+                    app:bga_pb_isCapRounded="false"
+                    app:bga_pb_isHiddenText="true"
+                    app:bga_pb_mode="horizontal"
+                    app:bga_pb_reachedColor="#FF530D"
+                    app:bga_pb_reachedHeight="4dp"
+                    app:bga_pb_textColor="#FF530D"
+                    app:bga_pb_textMargin="8dp"
+                    app:bga_pb_textSize="14sp"
+                    app:bga_pb_unReachedColor="#ECF0F1"
+                    app:bga_pb_unReachedHeight="2dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/two"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/MatchWrap.Horizontal"
+                android:background="@color/colorPrimary"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/retweet"
+                    style="@style/AutoWrap"
+                    android:gravity="center"
+                    android:padding="@dimen/size_level1"
+                    android:text="转发"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/comment"
+                    style="@style/AutoWrap"
+                    android:gravity="center"
+                    android:padding="@dimen/size_level1"
+                    android:text="评论"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/praise"
+                    style="@style/AutoWrap"
+                    android:gravity="center"
+                    android:padding="@dimen/size_level1"
+                    android:text="赞"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <WebView
+                android:id="@+id/wv_webview_content"
+                style="@style/MatchMatch"/>
+
+        </cn.bingoogolapple.refreshlayout.BGAStickyNavLayout>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+</LinearLayout>
