@@ -53,8 +53,8 @@ public class WebViewActivity extends BaseActivity implements BGARefreshLayout.BG
                 }
             }
         });
-        findViewById(R.id.retweet).setOnClickListener(this);
-        findViewById(R.id.comment).setOnClickListener(this);
+        findViewById(R.id.transparent).setOnClickListener(this);
+        findViewById(R.id.not_transparent).setOnClickListener(this);
         findViewById(R.id.praise).setOnClickListener(this);
     }
 
@@ -88,12 +88,12 @@ public class WebViewActivity extends BaseActivity implements BGARefreshLayout.BG
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.retweet) {
-            Toast.makeText(this, "点击了转发", Toast.LENGTH_SHORT).show();
-        } else if (v.getId() == R.id.comment) {
-            Toast.makeText(this, "点击了评论", Toast.LENGTH_SHORT).show();
+        if (v.getId() == R.id.transparent) {
+            setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        } else if (v.getId() == R.id.not_transparent) {
+            setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark), 0);
         } else if (v.getId() == R.id.praise) {
-            Toast.makeText(this, "点击了赞", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "谢谢你的赞", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -47,8 +47,8 @@
                 android:text="仅仅跟踪左侧边缘的滑动返回"/>
 
             <ImageView
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@mipmap/bga_avatar"/>
 
             <android.support.v7.widget.SwitchCompat
@@ -59,8 +59,20 @@
                 android:text="滑动返回可用"/>
 
             <ImageView
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/bga_avatar"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/weChatStyleSwitch"
+                style="@style/WrapWrap"
+                android:checked="true"
+                android:padding="@dimen/size_level3"
+                android:text="微信滑动返回样式"/>
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@mipmap/bga_avatar"/>
 
             <android.support.v7.widget.SwitchCompat
@@ -71,8 +83,8 @@
                 android:text="显示滑动返回的阴影效果"/>
 
             <ImageView
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@mipmap/bga_avatar"/>
         </LinearLayout>
     </ScrollView>

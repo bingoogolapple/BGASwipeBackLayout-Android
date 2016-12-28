@@ -194,6 +194,10 @@ public class BGASwipeBackLayout extends ViewGroup {
      */
     private boolean mIsNeedShowShadow = true;
     /**
+     * 是否是微信滑动返回样式
+     */
+    private boolean mIsWeChatStyle = true;
+    /**
      * 滑动返回时的阴影视图
      */
     private View mShadowView;
@@ -253,6 +257,13 @@ public class BGASwipeBackLayout extends ViewGroup {
                 mShadowView.setBackgroundResource(android.R.color.transparent);
             }
         }
+    }
+
+    /**
+     * 设置是否是微信滑动返回样式。默认值为 true
+     */
+    public void setIsWeChatStyle(boolean isWeChatStyle) {
+        mIsWeChatStyle = isWeChatStyle;
     }
     // ======================== 新加的 END ========================
 
@@ -392,6 +403,12 @@ public class BGASwipeBackLayout extends ViewGroup {
     }
 
     void dispatchOnPanelSlide(View panel) {
+        // ======================== 新加的 START ========================
+        if (mIsWeChatStyle) {
+            BGASwipeBackManager.onPanelSlide(mSlideOffset);
+        }
+        // ======================== 新加的 END ========================
+
         if (mPanelSlideListener != null) {
             mPanelSlideListener.onPanelSlide(panel, mSlideOffset);
         }
@@ -405,6 +422,12 @@ public class BGASwipeBackLayout extends ViewGroup {
     }
 
     void dispatchOnPanelClosed(View panel) {
+        // ======================== 新加的 START ========================
+        if (mIsWeChatStyle) {
+            BGASwipeBackManager.onPanelClosed();
+        }
+        // ======================== 新加的 END ========================
+
         if (mPanelSlideListener != null) {
             mPanelSlideListener.onPanelClosed(panel);
         }

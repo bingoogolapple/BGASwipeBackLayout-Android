@@ -47,20 +47,20 @@
                 android:paddingTop="5dp">
 
                 <TextView
-                    android:id="@+id/retweet"
+                    android:id="@+id/transparent"
                     style="@style/AutoWrap"
                     android:gravity="center"
                     android:padding="@dimen/size_level1"
-                    android:text="转发"
+                    android:text="状态栏透明"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"/>
 
                 <TextView
-                    android:id="@+id/comment"
+                    android:id="@+id/not_transparent"
                     style="@style/AutoWrap"
                     android:gravity="center"
                     android:padding="@dimen/size_level1"
-                    android:text="评论"
+                    android:text="状态栏不透明"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"/>
 

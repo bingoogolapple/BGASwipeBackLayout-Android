@@ -2,8 +2,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/MatchMatch.Vertical"
-    android:background="@android:color/white"
-    android:gravity="center">
+    android:background="@android:color/white">
+
+    <include layout="@layout/inc_toolbar"/>
 
     <Button
         android:id="@+id/btn_main_test"
