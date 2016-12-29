@@ -190,13 +190,21 @@ public class BGASwipeBackLayout extends ViewGroup {
      */
     private boolean mIsOnlyTrackingLeftEdge = true;
     /**
+     * 是否是微信滑动返回样式
+     */
+    private boolean mIsWeChatStyle = true;
+    /**
      * 是否显示滑动返回的阴影效果
      */
     private boolean mIsNeedShowShadow = true;
     /**
-     * 是否是微信滑动返回样式
+     * 阴影区域的透明度是否根据滑动的距离渐变
      */
-    private boolean mIsWeChatStyle = true;
+    private boolean mIsShadowAlphaGradient = true;
+    /**
+     * 阴影资源 id
+     */
+    private int mShadowResId = R.drawable.bga_swipebacklayout_shadow;
     /**
      * 滑动返回时的阴影视图
      */
@@ -244,6 +252,23 @@ public class BGASwipeBackLayout extends ViewGroup {
     }
 
     /**
+     * 设置是否是微信滑动返回样式。默认值为 true
+     */
+    public void setIsWeChatStyle(boolean isWeChatStyle) {
+        mIsWeChatStyle = isWeChatStyle;
+    }
+
+    /**
+     * 设置阴影资源 id。默认值为 R.drawable.bga_swipebacklayout_shadow
+     *
+     * @param shadowResId
+     */
+    public void setShadowResId(@DrawableRes int shadowResId) {
+        mShadowResId = shadowResId;
+        setIsNeedShowShadow(mIsNeedShowShadow);
+    }
+
+    /**
      * 设置是否显示滑动返回的阴影效果。默认值为 true
      *
      * @param isNeedShowShadow
@@ -252,7 +277,7 @@ public class BGASwipeBackLayout extends ViewGroup {
         mIsNeedShowShadow = isNeedShowShadow;
         if (mShadowView != null) {
             if (mIsNeedShowShadow) {
-                mShadowView.setBackgroundResource(R.drawable.bga_swipebacklayout_shadow);
+                mShadowView.setBackgroundResource(mShadowResId);
             } else {
                 mShadowView.setBackgroundResource(android.R.color.transparent);
             }
@@ -260,10 +285,12 @@ public class BGASwipeBackLayout extends ViewGroup {
     }
 
     /**
-     * 设置是否是微信滑动返回样式。默认值为 true
+     * 设置阴影区域的透明度是否根据滑动的距离渐变。默认值为 true
+     *
+     * @param isShadowAlphaGradient
      */
-    public void setIsWeChatStyle(boolean isWeChatStyle) {
-        mIsWeChatStyle = isWeChatStyle;
+    public void setIsShadowAlphaGradient(boolean isShadowAlphaGradient) {
+        mIsShadowAlphaGradient = isShadowAlphaGradient;
     }
     // ======================== 新加的 END ========================
 
@@ -1069,7 +1096,9 @@ public class BGASwipeBackLayout extends ViewGroup {
 
         // ======================== 新加的 START ========================
         if (mIsNeedShowShadow && mShadowView != null) {
-            ViewCompat.setAlpha(mShadowView, 1.0f - mSlideOffset);
+            if (mIsShadowAlphaGradient) {
+                ViewCompat.setAlpha(mShadowView, 1.0f - mSlideOffset);
+            }
             ViewCompat.setTranslationX(mShadowView, -mShadowView.getMeasuredWidth() + newLeft);
         }
         // ======================== 新加的 END ========================

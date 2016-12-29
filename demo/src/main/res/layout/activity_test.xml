@@ -2,7 +2,6 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/coordinatorLayout"
     style="@style/MatchMatch.Vertical"
     android:background="@android:color/white">
 
@@ -35,9 +34,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:flipInterval="30"
-                android:persistentDrawingCache="animation"/>
+                android:layout_height="250dp"/>
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/onlyTrackingLeftEdgeSwitch"
@@ -46,22 +43,12 @@
                 android:padding="@dimen/size_level3"
                 android:text="仅仅跟踪左侧边缘的滑动返回"/>
 
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@mipmap/bga_avatar"/>
-
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/swipeBackEnableSwitch"
                 style="@style/WrapWrap"
                 android:checked="true"
                 android:padding="@dimen/size_level3"
                 android:text="滑动返回可用"/>
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@mipmap/bga_avatar"/>
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/weChatStyleSwitch"
@@ -70,11 +57,6 @@
                 android:padding="@dimen/size_level3"
                 android:text="微信滑动返回样式"/>
 
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@mipmap/bga_avatar"/>
-
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/needShowShadowSwitch"
                 style="@style/WrapWrap"
@@ -82,9 +64,46 @@
                 android:padding="@dimen/size_level3"
                 android:text="显示滑动返回的阴影效果"/>
 
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/shadowAlphaGradientSwitch"
+                style="@style/WrapWrap"
+                android:checked="true"
+                android:padding="@dimen/size_level3"
+                android:text="阴影区域的透明度根据滑动的距离渐变"/>
+
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/bga_avatar"/>
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/bga_avatar"/>
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/bga_avatar"/>
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/bga_avatar"/>
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/bga_avatar"/>
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/bga_avatar"/>
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:src="@mipmap/bga_avatar"/>
         </LinearLayout>
     </ScrollView>

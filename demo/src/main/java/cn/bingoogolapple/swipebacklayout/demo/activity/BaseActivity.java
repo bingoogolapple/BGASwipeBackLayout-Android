@@ -54,10 +54,14 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
             mSwipeBackLayout.setSwipeBackEnable(true);
             // 设置是否仅仅跟踪左侧边缘的滑动返回。默认值为 true
             mSwipeBackLayout.setIsOnlyTrackingLeftEdge(true);
-            // 设置是否显示滑动返回的阴影效果。默认值为 true
-            mSwipeBackLayout.setIsNeedShowShadow(true);
             // 设置是否是微信滑动返回样式。默认值为 true
             mSwipeBackLayout.setIsWeChatStyle(true);
+            // 设置阴影资源 id。默认值为 R.drawable.bga_swipebacklayout_shadow
+            mSwipeBackLayout.setShadowResId(R.drawable.bga_swipebacklayout_shadow);
+            // 设置是否显示滑动返回的阴影效果。默认值为 true
+            mSwipeBackLayout.setIsNeedShowShadow(true);
+            // 设置阴影区域的透明度是否根据滑动的距离渐变。默认值为 true
+            mSwipeBackLayout.setIsShadowAlphaGradient(true);
         }
     }
 
