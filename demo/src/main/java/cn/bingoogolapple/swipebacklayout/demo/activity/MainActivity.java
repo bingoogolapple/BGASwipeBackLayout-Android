@@ -42,4 +42,9 @@ public class MainActivity extends BaseActivity {
             forward(TestActivity.class);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

@@ -15,6 +15,7 @@ import com.jaeger.library.StatusBarUtil;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackLayout;
 import cn.bingoogolapple.swipebacklayout.demo.R;
+import cn.bingoogolapple.swipebacklayout.demo.util.BGAStatusBarUtil;
 import cn.bingoogolapple.swipebacklayout.demo.util.KeyboardUtil;
 
 /**
@@ -223,7 +224,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
      * @param statusBarAlpha 透明度
      */
     public void setStatusBarColor(@ColorInt int color, @IntRange(from = 0, to = 255) int statusBarAlpha) {
-        StatusBarUtil.setColorForSwipeBack(this, color, statusBarAlpha);
+//        StatusBarUtil.setColorForSwipeBack(this, color, statusBarAlpha);
+
+        // 临时修复 https://github.com/laobie/StatusBarUtil 与 CoordinatorLayout 结合使用时的 bug，等 StatusBarUtil 的作者更新后用他的库
+        BGAStatusBarUtil.setColorForSwipeBack(this, color, statusBarAlpha);
     }
 
     /**
