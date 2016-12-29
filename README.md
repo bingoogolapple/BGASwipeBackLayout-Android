@@ -1,16 +1,21 @@
 :running:BGASwipeBackLayout-Android:running:
 ============
 
+强烈建议与 **[StatusBarUtil](https://github.com/laobie/StatusBarUtil)** 结合着一起使用
+
 ## 功能介绍
 
 - [x] 通过修改 support-v4 包中 SlidingPaneLayout 的源码来实现滑动返回布局
 - [x] 动态设置滑动返回是否可用
 - [x] 动态设置是否仅仅跟踪左侧边缘的滑动返回
+- [x] 动态设置是否是微信滑动返回样式「如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)」
 - [x] 动态设置是否显示滑动返回的阴影效果
 
 ## 效果图与示例 apk
 
-![BGASwipeBackLayoutDemo](https://cloud.githubusercontent.com/assets/8949716/21512903/fac699f8-ccec-11e6-8437-1bfe8b9bd9d3.gif)
+| 普通滑动返回样式 | 微信滑动返回样式 |
+| ------------ | ------------- |
+| ![BGASwipeBackLayoutDemo](https://cloud.githubusercontent.com/assets/8949716/21512903/fac699f8-ccec-11e6-8437-1bfe8b9bd9d3.gif) | ![BGASwipeBackLayoutDemo-WeChat](https://cloud.githubusercontent.com/assets/8949716/21536263/7aa0fe88-cdbb-11e6-801d-4b370d6c454c.gif)  |
 
 [点击下载 BGASwipeBackLayoutDemo.apk](http://fir.im/BGASwipeBackLayout) 或扫描下面的二维码安装
 
@@ -69,19 +74,23 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackLayou
     private void initSwipeBackFinish() {
         if (isSupportSwipeBack()) {
             mSwipeBackLayout = new BGASwipeBackLayout(this);
-            // 将该滑动返回控件添加到 Activity 上
             mSwipeBackLayout.attachToActivity(this);
-            // 设置滑动监听器
             mSwipeBackLayout.setPanelSlideListener(this);
 
-            // 下面三项可以不配置，这里只是为了讲述接口用法
+            // 下面六项可以不配置，这里只是为了讲述接口用法。
 
             // 设置滑动返回是否可用。默认值为 true
             mSwipeBackLayout.setSwipeBackEnable(true);
             // 设置是否仅仅跟踪左侧边缘的滑动返回。默认值为 true
             mSwipeBackLayout.setIsOnlyTrackingLeftEdge(true);
+            // 设置是否是微信滑动返回样式。默认值为 true「如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)」
+            mSwipeBackLayout.setIsWeChatStyle(true);
+            // 设置阴影资源 id。默认值为 R.drawable.bga_swipebacklayout_shadow
+            mSwipeBackLayout.setShadowResId(R.drawable.bga_swipebacklayout_shadow);
             // 设置是否显示滑动返回的阴影效果。默认值为 true
             mSwipeBackLayout.setIsNeedShowShadow(true);
+            // 设置阴影区域的透明度是否根据滑动的距离渐变。默认值为 true
+            mSwipeBackLayout.setIsShadowAlphaGradient(true);
         }
     }
 
@@ -105,7 +114,6 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackLayou
         }
     }
 
-
     @Override
     public void onPanelClosed(View view) {
     }
@@ -119,6 +127,12 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackLayou
     public void onPanelSlide(View view, float v) {
     }
 }
+```
+
+### 4.如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中配置
+
+```java
+BGASwipeBackManager.getInstance().init(this)
 ```
 
 ## demo 中用到的第三方库
@@ -149,6 +163,7 @@ public class BaseActivity extends AppCompatActivity implements BGASwipeBackLayou
 
 ## License
 
+    Copyright (C) 2012 The Android Open Source Project
     Copyright 2015 bingoogolapple
 
     Licensed under the Apache License, Version 2.0 (the "License");

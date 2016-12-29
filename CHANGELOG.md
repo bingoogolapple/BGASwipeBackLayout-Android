@@ -1,12 +1,19 @@
 Change Log
 ==========
 
+Version 1.0.2 *(2016-12-29)*
+----------------------------
+
+* 增加 setIsWeChatStyle 方法，设置是否是微信滑动返回样式，默认值为 true「如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)」
+* 增加 setShadowResId 方法，设置阴影资源 id，默认值为 R.drawable.bga_swipebacklayout_shadow
+* 增加 setIsShadowAlphaGradient，设置阴影区域的透明度是否根据滑动的距离渐变。默认值为 true
+
 Version 1.0.1 *(2016-12-28)*
 ----------------------------
 
-* 增加 setSwipeBackEnable 方法，设置滑动返回是否可用
-* 增加 setIsNeedShowShadow 方法，设置是否显示滑动返回的阴影效果
-* 增加 setIsOnlyTrackingLeftEdge 方法，设置是否仅仅跟踪左侧边缘的滑动返回
+* 增加 setSwipeBackEnable 方法，设置滑动返回是否可用，默认值为 true
+* 增加 setIsNeedShowShadow 方法，设置是否显示滑动返回的阴影效果，默认值为 true
+* 增加 setIsOnlyTrackingLeftEdge 方法，设置是否仅仅跟踪左侧边缘的滑动返回，默认值为 true
 
 Version 1.0.0 *(2016-12-27)*
 ----------------------------

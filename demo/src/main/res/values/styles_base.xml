@@ -138,10 +138,10 @@
     <style name="DemoBtn" parent="MatchWrap">
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:layout_marginTop">@dimen/size_level1</item>
-        <item name="android:layout_marginLeft">@dimen/size_level1</item>
-        <item name="android:layout_marginRight">@dimen/size_level1</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginTop">@dimen/size_level2</item>
+        <item name="android:layout_marginLeft">@dimen/size_level2</item>
+        <item name="android:layout_marginRight">@dimen/size_level2</item>
         <item name="android:background">@drawable/selector_roundrect_primary</item>
     </style>
 

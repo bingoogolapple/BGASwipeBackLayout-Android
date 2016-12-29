@@ -25,6 +25,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
+        mToolbar = getViewById(R.id.toolbar);
     }
 
     @Override
@@ -33,6 +34,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
+        setSupportActionBar(mToolbar);
     }
 
     public void onClick(View v) {

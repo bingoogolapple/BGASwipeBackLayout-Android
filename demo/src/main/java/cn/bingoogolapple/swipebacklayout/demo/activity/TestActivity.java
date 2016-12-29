@@ -100,6 +100,17 @@ public class TestActivity extends BaseActivity {
             }
         });
 
+        // 测试动态设置是否是微信滑动返回样式
+        ((SwitchCompat) getViewById(R.id.weChatStyleSwitch)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isWeChatStyle) {
+                /**
+                 * 设置是否是微信滑动返回样式。如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)
+                 */
+                mSwipeBackLayout.setIsWeChatStyle(isWeChatStyle);
+            }
+        });
+
         // 测试动态设置是否显示滑动返回的阴影效果
         ((SwitchCompat) getViewById(R.id.needShowShadowSwitch)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -108,6 +119,17 @@ public class TestActivity extends BaseActivity {
                  * 设置是否显示滑动返回的阴影效果
                  */
                 mSwipeBackLayout.setIsNeedShowShadow(isNeedShowShadow);
+            }
+        });
+
+        // 测试动态设置阴影区域的透明度是否根据滑动的距离渐变
+        ((SwitchCompat) getViewById(R.id.shadowAlphaGradientSwitch)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isShadowAlphaGradient) {
+                /**
+                 * 设置阴影区域的透明度是否根据滑动的距离渐变
+                 */
+                mSwipeBackLayout.setIsShadowAlphaGradient(isShadowAlphaGradient);
             }
         });
     }

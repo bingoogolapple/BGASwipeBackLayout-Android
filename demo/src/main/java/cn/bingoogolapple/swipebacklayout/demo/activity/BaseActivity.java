@@ -2,7 +2,9 @@ package cn.bingoogolapple.swipebacklayout.demo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
+import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -45,14 +47,21 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
             mSwipeBackLayout.attachToActivity(this);
             mSwipeBackLayout.setPanelSlideListener(this);
 
-            // 下面三项可以不配置，这里只是为了讲述接口用法
+            // 下面四项项可以不配置，这里只是为了讲述接口用法。
+            // 如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)
 
             // 设置滑动返回是否可用。默认值为 true
             mSwipeBackLayout.setSwipeBackEnable(true);
             // 设置是否仅仅跟踪左侧边缘的滑动返回。默认值为 true
             mSwipeBackLayout.setIsOnlyTrackingLeftEdge(true);
+            // 设置是否是微信滑动返回样式。默认值为 true
+            mSwipeBackLayout.setIsWeChatStyle(true);
+            // 设置阴影资源 id。默认值为 R.drawable.bga_swipebacklayout_shadow
+            mSwipeBackLayout.setShadowResId(R.drawable.bga_swipebacklayout_shadow);
             // 设置是否显示滑动返回的阴影效果。默认值为 true
             mSwipeBackLayout.setIsNeedShowShadow(true);
+            // 设置阴影区域的透明度是否根据滑动的距离渐变。默认值为 true
+            mSwipeBackLayout.setIsShadowAlphaGradient(true);
         }
     }
 
@@ -203,8 +212,18 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
      *
      * @param color
      */
-    protected void setStatusBarColor(int color) {
-        StatusBarUtil.setColorForSwipeBack(this, color);
+    protected void setStatusBarColor(@ColorInt int color) {
+        setStatusBarColor(color, StatusBarUtil.DEFAULT_STATUS_BAR_ALPHA);
+    }
+
+    /**
+     * 设置状态栏颜色
+     *
+     * @param color
+     * @param statusBarAlpha 透明度
+     */
+    public void setStatusBarColor(@ColorInt int color, @IntRange(from = 0, to = 255) int statusBarAlpha) {
+        StatusBarUtil.setColorForSwipeBack(this, color, statusBarAlpha);
     }
 
     /**
