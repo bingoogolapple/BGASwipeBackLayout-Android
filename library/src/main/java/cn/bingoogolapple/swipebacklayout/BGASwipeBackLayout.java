@@ -190,7 +190,7 @@ public class BGASwipeBackLayout extends ViewGroup {
      */
     private boolean mIsOnlyTrackingLeftEdge = true;
     /**
-     * 是否是微信滑动返回样式
+     * 是否是微信滑动返回样式。如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)
      */
     private boolean mIsWeChatStyle = true;
     /**
@@ -204,7 +204,7 @@ public class BGASwipeBackLayout extends ViewGroup {
     /**
      * 阴影资源 id
      */
-    private int mShadowResId = R.drawable.bga_swipebacklayout_shadow;
+    private int mShadowResId = R.drawable.bga_sbl_shadow;
     /**
      * 滑动返回时的阴影视图
      */
@@ -252,14 +252,14 @@ public class BGASwipeBackLayout extends ViewGroup {
     }
 
     /**
-     * 设置是否是微信滑动返回样式。默认值为 true
+     * 设置是否是微信滑动返回样式。默认值为 true。如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)
      */
     public void setIsWeChatStyle(boolean isWeChatStyle) {
         mIsWeChatStyle = isWeChatStyle;
     }
 
     /**
-     * 设置阴影资源 id。默认值为 R.drawable.bga_swipebacklayout_shadow
+     * 设置阴影资源 id。默认值为 R.drawable.bga_sbl_shadow
      *
      * @param shadowResId
      */

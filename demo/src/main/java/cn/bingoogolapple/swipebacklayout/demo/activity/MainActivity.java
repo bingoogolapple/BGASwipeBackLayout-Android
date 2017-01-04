@@ -18,7 +18,7 @@ public class MainActivity extends BaseActivity {
      * @return
      */
     @Override
-    protected boolean isSupportSwipeBack() {
+    public boolean isSupportSwipeBack() {
         return false;
     }
 
@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity {
 
     public void onClick(View v) {
         if (v.getId() == R.id.btn_main_test) {
-            forward(TestActivity.class);
+            mSwipeBackHelper.forward(TestActivity.class);
         }
     }
 
