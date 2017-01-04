@@ -136,6 +136,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
 BGASwipeBackManager.getInstance().init(this)
 ```
 
+### 5.强烈强烈强烈建议把 [BGASwipeBackHelper](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/blob/master/library/src/main/java/cn/bingoogolapple/swipebacklayout/BGASwipeBackHelper.java) 里的每个方法的注释看一遍，只看注释就好
+
 ## demo 中用到的第三方库
 
 * [StatusBarUtil](https://github.com/laobie/StatusBarUtil) A util for setting status bar style on Android App
