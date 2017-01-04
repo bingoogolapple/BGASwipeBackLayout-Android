@@ -1,4 +1,20 @@
-package cn.bingoogolapple.swipebacklayout.demo.util;
+/*
+ * Copyright 2016 bingoogolapple
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package cn.bingoogolapple.swipebacklayout;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -17,8 +33,8 @@ import android.widget.EditText;
  * 创建时间:16/12/27 下午10:07
  * 描述:
  */
-public class KeyboardUtil {
-    private KeyboardUtil() {
+public class BGAKeyboardUtil {
+    private BGAKeyboardUtil() {
     }
 
     /**
@@ -110,9 +126,9 @@ public class KeyboardUtil {
             int right = left + currentFocusView.getWidth();
             if (!(motionEvent.getX() > left && motionEvent.getX() < right && motionEvent.getY() > top && motionEvent.getY() < bottom)) {
                 if (dialogOrActivity instanceof Dialog) {
-                    KeyboardUtil.closeKeyboard((Dialog) dialogOrActivity);
+                    closeKeyboard((Dialog) dialogOrActivity);
                 } else if (dialogOrActivity instanceof Activity) {
-                    KeyboardUtil.closeKeyboard((Activity) dialogOrActivity);
+                    closeKeyboard((Activity) dialogOrActivity);
                 }
             }
         }

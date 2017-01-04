@@ -64,7 +64,7 @@ public class TestActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 // 测试只有ViewPager在第0页时才开启滑动返回
-                mSwipeBackLayout.setSwipeBackEnable(position == 0);
+                mSwipeBackHelper.setSwipeBackEnable(position == 0);
                 mSwipeBackEnableSwitch.setChecked(position == 0);
             }
         });
@@ -83,9 +83,9 @@ public class TestActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean swipeBackEnable) {
                 /**
-                 * 设置滑动返回是否可用。在 BaseActivity 里对 mSwipeBackLayout 进行了判空操作
+                 * 设置滑动返回是否可用
                  */
-                setSwipeBackEnable(swipeBackEnable);
+                mSwipeBackHelper.setSwipeBackEnable(swipeBackEnable);
             }
         });
 
@@ -96,7 +96,7 @@ public class TestActivity extends BaseActivity {
                 /**
                  * 设置是否仅仅跟踪左侧边缘的滑动返回
                  */
-                mSwipeBackLayout.setIsOnlyTrackingLeftEdge(isOnlyTrackingLeftEdge);
+                mSwipeBackHelper.setIsOnlyTrackingLeftEdge(isOnlyTrackingLeftEdge);
             }
         });
 
@@ -107,7 +107,7 @@ public class TestActivity extends BaseActivity {
                 /**
                  * 设置是否是微信滑动返回样式。如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)
                  */
-                mSwipeBackLayout.setIsWeChatStyle(isWeChatStyle);
+                mSwipeBackHelper.setIsWeChatStyle(isWeChatStyle);
             }
         });
 
@@ -118,7 +118,7 @@ public class TestActivity extends BaseActivity {
                 /**
                  * 设置是否显示滑动返回的阴影效果
                  */
-                mSwipeBackLayout.setIsNeedShowShadow(isNeedShowShadow);
+                mSwipeBackHelper.setIsNeedShowShadow(isNeedShowShadow);
             }
         });
 
@@ -129,17 +129,19 @@ public class TestActivity extends BaseActivity {
                 /**
                  * 设置阴影区域的透明度是否根据滑动的距离渐变
                  */
-                mSwipeBackLayout.setIsShadowAlphaGradient(isShadowAlphaGradient);
+                mSwipeBackHelper.setIsShadowAlphaGradient(isShadowAlphaGradient);
             }
         });
     }
 
     public void onClickTranslucentFab(View v) {
-        forward(TranslucentActivity.class);
+        mSwipeBackHelper.forward(TranslucentActivity.class);
+
+//        mSwipeBackHelper.forwardAndFinish(TranslucentActivity.class);
     }
 
     public void onClickWebViewFab(View v) {
-        forward(WebViewActivity.class);
+        mSwipeBackHelper.forward(WebViewActivity.class);
     }
 
     /**
