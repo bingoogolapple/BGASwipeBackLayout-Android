@@ -214,12 +214,16 @@ public class BGASwipeBackLayout extends ViewGroup {
      */
     private View mContentView;
 
+    private Activity mActivity;
+
     /**
      * 将该滑动返回控件添加到 Activity 上
      *
      * @param activity
      */
     public void attachToActivity(Activity activity) {
+        mActivity = activity;
+
         setSliderFadeColor(Color.TRANSPARENT);
 
         mShadowView = new View(activity);
@@ -601,7 +605,7 @@ public class BGASwipeBackLayout extends ViewGroup {
         }
 
         // ======================== 新加的 START ========================
-        maxLayoutHeight -= UIUtil.getNavigationBarHeight(getContext());
+        maxLayoutHeight -= UIUtil.getNavigationBarHeight(mActivity);
         // ======================== 新加的 END ========================
 
         float weightSum = 0;
