@@ -3,6 +3,20 @@
 
 强烈建议与 **[StatusBarUtil](https://github.com/laobie/StatusBarUtil)** 结合着一起使用
 
+## 常见问题与反馈
+
+### 1.滑动返回时看见了 Launcher
+
+保证栈底 Activity 的主题是不透明的。例如 demo 中的首个 Activity 是 SplashActivity，进入主界面后 SplashActivity 就销毁了，此时 MainActivity 就是栈底 Activity，需保证 MainActivity 的主题不透明
+
+### 2.如果发现某些手机上底部出现空白区域，麻烦打印以下信息新建 [Issue](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/issues/new) 反馈
+
+```
+android.Build.VERSION.SDK_INT
+
+android.Build.MODEL
+```
+
 ## 功能介绍
 
 - [x] 通过修改 support-v4 包中 SlidingPaneLayout 的源码来实现滑动返回布局
@@ -19,7 +33,7 @@
 
 [点击下载 BGASwipeBackLayoutDemo.apk](http://fir.im/BGASwipeBackLayout) 或扫描下面的二维码安装
 
-![BGABannerDemo apk文件二维](https://cloud.githubusercontent.com/assets/8949716/21510942/c8e9c9e0-ccd4-11e6-9757-bbc6653cccdb.png)
+![BGASwipeBackLayoutDemo apk 文件二维码](https://cloud.githubusercontent.com/assets/8949716/21510942/c8e9c9e0-ccd4-11e6-9757-bbc6653cccdb.png)
 
 ### 1.添加 Gradle 依赖
  [ ![Download](https://api.bintray.com/packages/bintray/jcenter/cn.bingoogolapple%3Abga-swipebacklayout/images/download.svg) ](https://bintray.com/bintray/jcenter/cn.bingoogolapple%3Abga-swipebacklayout/_latestVersion) bga-swipebacklayout 后面的「latestVersion」指的是左边这个 Download 徽章后面的「数字」，请自行替换。
@@ -167,7 +181,7 @@ BGASwipeBackManager.getInstance().init(this)
 ## License
 
     Copyright (C) 2012 The Android Open Source Project
-    Copyright 2015 bingoogolapple
+    Copyright 2016 bingoogolapple
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
