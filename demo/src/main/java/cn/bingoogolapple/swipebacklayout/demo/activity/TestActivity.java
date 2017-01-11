@@ -136,13 +136,13 @@ public class TestActivity extends BaseActivity {
         });
     }
 
-    public void onClickTranslucentFab(View v) {
+    public void testTranslucent(View v) {
         mSwipeBackHelper.forward(TranslucentActivity.class);
 
 //        mSwipeBackHelper.forwardAndFinish(TranslucentActivity.class);
     }
 
-    public void onClickWebViewFab(View v) {
+    public void testPullRefreshAndWebView(View v) {
         mSwipeBackHelper.forward(WebViewActivity.class);
     }
 
