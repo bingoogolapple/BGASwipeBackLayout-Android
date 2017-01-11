@@ -21,6 +21,8 @@ import cn.bingoogolapple.swipebacklayout.demo.fragment.ContentFragment;
  * 作者:王浩 邮件:bingoogolapple@gmail.com
  * 创建时间:16/12/27 下午5:35
  * 描述:测试滑动返回布局的接口
+ * <p>
+ * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
  */
 public class TestActivity extends BaseActivity {
     private TabLayout mTabLayout;
@@ -105,7 +107,7 @@ public class TestActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isWeChatStyle) {
                 /**
-                 * 设置是否是微信滑动返回样式。如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)
+                 * 设置是否是微信滑动返回样式
                  */
                 mSwipeBackHelper.setIsWeChatStyle(isWeChatStyle);
             }
@@ -142,6 +144,10 @@ public class TestActivity extends BaseActivity {
 
     public void onClickWebViewFab(View v) {
         mSwipeBackHelper.forward(WebViewActivity.class);
+    }
+
+    public void testSwipeDelete(View v) {
+        mSwipeBackHelper.forward(SwipeDeleteActivity.class);
     }
 
     /**

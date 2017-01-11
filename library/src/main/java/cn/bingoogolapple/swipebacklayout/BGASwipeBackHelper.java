@@ -91,7 +91,7 @@ public class BGASwipeBackHelper {
     }
 
     /**
-     * 设置是否是微信滑动返回样式。默认值为 true。如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)
+     * 设置是否是微信滑动返回样式。默认值为 true
      *
      * @param isWeChatStyle
      * @return
@@ -146,21 +146,42 @@ public class BGASwipeBackHelper {
      * 执行跳转到下一个 Activity 的动画
      */
     public void executeForwardAnim() {
-        mActivity.overridePendingTransition(R.anim.bga_sbl_activity_forward_enter, R.anim.bga_sbl_activity_forward_exit);
+        executeForwardAnim(mActivity);
     }
 
     /**
      * 执行回到到上一个 Activity 的动画
      */
     public void executeBackwardAnim() {
-        mActivity.overridePendingTransition(R.anim.bga_sbl_activity_backward_enter, R.anim.bga_sbl_activity_backward_exit);
+        executeBackwardAnim(mActivity);
     }
 
     /**
      * 执行滑动返回到到上一个 Activity 的动画
      */
     public void executeSwipeBackAnim() {
-        mActivity.overridePendingTransition(R.anim.bga_sbl_activity_swipeback_enter, R.anim.bga_sbl_activity_swipeback_exit);
+        executeSwipeBackAnim(mActivity);
+    }
+
+    /**
+     * 执行跳转到下一个 Activity 的动画。这里弄成静态方法，方便在 Fragment 中调用
+     */
+    public static void executeForwardAnim(Activity activity) {
+        activity.overridePendingTransition(R.anim.bga_sbl_activity_forward_enter, R.anim.bga_sbl_activity_forward_exit);
+    }
+
+    /**
+     * 执行回到到上一个 Activity 的动画。这里弄成静态方法，方便在 Fragment 中调用
+     */
+    public static void executeBackwardAnim(Activity activity) {
+        activity.overridePendingTransition(R.anim.bga_sbl_activity_backward_enter, R.anim.bga_sbl_activity_backward_exit);
+    }
+
+    /**
+     * 执行滑动返回到到上一个 Activity 的动画。这里弄成静态方法，方便在 Fragment 中调用
+     */
+    public static void executeSwipeBackAnim(Activity activity) {
+        activity.overridePendingTransition(R.anim.bga_sbl_activity_swipeback_enter, R.anim.bga_sbl_activity_swipeback_exit);
     }
 
     /**

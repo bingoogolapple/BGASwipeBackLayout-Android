@@ -30,6 +30,7 @@
             android:id="@+id/recyclerView"
             style="@style/MatchMatch"
             android:overScrollMode="never"
+            android:scrollbars="none"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             tools:listitem="@layout/item_test"/>
     </LinearLayout>

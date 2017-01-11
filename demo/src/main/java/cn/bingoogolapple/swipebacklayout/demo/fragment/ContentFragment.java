@@ -1,6 +1,5 @@
 package cn.bingoogolapple.swipebacklayout.demo.fragment;
 
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bingoogolapple.androidcommon.adapter.BGADivider;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.swipebacklayout.demo.R;
@@ -46,12 +46,6 @@ public class ContentFragment extends BaseFragment {
         setContentView(R.layout.fragment_test);
         mHeaderIv = getViewById(R.id.headerView);
         mContentRv = getViewById(R.id.recyclerView);
-        mContentRv.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.set(0, getResources().getDimensionPixelOffset(R.dimen.size_level1), 0, getResources().getDimensionPixelOffset(R.dimen.size_level1));
-            }
-        });
     }
 
     @Override
@@ -74,6 +68,8 @@ public class ContentFragment extends BaseFragment {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
+        mContentRv.addItemDecoration(BGADivider.newBitmapDivider());
+
         mPosition = getArguments().getInt(EXTRA_POSITION);
         if (mPosition == 0) {
             mHeaderIv.setImageResource(R.mipmap.one);

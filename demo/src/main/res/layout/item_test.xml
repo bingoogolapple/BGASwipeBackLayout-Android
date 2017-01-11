@@ -2,8 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 style="@style/MatchWrap"
-                android:paddingLeft="@dimen/size_level2"
-                android:paddingRight="@dimen/size_level2">
+                android:background="@drawable/bga_adapter_white_gray"
+                android:paddingBottom="@dimen/size_level2"
+                android:paddingLeft="@dimen/size_level4"
+                android:paddingRight="@dimen/size_level4"
+                android:paddingTop="@dimen/size_level2">
 
     <ImageView
         android:id="@+id/iv_item_test_avatar"
