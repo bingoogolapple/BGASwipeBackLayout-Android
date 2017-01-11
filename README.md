@@ -26,7 +26,7 @@ android.Build.MODEL
 - [x] 通过修改 support-v4 包中 SlidingPaneLayout 的源码来实现滑动返回布局
 - [x] 动态设置滑动返回是否可用
 - [x] 动态设置是否仅仅跟踪左侧边缘的滑动返回
-- [x] 动态设置是否是微信滑动返回样式「如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)」
+- [x] 动态设置是否是微信滑动返回样式
 - [x] 动态设置是否显示滑动返回的阴影效果
 
 ## 效果图与示例 apk
