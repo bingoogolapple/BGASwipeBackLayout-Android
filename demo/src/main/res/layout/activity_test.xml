@@ -72,6 +72,14 @@
                 android:padding="@dimen/size_level3"
                 android:text="阴影区域的透明度根据滑动的距离渐变"/>
 
+            <EditText
+                style="@style/MatchWrap"
+                android:layout_margin="@dimen/size_level1"
+                android:gravity="center"
+                android:hint="测试滑动返回时自动关闭软键盘"
+                android:singleLine="true"
+                android:text="测试滑动返回时自动关闭软键盘"/>
+
             <Button
                 style="@style/DemoBtn"
                 android:onClick="testSwipeDelete"
@@ -87,28 +95,12 @@
                 android:onClick="testPullRefreshAndWebView"
                 android:text="测试下拉刷新和 WebView"/>
 
-            <EditText
-                style="@style/MatchWrap"
-                android:layout_margin="@dimen/size_level1"
-                android:gravity="center"
-                android:hint="测试滑动返回时自动关闭软键盘"
-                android:singleLine="true"
-                android:text="测试滑动返回时自动关闭软键盘"/>
+            <Button
+                style="@style/DemoBtn"
+                android:layout_marginBottom="@dimen/size_level2"
+                android:onClick="testRecyclerView"
+                android:text="测试 RecyclerView"/>
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@mipmap/bga_avatar"/>
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@mipmap/bga_avatar"/>
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@mipmap/bga_avatar"/>
         </LinearLayout>
     </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

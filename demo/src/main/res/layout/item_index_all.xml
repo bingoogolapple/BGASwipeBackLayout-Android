@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              style="@style/MatchWrap.Vertical">
+
+    <TextView
+        android:id="@+id/tv_item_index_catalog"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_level8"
+        android:background="@color/category_backgroundColor"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/size_level4"
+        android:paddingRight="@dimen/size_level4"
+        android:text="A"
+        android:textColor="@color/category_textColor"
+        android:textSize="@dimen/textSize_14"
+        android:textStyle="bold"/>
+
+    <include layout="@layout/item_index_city"/>
+</LinearLayout>

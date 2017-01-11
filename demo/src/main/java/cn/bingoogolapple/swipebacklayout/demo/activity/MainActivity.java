@@ -39,10 +39,26 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(mToolbar);
     }
 
-    public void onClick(View v) {
-        if (v.getId() == R.id.btn_main_test) {
-            mSwipeBackHelper.forward(TestActivity.class);
-        }
+    public void testSwipeBack(View v) {
+        mSwipeBackHelper.forward(TestActivity.class);
+    }
+
+    public void testTranslucent(View v) {
+        mSwipeBackHelper.forward(TranslucentActivity.class);
+
+//        mSwipeBackHelper.forwardAndFinish(TranslucentActivity.class);
+    }
+
+    public void testPullRefreshAndWebView(View v) {
+        mSwipeBackHelper.forward(WebViewActivity.class);
+    }
+
+    public void testSwipeDelete(View v) {
+        mSwipeBackHelper.forward(SwipeDeleteActivity.class);
+    }
+
+    public void testRecyclerView(View v) {
+        mSwipeBackHelper.forward(RecyclerIndexActivity.class);
     }
 
     @Override

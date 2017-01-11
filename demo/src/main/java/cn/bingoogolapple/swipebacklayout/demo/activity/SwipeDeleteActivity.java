@@ -18,7 +18,7 @@ import cn.bingoogolapple.swipebacklayout.demo.util.DataUtil;
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com
  * 创建时间:17/1/11 上午2:46
- * 描述:测试与滑动删除一起使用。希望有猿友能处理 RecyclerVie 的 item 中嵌套 EditText 时，软键盘折叠 EditText 的问题
+ * 描述:测试与滑动删除一起使用
  * <p>
  * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
  */

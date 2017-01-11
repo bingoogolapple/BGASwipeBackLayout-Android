@@ -12,4 +12,7 @@
 
     <color name="black_dark">#333333</color>
     <color name="black_middle">#666666</color>
+
+    <color name="category_backgroundColor">#F2F2F2</color>
+    <color name="category_textColor">#848484</color>
 </resources>

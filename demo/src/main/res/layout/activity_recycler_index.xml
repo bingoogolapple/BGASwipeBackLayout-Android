@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              style="@style/MatchMatch.Vertical"
+              android:background="@android:color/white">
+
+    <include layout="@layout/inc_toolbar"/>
+
+    <FrameLayout style="@style/MatchMatch">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_recyclerindexview_data"
+            style="@style/MatchMatch"
+            android:overScrollMode="never"
+            android:scrollbars="none"/>
+
+        <TextView
+            android:id="@+id/tv_recyclerindexview_tip"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_tip"
+            android:gravity="center"
+            android:text="A"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <cn.bingoogolapple.swipebacklayout.demo.widget.IndexView
+            android:id="@+id/indexview"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center"
+            android:background="@android:color/transparent"/>
+    </FrameLayout>
+</LinearLayout>

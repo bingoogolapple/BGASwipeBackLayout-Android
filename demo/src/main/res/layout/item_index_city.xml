@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_item_index_city"
+    style="@style/MatchWrap"
+    android:background="@drawable/bga_adapter_white_gray"
+    android:paddingBottom="@dimen/size_level2"
+    android:paddingLeft="@dimen/size_level3"
+    android:paddingRight="@dimen/size_level3"
+    android:paddingTop="@dimen/size_level2"
+    android:text="成都"
+    android:textColor="#949494"
+    android:textSize="@dimen/textSize_14"/>
