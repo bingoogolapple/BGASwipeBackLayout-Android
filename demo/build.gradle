@@ -23,7 +23,7 @@ dependencies {
 
 
     // 下面的依赖不是必须的，只是为了方便演示 demo
-    compile 'cn.bingoogolapple:bga-adapter:1.1.7@aar'
+    compile 'cn.bingoogolapple:bga-adapter:1.1.8@aar'
     compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
     compile 'cn.bingoogolapple:bga-progressbar:1.0.0@aar'
     compile 'cn.bingoogolapple:bga-swipeitemlayout:1.0.4@aar'

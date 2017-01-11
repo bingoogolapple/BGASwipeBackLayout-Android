@@ -150,6 +150,10 @@ public class TestActivity extends BaseActivity {
         mSwipeBackHelper.forward(SwipeDeleteActivity.class);
     }
 
+    public void testRecyclerView(View v) {
+        mSwipeBackHelper.forward(RecyclerIndexActivity.class);
+    }
+
     /**
      * 测试 ViewPager 的适配器
      */

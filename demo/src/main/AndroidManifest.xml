@@ -51,7 +51,13 @@
             android:name=".activity.SwipeDeleteActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+
+        <activity
+            android:name=".activity.RecyclerIndexActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>

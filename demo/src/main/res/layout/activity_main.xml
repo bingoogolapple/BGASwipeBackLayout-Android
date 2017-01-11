@@ -7,8 +7,27 @@
     <include layout="@layout/inc_toolbar"/>
 
     <Button
-        android:id="@+id/btn_main_test"
         style="@style/DemoBtn"
-        android:onClick="onClick"
+        android:onClick="testSwipeBack"
         android:text="测试滑动返回"/>
+
+    <Button
+        style="@style/DemoBtn"
+        android:onClick="testSwipeDelete"
+        android:text="测试滑动删除"/>
+
+    <Button
+        style="@style/DemoBtn"
+        android:onClick="testTranslucent"
+        android:text="TestTranslucent"/>
+
+    <Button
+        style="@style/DemoBtn"
+        android:onClick="testPullRefreshAndWebView"
+        android:text="测试下拉刷新和 WebView"/>
+
+    <Button
+        style="@style/DemoBtn"
+        android:onClick="testRecyclerView"
+        android:text="测试 RecyclerView"/>
 </LinearLayout>
