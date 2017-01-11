@@ -11,7 +11,6 @@ import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
-import cn.bingoogolapple.swipebacklayout.BGAKeyboardUtil;
 import cn.bingoogolapple.swipebacklayout.demo.R;
 import cn.bingoogolapple.swipebacklayout.demo.adapter.SwipeDeleteAdapter;
 import cn.bingoogolapple.swipebacklayout.demo.util.DataUtil;
@@ -35,7 +34,7 @@ public class SwipeDeleteActivity extends BaseActivity implements BGAOnRVItemClic
 
     @Override
     protected void setListener() {
-        mAdapter = new SwipeDeleteAdapter(mDataRv, this);
+        mAdapter = new SwipeDeleteAdapter(mDataRv);
         mAdapter.setOnRVItemClickListener(this);
         mAdapter.setOnRVItemLongClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
@@ -46,7 +45,6 @@ public class SwipeDeleteActivity extends BaseActivity implements BGAOnRVItemClic
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (RecyclerView.SCROLL_STATE_DRAGGING == newState) {
                     mAdapter.closeOpenedSwipeItemLayoutWithAnim();
-                    BGAKeyboardUtil.closeKeyboard(SwipeDeleteActivity.this);
                 }
             }
         });

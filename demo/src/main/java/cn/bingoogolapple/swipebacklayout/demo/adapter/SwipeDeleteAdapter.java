@@ -1,6 +1,5 @@
 package cn.bingoogolapple.swipebacklayout.demo.adapter;
 
-import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -8,7 +7,6 @@ import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
-import cn.bingoogolapple.swipebacklayout.BGAKeyboardUtil;
 import cn.bingoogolapple.swipebacklayout.demo.R;
 import cn.bingoogolapple.swipebacklayout.demo.model.NormalModel;
 import cn.bingoogolapple.swipeitemlayout.BGASwipeItemLayout;
@@ -24,11 +22,8 @@ public class SwipeDeleteAdapter extends BGARecyclerViewAdapter<NormalModel> {
      */
     private List<BGASwipeItemLayout> mOpenedSil = new ArrayList<>();
 
-    private Activity mActivity;
-
-    public SwipeDeleteAdapter(RecyclerView recyclerView, Activity activity) {
+    public SwipeDeleteAdapter(RecyclerView recyclerView) {
         super(recyclerView, R.layout.item_bgaswipe);
-        mActivity = activity;
     }
 
     @Override
@@ -44,13 +39,11 @@ public class SwipeDeleteAdapter extends BGARecyclerViewAdapter<NormalModel> {
             @Override
             public void onBGASwipeItemLayoutClosed(BGASwipeItemLayout swipeItemLayout) {
                 mOpenedSil.remove(swipeItemLayout);
-                BGAKeyboardUtil.closeKeyboard(mActivity);
             }
 
             @Override
             public void onBGASwipeItemLayoutStartOpen(BGASwipeItemLayout swipeItemLayout) {
                 closeOpenedSwipeItemLayoutWithAnim();
-                BGAKeyboardUtil.closeKeyboard(mActivity);
             }
         });
         viewHolderHelper.setItemChildClickListener(R.id.tv_item_bgaswipe_delete);
@@ -59,14 +52,8 @@ public class SwipeDeleteAdapter extends BGARecyclerViewAdapter<NormalModel> {
 
     @Override
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, NormalModel model) {
-        viewHolderHelper.setText(R.id.tv_item_bgaswipe_title, model.mTitle).setText(R.id.tv_item_bgaswipe_detail, model.mDetail).setText(R.id.et_item_bgaswipe_title, model.mTitle);
-
-        BGASwipeItemLayout swipeItemLayout = viewHolderHelper.getView(R.id.sil_item_bgaswipe_root);
-        if (position % 3 == 0) {
-            swipeItemLayout.setSwipeAble(false);
-        } else {
-            swipeItemLayout.setSwipeAble(true);
-        }
+        viewHolderHelper.setText(R.id.tv_item_bgaswipe_title, model.mTitle)
+                .setText(R.id.tv_item_bgaswipe_detail, model.mDetail);
     }
 
     public void closeOpenedSwipeItemLayoutWithAnim() {

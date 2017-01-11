@@ -9,31 +9,18 @@
                                                       app:bga_sil_swipeDirection="left">
     <!-- BGASwipeItemLayout 的 layout_marginLeft 设置成了 2dp，以便触发滑动返回 -->
 
-    <LinearLayout
-        style="@style/WrapMatch.Horizontal"
+    <TextView
+        android:id="@+id/tv_item_bgaswipe_delete"
+        style="@style/WrapMatch"
         android:layout_margin="@dimen/size_level1"
-        android:background="#ffaa55"
-        android:padding="@dimen/size_level1">
-
-        <EditText
-            android:id="@+id/et_item_bgaswipe_title"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/size_level1"/>
-
-        <TextView
-            android:id="@+id/tv_item_bgaswipe_delete"
-            style="@style/WrapMatch"
-            android:layout_margin="@dimen/size_level1"
-            android:background="@drawable/selector_btn_red"
-            android:clickable="true"
-            android:gravity="center"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="删除"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/textSize_18"/>
-    </LinearLayout>
+        android:background="@drawable/selector_btn_red"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="删除"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/textSize_18"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -53,7 +40,7 @@
             android:layout_marginLeft="@dimen/size_level2"
             android:layout_toRightOf="@id/iv_item_bgaswipe_avatar"
             android:text="标题"
-            android:textColor="@android:color/black"
+            android:textColor="@color/black_dark"
             android:textSize="@dimen/textSize_18"/>
 
         <TextView
@@ -64,7 +51,7 @@
             android:layout_marginTop="@dimen/size_level2"
             android:layout_toRightOf="@id/iv_item_bgaswipe_avatar"
             android:text="详细内容"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/black_middle"
             android:textSize="@dimen/textSize_14"/>
     </RelativeLayout>
 
