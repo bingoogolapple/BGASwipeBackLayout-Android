@@ -40,7 +40,7 @@ android.Build.MODEL
 ![BGASwipeBackLayoutDemo apk 文件二维码](https://cloud.githubusercontent.com/assets/8949716/21510942/c8e9c9e0-ccd4-11e6-9757-bbc6653cccdb.png)
 
 ### 1.添加 Gradle 依赖
- [ ![Download](https://api.bintray.com/packages/bintray/jcenter/cn.bingoogolapple%3Abga-swipebacklayout/images/download.svg) ](https://bintray.com/bintray/jcenter/cn.bingoogolapple%3Abga-swipebacklayout/_latestVersion) bga-swipebacklayout 后面的「latestVersion」指的是左边这个 Download 徽章后面的「数字」，请自行替换。
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/cn.bingoogolapple/bga-swipebacklayout/badge.svg)](https://maven-badges.herokuapp.com/maven-central/cn.bingoogolapple/bga-swipebacklayout) bga-swipebacklayout 后面的「latestVersion」指的是左边这个 maven-central 徽章后面的「数字」，请自行替换。
 
 ```groovy
 dependencies {
