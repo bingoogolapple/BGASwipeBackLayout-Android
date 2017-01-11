@@ -35,6 +35,10 @@ android.Build.MODEL
 | ------------ | ------------- |
 | ![BGASwipeBackLayoutDemo](https://cloud.githubusercontent.com/assets/8949716/21512903/fac699f8-ccec-11e6-8437-1bfe8b9bd9d3.gif) | ![BGASwipeBackLayoutDemo-WeChat](https://cloud.githubusercontent.com/assets/8949716/21536263/7aa0fe88-cdbb-11e6-801d-4b370d6c454c.gif)  |
 
+| 配合滑动删除列表一起使用 | 配合 RecycerView 一起使用 |
+| ------------ | ------------- |
+| ![bgaswipebacklayout-swipe-delete](https://cloud.githubusercontent.com/assets/8949716/21843157/ec74aeec-d824-11e6-9579-77549892e273.gif) | ![bgaswipebacklayout-recycler-index](https://cloud.githubusercontent.com/assets/8949716/21843158/ec784a3e-d824-11e6-9649-7397e5aad7eb.gif)  |
+
 [点击下载 BGASwipeBackLayoutDemo.apk](http://fir.im/BGASwipeBackLayout) 或扫描下面的二维码安装
 
 ![BGASwipeBackLayoutDemo apk 文件二维码](https://cloud.githubusercontent.com/assets/8949716/21510942/c8e9c9e0-ccd4-11e6-9757-bbc6653cccdb.png)
