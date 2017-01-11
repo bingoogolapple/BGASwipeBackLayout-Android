@@ -48,6 +48,11 @@ public class BGASwipeBackHelper {
             mSwipeBackLayout.setPanelSlideListener(new BGASwipeBackLayout.PanelSlideListener() {
                 @Override
                 public void onPanelSlide(View panel, float slideOffset) {
+                    // 开始滑动返回时关闭软键盘
+                    if (slideOffset < 0.03) {
+                        BGAKeyboardUtil.closeKeyboard(mActivity);
+                    }
+
                     mDelegate.onSwipeBackLayoutSlide(slideOffset);
                 }
 
