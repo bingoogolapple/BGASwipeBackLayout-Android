@@ -12,7 +12,6 @@ import android.view.View;
 
 import com.jaeger.library.StatusBarUtil;
 
-import cn.bingoogolapple.swipebacklayout.BGAKeyboardUtil;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 import cn.bingoogolapple.swipebacklayout.demo.R;
 
@@ -82,10 +81,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
      */
     @Override
     public void onSwipeBackLayoutSlide(float slideOffset) {
-        // 开始滑动返回时关闭软键盘
-        if (slideOffset < 0.01) {
-            BGAKeyboardUtil.closeKeyboard(this);
-        }
     }
 
     /**

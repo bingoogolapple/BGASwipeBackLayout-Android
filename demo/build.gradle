@@ -15,7 +15,7 @@ android {
 dependencies {
     // 下面两个依赖是必须的
     compile 'com.android.support:support-v4:25.1.0'
-    compile 'cn.bingoogolapple:bga-swipebacklayout:1.0.6@aar'
+    compile 'cn.bingoogolapple:bga-swipebacklayout:1.0.7@aar'
     // 上面两个依赖是必须的
 
 
