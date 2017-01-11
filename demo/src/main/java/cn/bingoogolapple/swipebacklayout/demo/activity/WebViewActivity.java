@@ -16,6 +16,8 @@ import cn.bingoogolapple.swipebacklayout.demo.R;
  * 作者:王浩 邮件:bingoogolapple@gmail.com
  * 创建时间:16/12/28 上午10:10
  * 描述:测试下拉刷新、WebView等
+ * <p>
+ * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
  */
 public class WebViewActivity extends BaseActivity implements BGARefreshLayout.BGARefreshLayoutDelegate {
     private BGARefreshLayout mRefreshLayout;

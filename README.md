@@ -9,7 +9,11 @@
 
 保证栈底 Activity 的主题是不透明的。例如 demo 中的首个 Activity 是 SplashActivity，进入主界面后 SplashActivity 就销毁了，此时 MainActivity 就是栈底 Activity，需保证 MainActivity 的主题不透明
 
-### 2.如果发现某些手机上底部出现空白区域，麻烦打印以下信息新建 [Issue](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/issues/new) 反馈
+### 2.滑动返回不生效
+
+必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回
+
+### 3.如果发现某些手机上底部出现空白区域，麻烦打印以下信息新建 [Issue](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/issues/new) 反馈
 
 ```
 android.Build.VERSION.SDK_INT
@@ -47,7 +51,22 @@ dependencies {
 }
 ```
 
-### 2.为需要支持滑动返回的 Activity 设置透明主题 AppTheme.Transparent
+### 2.必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回
+
+```java
+public class App extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        // 必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回
+        BGASwipeBackManager.getInstance().init(this);
+    }
+}
+```
+
+### 3.为需要支持滑动返回的 Activity 设置透明主题 AppTheme.Transparent
 
 ```xml
 <!-- 这里面的内容改成你自己项目里的 -->
@@ -70,7 +89,7 @@ dependencies {
 </style>
 ```
 
-### 3.将下面的代码拷贝到你自己的 BaseActivity 中，建议参考 demo 里的这个 [BaseActivity](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/blob/master/demo/src/main/java/cn/bingoogolapple/swipebacklayout/demo/activity/BaseActivity.java) 来设置界面跳转动画
+### 4.将下面的代码拷贝到你自己的 BaseActivity 中，建议参考 demo 里的这个 [BaseActivity](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/blob/master/demo/src/main/java/cn/bingoogolapple/swipebacklayout/demo/activity/BaseActivity.java) 来设置界面跳转动画
 
 ```java
 public abstract class BaseActivity extends AppCompatActivity implements BGASwipeBackHelper.Delegate, View.OnClickListener {
@@ -79,6 +98,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
         // 在 super.onCreate(savedInstanceState) 之前调用该方法
         initSwipeBackFinish();
         super.onCreate(savedInstanceState);
@@ -90,9 +110,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
     private void initSwipeBackFinish() {
         mSwipeBackHelper = new BGASwipeBackHelper(this, this);
 
+        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
         // 下面几项可以不配置，这里只是为了讲述接口用法。
-
-        // 如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)
 
         // 设置滑动返回是否可用。默认值为 true
         mSwipeBackHelper.setSwipeBackEnable(true);
@@ -144,18 +163,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
 }
 ```
 
-### 4.如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中配置
-
-```java
-BGASwipeBackManager.getInstance().init(this)
-```
-
 ### 5.强烈强烈强烈建议把 [BGASwipeBackHelper](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/blob/master/library/src/main/java/cn/bingoogolapple/swipebacklayout/BGASwipeBackHelper.java) 里的每个方法的注释看一遍，只看注释就好
 
 ## demo 中用到的第三方库
 
 * [StatusBarUtil](https://github.com/laobie/StatusBarUtil) A util for setting status bar style on Android App
-* [BGAAdapter-Android](https://github.com/bingoogolapple/BGAAdapter-Android) 在 AdapterView 和 RecyclerView 中通用的 Adapter 和 ViewHolder。RecyclerView 支持 DataBinding 、多种 Item 类型、添加 Header 和 Footer
+* [BGAAdapter-Android](https://github.com/bingoogolapple/BGAAdapter-Android) 在 AdapterView 和 RecyclerView 中通用的 Adapter 和 ViewHolder。RecyclerView 支持 DataBinding 、多种 Item 类型、添加 Header 和 Footer。RecyclerView 竖直方向通用分割线 BGADivider
 * [BGAProgressBar-Android](https://github.com/bingoogolapple/BGAProgressBar-Android) 带百分比数字的水平、圆形进度条
 * [BGARefreshLayout-Android](https://github.com/bingoogolapple/BGARefreshLayout-Android) 多种下拉刷新效果、上拉加载更多、可配置自定义头部广告位
 * 谷爹的 support 包

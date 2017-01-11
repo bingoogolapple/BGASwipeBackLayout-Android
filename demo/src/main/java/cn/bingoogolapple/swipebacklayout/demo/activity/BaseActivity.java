@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.jaeger.library.StatusBarUtil;
 
+import cn.bingoogolapple.swipebacklayout.BGAKeyboardUtil;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 import cn.bingoogolapple.swipebacklayout.demo.R;
 
@@ -19,6 +20,8 @@ import cn.bingoogolapple.swipebacklayout.demo.R;
  * 作者:王浩 邮件:bingoogolapple@gmail.com
  * 创建时间:16/12/27 下午5:35
  * 描述:开发者可将该类中的某些方法拷贝到自己的 BaseActivity 中封装成适合自己项目的滑动返回基类
+ * <p>
+ * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
  */
 public abstract class BaseActivity extends AppCompatActivity implements BGASwipeBackHelper.Delegate, View.OnClickListener {
     protected BGASwipeBackHelper mSwipeBackHelper;
@@ -26,6 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
         // 在 super.onCreate(savedInstanceState) 之前调用该方法
         initSwipeBackFinish();
         super.onCreate(savedInstanceState);
@@ -44,9 +48,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
     private void initSwipeBackFinish() {
         mSwipeBackHelper = new BGASwipeBackHelper(this, this);
 
+        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
         // 下面几项可以不配置，这里只是为了讲述接口用法。
-
-        // 如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)
 
         // 设置滑动返回是否可用。默认值为 true
         mSwipeBackHelper.setSwipeBackEnable(true);
@@ -79,6 +82,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
      */
     @Override
     public void onSwipeBackLayoutSlide(float slideOffset) {
+        // 开始滑动返回时关闭软键盘
+        if (slideOffset < 0.01) {
+            BGAKeyboardUtil.closeKeyboard(this);
+        }
     }
 
     /**

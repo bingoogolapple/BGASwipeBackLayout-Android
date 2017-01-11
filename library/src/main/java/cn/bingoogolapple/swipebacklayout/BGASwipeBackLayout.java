@@ -190,7 +190,7 @@ public class BGASwipeBackLayout extends ViewGroup {
      */
     private boolean mIsOnlyTrackingLeftEdge = true;
     /**
-     * 是否是微信滑动返回样式。如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)
+     * 是否是微信滑动返回样式
      */
     private boolean mIsWeChatStyle = true;
     /**
@@ -256,7 +256,7 @@ public class BGASwipeBackLayout extends ViewGroup {
     }
 
     /**
-     * 设置是否是微信滑动返回样式。默认值为 true。如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)
+     * 设置是否是微信滑动返回样式。默认值为 true
      */
     public void setIsWeChatStyle(boolean isWeChatStyle) {
         mIsWeChatStyle = isWeChatStyle;
@@ -295,6 +295,15 @@ public class BGASwipeBackLayout extends ViewGroup {
      */
     public void setIsShadowAlphaGradient(boolean isShadowAlphaGradient) {
         mIsShadowAlphaGradient = isShadowAlphaGradient;
+    }
+
+    /**
+     * 滑动返回是否可用
+     *
+     * @return
+     */
+    private boolean isSwipeBackEnable() {
+        return mSwipeBackEnable && BGASwipeBackManager.getInstance().getPenultimateActivity() != null;
     }
     // ======================== 新加的 END ========================
 
@@ -892,7 +901,7 @@ public class BGASwipeBackLayout extends ViewGroup {
         }
 
         // ======================== 新加的 START ========================
-        if (!mSwipeBackEnable) {
+        if (!isSwipeBackEnable()) {
             mDragHelper.cancel();
             return super.onInterceptTouchEvent(ev);
         }
@@ -947,7 +956,7 @@ public class BGASwipeBackLayout extends ViewGroup {
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         // ======================== 新加的 START ========================
-        if (!mSwipeBackEnable) {
+        if (!isSwipeBackEnable()) {
             return super.onTouchEvent(ev);
         }
         // ======================== 新加的 END ========================
@@ -1462,7 +1471,7 @@ public class BGASwipeBackLayout extends ViewGroup {
             if (mIsOnlyTrackingLeftEdge) {
                 return false;
             }
-            return mSwipeBackEnable && ((LayoutParams) child.getLayoutParams()).slideable;
+            return isSwipeBackEnable() && ((LayoutParams) child.getLayoutParams()).slideable;
             // ======================== 新加的 END ========================
         }
 
@@ -1549,7 +1558,7 @@ public class BGASwipeBackLayout extends ViewGroup {
             // ======================== 新加的 START ========================
 //            mDragHelper.captureChildView(mSlideableView, pointerId);
 
-            if (mSwipeBackEnable) {
+            if (isSwipeBackEnable()) {
                 mDragHelper.captureChildView(mSlideableView, pointerId);
             }
             // ======================== 新加的 END ========================

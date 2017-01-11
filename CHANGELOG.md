@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 1.0.6 *(2017-01-11)*
+----------------------------
+
+* 必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回，避免任务栈里只有一个 Activity 时滑动返回看见 Launcher
+
 Version 1.0.5 *(2017-01-09)*
 ----------------------------
 

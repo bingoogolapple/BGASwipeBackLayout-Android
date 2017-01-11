@@ -1,6 +1,5 @@
 package cn.bingoogolapple.swipebacklayout.demo.activity;
 
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,6 +11,7 @@ import com.jaeger.library.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bingoogolapple.androidcommon.adapter.BGADivider;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.swipebacklayout.demo.R;
@@ -21,6 +21,8 @@ import cn.bingoogolapple.swipebacklayout.demo.adapter.ContentAdapter;
  * 作者:王浩 邮件:bingoogolapple@gmail.com
  * 创建时间:16/12/28 上午1:06
  * 描述:Test Translucent StatusBar
+ * <p>
+ * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
  */
 public class TranslucentActivity extends BaseActivity {
     private ContentAdapter mContentAdapter;
@@ -52,12 +54,7 @@ public class TranslucentActivity extends BaseActivity {
     }
 
     private void initRecyclerView() {
-        mContentRv.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.set(0, getResources().getDimensionPixelOffset(R.dimen.size_level1), 0, getResources().getDimensionPixelOffset(R.dimen.size_level1));
-            }
-        });
+        mContentRv.addItemDecoration(BGADivider.newBitmapDivider());
 
         mContentAdapter = new ContentAdapter(mContentRv);
         mContentAdapter.setOnRVItemClickListener(new BGAOnRVItemClickListener() {

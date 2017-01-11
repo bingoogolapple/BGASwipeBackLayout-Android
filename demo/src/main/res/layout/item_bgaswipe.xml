@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.bingoogolapple.swipeitemlayout.BGASwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                      xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                      android:id="@+id/sil_item_bgaswipe_root"
+                                                      style="@style/MatchWrap"
+                                                      android:layout_marginLeft="2dp"
+                                                      app:bga_sil_bottomMode="pullOut"
+                                                      app:bga_sil_springDistance="20dp"
+                                                      app:bga_sil_swipeDirection="left">
+
+    <LinearLayout
+        style="@style/WrapMatch.Horizontal"
+        android:layout_margin="@dimen/size_level1"
+        android:background="#ffaa55"
+        android:padding="@dimen/size_level1">
+
+        <EditText
+            android:id="@+id/et_item_bgaswipe_title"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/size_level1"/>
+
+        <TextView
+            android:id="@+id/tv_item_bgaswipe_delete"
+            style="@style/WrapMatch"
+            android:layout_margin="@dimen/size_level1"
+            android:background="@drawable/selector_btn_red"
+            android:clickable="true"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="删除"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textSize_18"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bga_adapter_white_gray"
+        android:padding="@dimen/size_level2">
+
+        <ImageView
+            android:id="@+id/iv_item_bgaswipe_avatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/bga_avatar"/>
+
+        <TextView
+            android:id="@+id/tv_item_bgaswipe_title"
+            style="@style/MatchWrap"
+            android:layout_marginLeft="@dimen/size_level2"
+            android:layout_toRightOf="@id/iv_item_bgaswipe_avatar"
+            android:text="标题"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textSize_18"/>
+
+        <TextView
+            android:id="@+id/tv_item_bgaswipe_detail"
+            style="@style/MatchWrap"
+            android:layout_below="@id/tv_item_bgaswipe_title"
+            android:layout_marginLeft="@dimen/size_level2"
+            android:layout_marginTop="@dimen/size_level2"
+            android:layout_toRightOf="@id/iv_item_bgaswipe_avatar"
+            android:text="详细内容"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/textSize_14"/>
+    </RelativeLayout>
+
+</cn.bingoogolapple.swipeitemlayout.BGASwipeItemLayout>
