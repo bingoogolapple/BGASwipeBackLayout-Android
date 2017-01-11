@@ -33,7 +33,7 @@
             android:name=".activity.TestActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
 
         <activity
             android:name=".activity.TranslucentActivity"

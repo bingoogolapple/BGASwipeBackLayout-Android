@@ -171,6 +171,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
 * [BGAAdapter-Android](https://github.com/bingoogolapple/BGAAdapter-Android) 在 AdapterView 和 RecyclerView 中通用的 Adapter 和 ViewHolder。RecyclerView 支持 DataBinding 、多种 Item 类型、添加 Header 和 Footer。RecyclerView 竖直方向通用分割线 BGADivider
 * [BGAProgressBar-Android](https://github.com/bingoogolapple/BGAProgressBar-Android) 带百分比数字的水平、圆形进度条
 * [BGARefreshLayout-Android](https://github.com/bingoogolapple/BGARefreshLayout-Android) 多种下拉刷新效果、上拉加载更多、可配置自定义头部广告位
+* [BGASwipeItemLayout-Android](https://github.com/bingoogolapple/BGASwipeItemLayout-Android) 类似 iOS 带弹簧效果的左右滑动控件，可作为 AbsListView 和 RecyclerView 的 item
 * 谷爹的 support 包
 
 ## 代码是最好的老师，更多详细用法请查看 [demo](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/tree/master/demo):feet:

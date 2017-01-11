@@ -37,11 +37,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"/>
 
-            <Button
-                style="@style/DemoBtn"
-                android:onClick="testSwipeDelete"
-                android:text="测试滑动删除"/>
-
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/onlyTrackingLeftEdgeSwitch"
                 style="@style/WrapWrap"
@@ -77,25 +72,28 @@
                 android:padding="@dimen/size_level3"
                 android:text="阴影区域的透明度根据滑动的距离渐变"/>
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@mipmap/bga_avatar"/>
+            <Button
+                style="@style/DemoBtn"
+                android:onClick="testSwipeDelete"
+                android:text="测试滑动删除"/>
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@mipmap/bga_avatar"/>
+            <Button
+                style="@style/DemoBtn"
+                android:onClick="testTranslucent"
+                android:text="TestTranslucent"/>
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@mipmap/bga_avatar"/>
+            <Button
+                style="@style/DemoBtn"
+                android:onClick="testPullRefreshAndWebView"
+                android:text="测试下拉刷新和 WebView"/>
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@mipmap/bga_avatar"/>
+            <EditText
+                style="@style/MatchWrap"
+                android:layout_margin="@dimen/size_level1"
+                android:gravity="center"
+                android:hint="测试滑动返回时自动关闭软键盘"
+                android:singleLine="true"
+                android:text="测试滑动返回时自动关闭软键盘"/>
 
             <ImageView
                 android:layout_width="80dp"
@@ -113,32 +111,4 @@
                 android:src="@mipmap/bga_avatar"/>
         </LinearLayout>
     </ScrollView>
-
-    <android.support.design.widget.FloatingActionButton
-        style="@style/WrapWrap"
-        android:layout_gravity="bottom|left"
-        android:layout_marginBottom="@dimen/size_level4"
-        android:layout_marginLeft="@dimen/size_level4"
-        android:onClick="onClickWebViewFab"
-        android:src="@mipmap/fab"
-        app:backgroundTint="#ff0000"
-        app:borderWidth="5dp"
-        app:elevation="10dp"
-        app:fabSize="normal"
-        app:pressedTranslationZ="50dp"
-        app:rippleColor="#0000ff"/>
-
-    <android.support.design.widget.FloatingActionButton
-        style="@style/WrapWrap"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="@dimen/size_level4"
-        android:layout_marginRight="@dimen/size_level4"
-        android:onClick="onClickTranslucentFab"
-        android:src="@mipmap/fab"
-        app:backgroundTint="#ff0000"
-        app:borderWidth="5dp"
-        app:elevation="10dp"
-        app:fabSize="normal"
-        app:pressedTranslationZ="50dp"
-        app:rippleColor="#0000ff"/>
 </android.support.design.widget.CoordinatorLayout>

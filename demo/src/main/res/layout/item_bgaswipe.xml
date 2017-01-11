@@ -7,6 +7,7 @@
                                                       app:bga_sil_bottomMode="pullOut"
                                                       app:bga_sil_springDistance="20dp"
                                                       app:bga_sil_swipeDirection="left">
+    <!-- BGASwipeItemLayout 的 layout_marginLeft 设置成了 2dp，以便触发滑动返回 -->
 
     <LinearLayout
         style="@style/WrapMatch.Horizontal"
