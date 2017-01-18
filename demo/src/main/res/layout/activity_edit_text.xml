@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                style="@style/MatchMatch"
+                android:background="@android:color/white">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/inc_toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/ll_edit_text_msg"
+        style="@style/MatchWrap.Horizontal"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/size_level2">
+
+        <EditText
+            android:id="@+id/et_edit_text_msg"
+            style="@style/MatchWrap"
+            android:background="#D0D8EE"
+            android:hint="请输入消息内容并按回车"
+            android:imeActionLabel="发送"
+            android:imeOptions="actionGo"
+            android:padding="@dimen/size_level2"
+            android:singleLine="true"
+            android:textColor="@color/black_dark"
+            android:textSize="@dimen/textSize_14"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        style="@style/MatchMatch"
+        android:layout_above="@id/ll_edit_text_msg"
+        android:layout_below="@id/toolbar"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_test"/>
+
+</RelativeLayout>
