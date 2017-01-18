@@ -61,6 +61,10 @@ public class MainActivity extends BaseActivity {
         mSwipeBackHelper.forward(RecyclerIndexActivity.class);
     }
 
+    public void testEditText(View v) {
+        mSwipeBackHelper.forward(EditTextActivity.class);
+    }
+
     @Override
     public void onBackPressed() {
         finish();

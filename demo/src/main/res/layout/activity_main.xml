@@ -30,4 +30,9 @@
         style="@style/DemoBtn"
         android:onClick="testRecyclerView"
         android:text="测试 RecyclerView"/>
+
+    <Button
+        style="@style/DemoBtn"
+        android:onClick="testEditText"
+        android:text="测试 EditText 位于底部的情况"/>
 </LinearLayout>

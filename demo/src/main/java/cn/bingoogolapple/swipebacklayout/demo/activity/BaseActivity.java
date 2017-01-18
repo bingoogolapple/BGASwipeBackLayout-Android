@@ -7,6 +7,7 @@ import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -165,5 +166,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
      */
     protected <VT extends View> VT getViewById(@IdRes int id) {
         return (VT) findViewById(id);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(this.getClass().getSimpleName(), "onStop " + this.getClass().getSimpleName());
     }
 }
