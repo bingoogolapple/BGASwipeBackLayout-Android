@@ -101,6 +101,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
 
     @Override
     public void onBackPressed() {
+        if (mSwipeBackHelper.isSliding()) {
+            return;
+        }
         mSwipeBackHelper.backward();
     }
 
