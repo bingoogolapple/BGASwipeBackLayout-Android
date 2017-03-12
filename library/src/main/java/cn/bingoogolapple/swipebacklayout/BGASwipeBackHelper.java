@@ -19,6 +19,7 @@ package cn.bingoogolapple.swipebacklayout;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.FloatRange;
 import android.view.View;
 
 /**
@@ -281,6 +282,28 @@ public class BGASwipeBackHelper {
         mActivity.startActivity(new Intent(mActivity, cls));
         mActivity.finish();
         executeBackwardAnim();
+    }
+
+    /**
+     * 是否正在滑动
+     * @return
+     * <p>
+     *     true: 滑动状态
+     * </p>
+     * <p>
+     *     false: Idle状态
+     * </p>
+     */
+    public boolean isSliding() {
+        return mSwipeBackLayout.isSliding();
+    }
+
+    /**
+     * 设置触发释放后自动返回的滑动范围
+     * @param offset 设置滑动范围，默认是0.3f
+     */
+    public void setSwipeBackSlideOffset(@FloatRange(from = 0.0f, to = 1.0f) float offset) {
+        mSwipeBackLayout.setSwipeBackSlideOffset(offset);
     }
 
     public interface Delegate {
