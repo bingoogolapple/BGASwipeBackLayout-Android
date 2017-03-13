@@ -149,6 +149,30 @@ public class BGASwipeBackHelper {
     }
 
     /**
+     * 设置触发释放后自动滑动返回的阈值，默认值为 0.3f
+     *
+     * @param threshold
+     */
+    public BGASwipeBackHelper setSwipeBackThreshold(@FloatRange(from = 0.0f, to = 1.0f) float threshold) {
+        if (mSwipeBackLayout != null) {
+            mSwipeBackLayout.setSwipeBackThreshold(threshold);
+        }
+        return this;
+    }
+
+    /**
+     * 是否正在滑动
+     *
+     * @return
+     */
+    public boolean isSliding() {
+        if (mSwipeBackLayout != null) {
+            return mSwipeBackLayout.isSliding();
+        }
+        return false;
+    }
+
+    /**
      * 执行跳转到下一个 Activity 的动画
      */
     public void executeForwardAnim() {
@@ -282,28 +306,6 @@ public class BGASwipeBackHelper {
         mActivity.startActivity(new Intent(mActivity, cls));
         mActivity.finish();
         executeBackwardAnim();
-    }
-
-    /**
-     * 是否正在滑动
-     * @return
-     * <p>
-     *     true: 滑动状态
-     * </p>
-     * <p>
-     *     false: Idle状态
-     * </p>
-     */
-    public boolean isSliding() {
-        return mSwipeBackLayout.isSliding();
-    }
-
-    /**
-     * 设置触发释放后自动返回的滑动范围
-     * @param offset 设置滑动范围，默认是0.3f
-     */
-    public void setSwipeBackSlideOffset(@FloatRange(from = 0.0f, to = 1.0f) float offset) {
-        mSwipeBackLayout.setSwipeBackSlideOffset(offset);
     }
 
     public interface Delegate {

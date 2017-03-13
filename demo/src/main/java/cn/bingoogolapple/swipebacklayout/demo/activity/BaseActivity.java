@@ -63,6 +63,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
         mSwipeBackHelper.setIsNeedShowShadow(true);
         // 设置阴影区域的透明度是否根据滑动的距离渐变。默认值为 true
         mSwipeBackHelper.setIsShadowAlphaGradient(true);
+        // 设置触发释放后自动滑动返回的阈值，默认值为 0.3f
+        mSwipeBackHelper.setSwipeBackThreshold(0.3f);
     }
 
     /**
@@ -101,6 +103,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
 
     @Override
     public void onBackPressed() {
+        // 正在滑动返回的时候取消返回按钮事件
         if (mSwipeBackHelper.isSliding()) {
             return;
         }
