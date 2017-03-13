@@ -34,6 +34,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.FloatRange;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.os.ParcelableCompat;
 import android.support.v4.os.ParcelableCompatCreatorCallbacks;
@@ -217,6 +218,28 @@ public class BGASwipeBackLayout extends ViewGroup {
     private Activity mActivity;
 
     /**
+     * 触发滑动返回的滑动范围
+     */
+    private float mSwipeBackThreshold = 0.3f;
+    /**
+     * 释放后的自动滑动状态
+     * 无状态,
+     * 向左滑动,
+     * 向右滑动
+     */
+    private final static byte MOVE_STATE_NONE = -1;
+    private final static byte MOVE_STATE_LEFT = MOVE_STATE_NONE + 1;
+    private final static byte MOVE_STATE_RIGHT = MOVE_STATE_LEFT + 1;
+    private byte mMoveState = MOVE_STATE_NONE;
+    /**
+     * 记录上一次offset的变化值
+     */
+    private float mLastOffsetDelta;
+
+    private boolean mIsSliding;
+    //===========================新增END=======================
+
+    /**
      * 将该滑动返回控件添加到 Activity 上
      *
      * @param activity
@@ -286,6 +309,24 @@ public class BGASwipeBackLayout extends ViewGroup {
                 mShadowView.setBackgroundResource(android.R.color.transparent);
             }
         }
+    }
+
+    /**
+     * 设置触发释放后自动滑动返回的阈值
+     *
+     * @param threshold 触发释放后自动滑动返回的阈值
+     */
+    public void setSwipeBackThreshold(@FloatRange(from = 0.0f, to = 1.0f) float threshold) {
+        mSwipeBackThreshold = threshold;
+    }
+
+    /**
+     * 是否正在滑动
+     *
+     * @return
+     */
+    public boolean isSliding() {
+        return this.mIsSliding;
     }
 
     /**
@@ -972,6 +1013,7 @@ public class BGASwipeBackLayout extends ViewGroup {
 
         switch (action & MotionEventCompat.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN: {
+                mMoveState = MOVE_STATE_LEFT;
                 final float x = ev.getX();
                 final float y = ev.getY();
                 mInitialMotionX = x;
@@ -980,6 +1022,11 @@ public class BGASwipeBackLayout extends ViewGroup {
             }
 
             case MotionEvent.ACTION_UP: {
+                if (mSlideableView.getLeft() > mSlideRange * mSwipeBackThreshold) {
+                    mMoveState = MOVE_STATE_RIGHT;
+                } else {
+                    mMoveState = MOVE_STATE_LEFT;
+                }
                 if (isDimmed(mSlideableView)) {
                     final float x = ev.getX();
                     final float y = ev.getY();
@@ -995,6 +1042,18 @@ public class BGASwipeBackLayout extends ViewGroup {
                 }
                 break;
             }
+
+            case MotionEvent.ACTION_CANCEL: {
+                if (mSlideableView.getLeft() > mSlideRange * mSwipeBackThreshold) {
+                    mMoveState = MOVE_STATE_RIGHT;
+                } else {
+                    mMoveState = MOVE_STATE_LEFT;
+                }
+                break;
+            }
+
+            default:
+                break;
         }
 
         return wantTouchEvents;
@@ -1097,7 +1156,21 @@ public class BGASwipeBackLayout extends ViewGroup {
         final int lpMargin = isLayoutRtl ? lp.rightMargin : lp.leftMargin;
         final int startBound = paddingStart + lpMargin;
 
+        float lastSlideOffset = mSlideOffset;
         mSlideOffset = (float) (newStart - startBound) / mSlideRange;
+        float curOffsetDelta = mSlideOffset - lastSlideOffset;
+        if (mMoveState == MOVE_STATE_RIGHT) {
+            if (curOffsetDelta < mLastOffsetDelta) {
+                curOffsetDelta = mLastOffsetDelta;
+                mSlideOffset = lastSlideOffset + curOffsetDelta;
+                mSlideOffset += 0.05f;
+                if (mSlideOffset > 1.0f) {
+                    mSlideOffset = 1.0f;
+                }
+            } else {
+                mLastOffsetDelta = curOffsetDelta;
+            }
+        }
 
         if (mParallaxBy != 0) {
             parallaxOtherViews(mSlideOffset);
@@ -1486,7 +1559,13 @@ public class BGASwipeBackLayout extends ViewGroup {
                     dispatchOnPanelOpened(mSlideableView);
                     mPreservedOpenState = true;
                 }
+                // ======================== 新加的 START ========================
+//            }
+                mIsSliding = false;
+            } else {
+                mIsSliding = true;
             }
+            // ======================== 新加的 END ========================
         }
 
         @Override
@@ -1508,14 +1587,14 @@ public class BGASwipeBackLayout extends ViewGroup {
             int left;
             if (isLayoutRtlSupport()) {
                 int startToRight = getPaddingRight() + lp.rightMargin;
-                if (xvel < 0 || (xvel == 0 && mSlideOffset > 0.5f)) {
+                if (xvel < 0 || (xvel == 0 && mSlideOffset > mSwipeBackThreshold)) {
                     startToRight += mSlideRange;
                 }
                 int childWidth = mSlideableView.getWidth();
                 left = getWidth() - startToRight - childWidth;
             } else {
                 left = getPaddingLeft() + lp.leftMargin;
-                if (xvel > 0 || (xvel == 0 && mSlideOffset > 0.5f)) {
+                if (xvel > 0 || (xvel == 0 && mSlideOffset > mSwipeBackThreshold)) {
                     left += mSlideRange;
                 }
             }

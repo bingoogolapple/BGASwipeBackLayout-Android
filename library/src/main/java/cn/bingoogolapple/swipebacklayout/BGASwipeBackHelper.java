@@ -19,6 +19,7 @@ package cn.bingoogolapple.swipebacklayout;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.FloatRange;
 import android.view.View;
 
 /**
@@ -145,6 +146,30 @@ public class BGASwipeBackHelper {
             mSwipeBackLayout.setIsShadowAlphaGradient(isShadowAlphaGradient);
         }
         return this;
+    }
+
+    /**
+     * 设置触发释放后自动滑动返回的阈值，默认值为 0.3f
+     *
+     * @param threshold
+     */
+    public BGASwipeBackHelper setSwipeBackThreshold(@FloatRange(from = 0.0f, to = 1.0f) float threshold) {
+        if (mSwipeBackLayout != null) {
+            mSwipeBackLayout.setSwipeBackThreshold(threshold);
+        }
+        return this;
+    }
+
+    /**
+     * 是否正在滑动
+     *
+     * @return
+     */
+    public boolean isSliding() {
+        if (mSwipeBackLayout != null) {
+            return mSwipeBackLayout.isSliding();
+        }
+        return false;
     }
 
     /**
