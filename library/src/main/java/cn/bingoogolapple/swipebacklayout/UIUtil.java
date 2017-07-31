@@ -26,6 +26,8 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import java.lang.reflect.Method;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com
@@ -33,6 +35,15 @@ import java.lang.reflect.Method;
  * 描述:
  */
 class UIUtil {
+    public static final Set<String> NO_NAVIGATION_BAR_MODEL_SET = new HashSet<>();
+
+    static {
+        NO_NAVIGATION_BAR_MODEL_SET.add("Nexus 4");
+        NO_NAVIGATION_BAR_MODEL_SET.add("H60-L01");
+        NO_NAVIGATION_BAR_MODEL_SET.add("P7-L07");
+        NO_NAVIGATION_BAR_MODEL_SET.add("MT7-UL00");
+    }
+
     private UIUtil() {
     }
 
@@ -61,7 +72,7 @@ class UIUtil {
     public static boolean checkDeviceHasNavigationBar(Activity activity) {
         boolean hasNavigationBar = false;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            if (TextUtils.equals("Nexus 4".toLowerCase().trim(), Build.MODEL.toLowerCase().trim())) {
+            if (NO_NAVIGATION_BAR_MODEL_SET.contains(Build.MODEL)) {
                 hasNavigationBar = false;
             } else {
                 hasNavigationBar = newCheckDeviceHasNavigationBar(activity);
