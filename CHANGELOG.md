@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 1.1.0 *(2017-08-01)*
+----------------------------
+
+* BGASwipeBackManager 增加 ignoreNavigationBarModels 方法，忽略底部出现空白区域的手机对应的 android.Build.MODEL，修复部分手机底部出现出现白色区域
+
 Version 1.0.9 *(2017-08-01)*
 ----------------------------
 
