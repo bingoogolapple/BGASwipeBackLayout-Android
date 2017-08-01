@@ -35,7 +35,7 @@ import java.util.Set;
  * 描述:
  */
 class UIUtil {
-    public static final Set<String> NO_NAVIGATION_BAR_MODEL_SET = new HashSet<>();
+    static final Set<String> NO_NAVIGATION_BAR_MODEL_SET = new HashSet<>();
 
     static {
         NO_NAVIGATION_BAR_MODEL_SET.add("Nexus 4");

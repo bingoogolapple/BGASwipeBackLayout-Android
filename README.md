@@ -13,13 +13,15 @@
 
 必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回
 
-### 3.如果发现某些手机上底部出现空白区域，麻烦打印以下信息新建 [Issue](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/issues/new) 反馈
+### 3.如果发现某些手机底部出现空白区域，麻烦打印以下信息反馈到 [Issue](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/issues/51) 中
 
 ```
 android.Build.VERSION.SDK_INT
 
 android.Build.MODEL
 ```
+
+可以通过 BGASwipeBackManager.ignoreNavigationBarModels(Arrays.asList("底部出现空白区域的手机对应的 android.Build.MODEL")) 来解决
 
 ## 功能介绍
 

@@ -23,6 +23,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
 
+import java.util.Collection;
 import java.util.Stack;
 
 /**
@@ -46,6 +47,17 @@ public class BGASwipeBackManager implements Application.ActivityLifecycleCallbac
      */
     public void init(Application application) {
         application.registerActivityLifecycleCallbacks(this);
+    }
+
+    /**
+     * 忽略底部出现空白区域的手机对应的 android.Build.MODEL
+     *
+     * @param models
+     */
+    public static void ignoreNavigationBarModels(Collection<String> models) {
+        if (models != null && models.size() > 0) {
+            UIUtil.NO_NAVIGATION_BAR_MODEL_SET.addAll(models);
+        }
     }
 
     @Override
