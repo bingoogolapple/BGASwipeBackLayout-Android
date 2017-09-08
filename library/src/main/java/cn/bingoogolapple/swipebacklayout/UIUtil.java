@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -42,6 +41,9 @@ class UIUtil {
         NO_NAVIGATION_BAR_MODEL_SET.add("H60-L01");
         NO_NAVIGATION_BAR_MODEL_SET.add("P7-L07");
         NO_NAVIGATION_BAR_MODEL_SET.add("MT7-UL00");
+        NO_NAVIGATION_BAR_MODEL_SET.add("HUAWEI P7-L07");
+        NO_NAVIGATION_BAR_MODEL_SET.add("OPPO R7s");
+        NO_NAVIGATION_BAR_MODEL_SET.add("Xiaomi HM Note 1S");
     }
 
     private UIUtil() {
