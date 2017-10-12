@@ -10,7 +10,7 @@ import cn.bingoogolapple.swipebacklayout.demo.R;
  * 创建时间:16/12/27 下午5:35
  * 描述:示例项目主界面，改界面不需要支持滑动返回
  * <p>
- * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
+ * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
  */
 public class MainActivity extends BaseActivity {
 

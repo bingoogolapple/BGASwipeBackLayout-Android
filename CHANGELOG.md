@@ -30,7 +30,7 @@ Version 1.0.7 *(2017-01-11)*
 Version 1.0.6 *(2017-01-11)*
 ----------------------------
 
-* 必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回，避免任务栈里只有一个 Activity 时滑动返回看见 Launcher
+* 必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回，避免任务栈里只有一个 Activity 时滑动返回看见 Launcher
 
 Version 1.0.5 *(2017-01-09)*
 ----------------------------
@@ -51,7 +51,7 @@ Version 1.0.3 *(2017-01-04)*
 Version 1.0.2 *(2016-12-29)*
 ----------------------------
 
-* 增加 setIsWeChatStyle 方法，设置是否是微信滑动返回样式，默认值为 true「如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this)」
+* 增加 setIsWeChatStyle 方法，设置是否是微信滑动返回样式，默认值为 true「如果需要启用微信滑动返回样式，必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this)」
 * 增加 setShadowResId 方法，设置阴影资源 id，默认值为 R.drawable.bga_swipebacklayout_shadow
 * 增加 setIsShadowAlphaGradient，设置阴影区域的透明度是否根据滑动的距离渐变。默认值为 true
 

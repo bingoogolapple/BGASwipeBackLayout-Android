@@ -357,7 +357,7 @@ public class BGASwipeBackLayout extends ViewGroup {
      * @return
      */
     private boolean isSwipeBackEnable() {
-        return mSwipeBackEnable && BGASwipeBackManager.getInstance().getPenultimateActivity() != null;
+        return mSwipeBackEnable && BGASwipeBackManager.getInstance().isSwipeBackEnable();
     }
     // ======================== 新加的 END ========================
 
@@ -499,7 +499,7 @@ public class BGASwipeBackLayout extends ViewGroup {
     void dispatchOnPanelSlide(View panel) {
         // ======================== 新加的 START ========================
         if (mIsWeChatStyle) {
-            BGASwipeBackManager.onPanelSlide(mSlideOffset);
+            BGASwipeBackManager.onPanelSlide(mActivity, mSlideOffset);
         }
         // ======================== 新加的 END ========================
 
@@ -518,7 +518,7 @@ public class BGASwipeBackLayout extends ViewGroup {
     void dispatchOnPanelClosed(View panel) {
         // ======================== 新加的 START ========================
         if (mIsWeChatStyle) {
-            BGASwipeBackManager.onPanelClosed();
+            BGASwipeBackManager.onPanelClosed(mActivity);
         }
         // ======================== 新加的 END ========================
 

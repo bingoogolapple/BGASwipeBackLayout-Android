@@ -11,7 +11,7 @@ import cn.bingoogolapple.swipebacklayout.demo.R;
  * 创建时间:16/12/28 上午10:10
  * 描述:测试下拉刷新、WebView等
  * <p>
- * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
+ * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
  */
 public class MovieActivity extends BaseActivity {
     private Button mControlBtn;
