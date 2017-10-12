@@ -214,9 +214,10 @@ public class BGASwipeBackLayout extends ViewGroup {
      * 内容视图
      */
     private View mContentView;
-
+    /**
+     * 当前 Activity
+     */
     private Activity mActivity;
-
     /**
      * 触发滑动返回的滑动范围
      */
@@ -226,20 +227,8 @@ public class BGASwipeBackLayout extends ViewGroup {
      */
     private boolean mIsNavigationBarOverlap = false;
     /**
-     * 释放后的自动滑动状态
-     * 无状态,
-     * 向左滑动,
-     * 向右滑动
+     * 是否正在滑动
      */
-    private final static byte MOVE_STATE_NONE = -1;
-    private final static byte MOVE_STATE_LEFT = MOVE_STATE_NONE + 1;
-    private final static byte MOVE_STATE_RIGHT = MOVE_STATE_LEFT + 1;
-    private byte mMoveState = MOVE_STATE_NONE;
-    /**
-     * 记录上一次offset的变化值
-     */
-    private float mLastOffsetDelta;
-
     private boolean mIsSliding;
     //===========================新增END=======================
 
@@ -1036,7 +1025,6 @@ public class BGASwipeBackLayout extends ViewGroup {
 
         switch (action & MotionEventCompat.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN: {
-                mMoveState = MOVE_STATE_LEFT;
                 final float x = ev.getX();
                 final float y = ev.getY();
                 mInitialMotionX = x;
@@ -1045,11 +1033,6 @@ public class BGASwipeBackLayout extends ViewGroup {
             }
 
             case MotionEvent.ACTION_UP: {
-                if (mSlideableView.getLeft() > mSlideRange * mSwipeBackThreshold) {
-                    mMoveState = MOVE_STATE_RIGHT;
-                } else {
-                    mMoveState = MOVE_STATE_LEFT;
-                }
                 if (isDimmed(mSlideableView)) {
                     final float x = ev.getX();
                     final float y = ev.getY();
@@ -1065,18 +1048,6 @@ public class BGASwipeBackLayout extends ViewGroup {
                 }
                 break;
             }
-
-            case MotionEvent.ACTION_CANCEL: {
-                if (mSlideableView.getLeft() > mSlideRange * mSwipeBackThreshold) {
-                    mMoveState = MOVE_STATE_RIGHT;
-                } else {
-                    mMoveState = MOVE_STATE_LEFT;
-                }
-                break;
-            }
-
-            default:
-                break;
         }
 
         return wantTouchEvents;
@@ -1179,21 +1150,7 @@ public class BGASwipeBackLayout extends ViewGroup {
         final int lpMargin = isLayoutRtl ? lp.rightMargin : lp.leftMargin;
         final int startBound = paddingStart + lpMargin;
 
-        float lastSlideOffset = mSlideOffset;
         mSlideOffset = (float) (newStart - startBound) / mSlideRange;
-        float curOffsetDelta = mSlideOffset - lastSlideOffset;
-        if (mMoveState == MOVE_STATE_RIGHT) {
-            if (curOffsetDelta < mLastOffsetDelta) {
-                curOffsetDelta = mLastOffsetDelta;
-                mSlideOffset = lastSlideOffset + curOffsetDelta;
-                mSlideOffset += 0.05f;
-                if (mSlideOffset > 1.0f) {
-                    mSlideOffset = 1.0f;
-                }
-            } else {
-                mLastOffsetDelta = curOffsetDelta;
-            }
-        }
 
         if (mParallaxBy != 0) {
             parallaxOtherViews(mSlideOffset);
