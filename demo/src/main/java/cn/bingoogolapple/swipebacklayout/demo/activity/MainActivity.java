@@ -65,6 +65,10 @@ public class MainActivity extends BaseActivity {
         mSwipeBackHelper.forward(EditTextActivity.class);
     }
 
+    public void testNavigationBarOverlap(View v) {
+        mSwipeBackHelper.forward(MovieActivity.class);
+    }
+
     @Override
     public void onBackPressed() {
         finish();

@@ -161,6 +161,18 @@ public class BGASwipeBackHelper {
     }
 
     /**
+     * 设置底部导航条是否悬浮在内容上
+     *
+     * @param overlap
+     */
+    public BGASwipeBackHelper setIsNavigationBarOverlap(boolean overlap) {
+        if (mSwipeBackLayout != null) {
+            mSwipeBackLayout.setIsNavigationBarOverlap(overlap);
+        }
+        return this;
+    }
+
+    /**
      * 是否正在滑动
      *
      * @return

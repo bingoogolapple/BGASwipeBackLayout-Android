@@ -41,6 +41,11 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="AppTheme.Transparent.Fullscreen.Overlap">
+        <!-- 底部导航栏设置成半透明来查看悬浮效果 -->
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">#55cccccc</item>
+    </style>
+
     <style name="Toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>

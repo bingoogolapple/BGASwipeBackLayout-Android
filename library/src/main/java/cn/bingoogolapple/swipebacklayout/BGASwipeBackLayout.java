@@ -222,6 +222,10 @@ public class BGASwipeBackLayout extends ViewGroup {
      */
     private float mSwipeBackThreshold = 0.3f;
     /**
+     * 底部导航条是否悬浮在内容上
+     */
+    private boolean mIsNavigationBarOverlap = false;
+    /**
      * 释放后的自动滑动状态
      * 无状态,
      * 向左滑动,
@@ -318,6 +322,15 @@ public class BGASwipeBackLayout extends ViewGroup {
      */
     public void setSwipeBackThreshold(@FloatRange(from = 0.0f, to = 1.0f) float threshold) {
         mSwipeBackThreshold = threshold;
+    }
+
+    /**
+     * 设置底部导航条是否悬浮在内容上
+     *
+     * @param overlap
+     */
+    public void setIsNavigationBarOverlap(boolean overlap) {
+        mIsNavigationBarOverlap = overlap;
     }
 
     /**
@@ -610,9 +623,13 @@ public class BGASwipeBackLayout extends ViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        // ======================== 新加的 START ========================
+//        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int widthSize = UIUtil.getRealScreenWidth(mActivity);
+//        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        int heightSize = UIUtil.getRealScreenHeight(mActivity);
+        // ======================== 新加的 END ========================
 
         if (widthMode != MeasureSpec.EXACTLY) {
             if (isInEditMode()) {
@@ -655,7 +672,13 @@ public class BGASwipeBackLayout extends ViewGroup {
         }
 
         // ======================== 新加的 START ========================
-        maxLayoutHeight -= UIUtil.getNavigationBarHeight(mActivity);
+        if (!mIsNavigationBarOverlap && UIUtil.isPortrait(mActivity)) {
+            maxLayoutHeight -= UIUtil.getNavigationBarHeight(mActivity);
+        }
+
+        if (mIsNavigationBarOverlap && !UIUtil.isPortrait(mActivity)) {
+            widthSize += UIUtil.getNavigationBarHeight(mActivity);
+        }
         // ======================== 新加的 END ========================
 
         float weightSum = 0;
