@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+Version 1.1.2 *(2017-10-13)*
+----------------------------
+
+* 初始化由「BGASwipeBackManager.getInstance().init(this)」改成「BGASwipeBackHelper.init(this)」
+* 移除 BGASwipeBackManager 的 ignoreNavigationBarModels 方法
+* 支持全屏、横屏
+* 修复滑动释放逻辑错误
+* 修复部分手机底部出现出现白色区域
+
 Version 1.1.1 *(2017-09-07)*
 ----------------------------
 
