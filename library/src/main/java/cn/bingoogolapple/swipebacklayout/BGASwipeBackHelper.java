@@ -17,6 +17,7 @@
 package cn.bingoogolapple.swipebacklayout;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.FloatRange;
@@ -31,6 +32,15 @@ public class BGASwipeBackHelper {
     private Activity mActivity;
     private Delegate mDelegate;
     private BGASwipeBackLayout mSwipeBackLayout;
+
+    /**
+     * 必须在 Application 的 onCreate 方法中调用
+     *
+     * @param application
+     */
+    public static void init(Application application) {
+        BGASwipeBackManager.getInstance().init(application);
+    }
 
     public BGASwipeBackHelper(Activity activity, Delegate delegate) {
         mActivity = activity;
@@ -156,6 +166,18 @@ public class BGASwipeBackHelper {
     public BGASwipeBackHelper setSwipeBackThreshold(@FloatRange(from = 0.0f, to = 1.0f) float threshold) {
         if (mSwipeBackLayout != null) {
             mSwipeBackLayout.setSwipeBackThreshold(threshold);
+        }
+        return this;
+    }
+
+    /**
+     * 设置底部导航条是否悬浮在内容上
+     *
+     * @param overlap
+     */
+    public BGASwipeBackHelper setIsNavigationBarOverlap(boolean overlap) {
+        if (mSwipeBackLayout != null) {
+            mSwipeBackLayout.setIsNavigationBarOverlap(overlap);
         }
         return this;
     }

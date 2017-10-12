@@ -23,7 +23,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
 
-import java.util.Collection;
 import java.util.Stack;
 
 /**
@@ -31,7 +30,7 @@ import java.util.Stack;
  * 创建时间:16/12/28 下午11:42
  * 描述:
  */
-public class BGASwipeBackManager implements Application.ActivityLifecycleCallbacks {
+class BGASwipeBackManager implements Application.ActivityLifecycleCallbacks {
     private static final BGASwipeBackManager sInstance = new BGASwipeBackManager();
     private Stack<Activity> mActivityStack = new Stack<>();
 
@@ -42,22 +41,8 @@ public class BGASwipeBackManager implements Application.ActivityLifecycleCallbac
     private BGASwipeBackManager() {
     }
 
-    /**
-     * 必须在 Application 的 onCreate 方法中调用
-     */
     public void init(Application application) {
         application.registerActivityLifecycleCallbacks(this);
-    }
-
-    /**
-     * 忽略底部出现空白区域的手机对应的 android.Build.MODEL
-     *
-     * @param models
-     */
-    public static void ignoreNavigationBarModels(Collection<String> models) {
-        if (models != null && models.size() > 0) {
-            UIUtil.NO_NAVIGATION_BAR_MODEL_SET.addAll(models);
-        }
     }
 
     @Override
@@ -96,20 +81,34 @@ public class BGASwipeBackManager implements Application.ActivityLifecycleCallbac
      * @return
      */
     @Nullable
-    public Activity getPenultimateActivity() {
+    public Activity getPenultimateActivity(Activity currentActivity) {
         Activity activity = null;
         try {
             if (mActivityStack.size() > 1) {
                 activity = mActivityStack.get(mActivityStack.size() - 2);
+
+                // 处理屏幕旋转后 mActivityStack 中顺序错乱
+                if (currentActivity.equals(activity)) {
+                    activity = mActivityStack.lastElement();
+                }
             }
         } catch (Exception e) {
         }
         return activity;
     }
 
-    public static void onPanelSlide(float slideOffset) {
+    /**
+     * 滑动返回是否可用
+     *
+     * @return
+     */
+    public boolean isSwipeBackEnable() {
+        return mActivityStack.size() > 1;
+    }
+
+    public static void onPanelSlide(Activity currentActivity, float slideOffset) {
         try {
-            Activity activity = getInstance().getPenultimateActivity();
+            Activity activity = getInstance().getPenultimateActivity(currentActivity);
             if (activity != null) {
                 View decorView = activity.getWindow().getDecorView();
                 ViewCompat.setTranslationX(decorView, -(decorView.getMeasuredWidth() / 3.0f) * (1 - slideOffset));
@@ -118,9 +117,9 @@ public class BGASwipeBackManager implements Application.ActivityLifecycleCallbac
         }
     }
 
-    public static void onPanelClosed() {
+    public static void onPanelClosed(Activity currentActivity) {
         try {
-            Activity activity = getInstance().getPenultimateActivity();
+            Activity activity = getInstance().getPenultimateActivity(currentActivity);
             if (activity != null) {
                 View decorView = activity.getWindow().getDecorView();
                 ViewCompat.setTranslationX(decorView, 0);

@@ -214,28 +214,21 @@ public class BGASwipeBackLayout extends ViewGroup {
      * 内容视图
      */
     private View mContentView;
-
+    /**
+     * 当前 Activity
+     */
     private Activity mActivity;
-
     /**
      * 触发滑动返回的滑动范围
      */
     private float mSwipeBackThreshold = 0.3f;
     /**
-     * 释放后的自动滑动状态
-     * 无状态,
-     * 向左滑动,
-     * 向右滑动
+     * 底部导航条是否悬浮在内容上
      */
-    private final static byte MOVE_STATE_NONE = -1;
-    private final static byte MOVE_STATE_LEFT = MOVE_STATE_NONE + 1;
-    private final static byte MOVE_STATE_RIGHT = MOVE_STATE_LEFT + 1;
-    private byte mMoveState = MOVE_STATE_NONE;
+    private boolean mIsNavigationBarOverlap = false;
     /**
-     * 记录上一次offset的变化值
+     * 是否正在滑动
      */
-    private float mLastOffsetDelta;
-
     private boolean mIsSliding;
     //===========================新增END=======================
 
@@ -321,6 +314,15 @@ public class BGASwipeBackLayout extends ViewGroup {
     }
 
     /**
+     * 设置底部导航条是否悬浮在内容上
+     *
+     * @param overlap
+     */
+    public void setIsNavigationBarOverlap(boolean overlap) {
+        mIsNavigationBarOverlap = overlap;
+    }
+
+    /**
      * 是否正在滑动
      *
      * @return
@@ -344,7 +346,7 @@ public class BGASwipeBackLayout extends ViewGroup {
      * @return
      */
     private boolean isSwipeBackEnable() {
-        return mSwipeBackEnable && BGASwipeBackManager.getInstance().getPenultimateActivity() != null;
+        return mSwipeBackEnable && BGASwipeBackManager.getInstance().isSwipeBackEnable();
     }
     // ======================== 新加的 END ========================
 
@@ -486,7 +488,7 @@ public class BGASwipeBackLayout extends ViewGroup {
     void dispatchOnPanelSlide(View panel) {
         // ======================== 新加的 START ========================
         if (mIsWeChatStyle) {
-            BGASwipeBackManager.onPanelSlide(mSlideOffset);
+            BGASwipeBackManager.onPanelSlide(mActivity, mSlideOffset);
         }
         // ======================== 新加的 END ========================
 
@@ -505,7 +507,7 @@ public class BGASwipeBackLayout extends ViewGroup {
     void dispatchOnPanelClosed(View panel) {
         // ======================== 新加的 START ========================
         if (mIsWeChatStyle) {
-            BGASwipeBackManager.onPanelClosed();
+            BGASwipeBackManager.onPanelClosed(mActivity);
         }
         // ======================== 新加的 END ========================
 
@@ -610,9 +612,13 @@ public class BGASwipeBackLayout extends ViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        // ======================== 新加的 START ========================
+//        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int widthSize = UIUtil.getRealScreenWidth(mActivity);
+//        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        int heightSize = UIUtil.getRealScreenHeight(mActivity);
+        // ======================== 新加的 END ========================
 
         if (widthMode != MeasureSpec.EXACTLY) {
             if (isInEditMode()) {
@@ -655,7 +661,13 @@ public class BGASwipeBackLayout extends ViewGroup {
         }
 
         // ======================== 新加的 START ========================
-        maxLayoutHeight -= UIUtil.getNavigationBarHeight(mActivity);
+        if (!mIsNavigationBarOverlap && UIUtil.isPortrait(mActivity)) {
+            maxLayoutHeight -= UIUtil.getNavigationBarHeight(mActivity);
+        }
+
+        if (mIsNavigationBarOverlap && !UIUtil.isPortrait(mActivity)) {
+            widthSize += UIUtil.getNavigationBarHeight(mActivity);
+        }
         // ======================== 新加的 END ========================
 
         float weightSum = 0;
@@ -1013,7 +1025,6 @@ public class BGASwipeBackLayout extends ViewGroup {
 
         switch (action & MotionEventCompat.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN: {
-                mMoveState = MOVE_STATE_LEFT;
                 final float x = ev.getX();
                 final float y = ev.getY();
                 mInitialMotionX = x;
@@ -1022,11 +1033,6 @@ public class BGASwipeBackLayout extends ViewGroup {
             }
 
             case MotionEvent.ACTION_UP: {
-                if (mSlideableView.getLeft() > mSlideRange * mSwipeBackThreshold) {
-                    mMoveState = MOVE_STATE_RIGHT;
-                } else {
-                    mMoveState = MOVE_STATE_LEFT;
-                }
                 if (isDimmed(mSlideableView)) {
                     final float x = ev.getX();
                     final float y = ev.getY();
@@ -1042,18 +1048,6 @@ public class BGASwipeBackLayout extends ViewGroup {
                 }
                 break;
             }
-
-            case MotionEvent.ACTION_CANCEL: {
-                if (mSlideableView.getLeft() > mSlideRange * mSwipeBackThreshold) {
-                    mMoveState = MOVE_STATE_RIGHT;
-                } else {
-                    mMoveState = MOVE_STATE_LEFT;
-                }
-                break;
-            }
-
-            default:
-                break;
         }
 
         return wantTouchEvents;
@@ -1156,21 +1150,7 @@ public class BGASwipeBackLayout extends ViewGroup {
         final int lpMargin = isLayoutRtl ? lp.rightMargin : lp.leftMargin;
         final int startBound = paddingStart + lpMargin;
 
-        float lastSlideOffset = mSlideOffset;
         mSlideOffset = (float) (newStart - startBound) / mSlideRange;
-        float curOffsetDelta = mSlideOffset - lastSlideOffset;
-        if (mMoveState == MOVE_STATE_RIGHT) {
-            if (curOffsetDelta < mLastOffsetDelta) {
-                curOffsetDelta = mLastOffsetDelta;
-                mSlideOffset = lastSlideOffset + curOffsetDelta;
-                mSlideOffset += 0.05f;
-                if (mSlideOffset > 1.0f) {
-                    mSlideOffset = 1.0f;
-                }
-            } else {
-                mLastOffsetDelta = curOffsetDelta;
-            }
-        }
 
         if (mParallaxBy != 0) {
             parallaxOtherViews(mSlideOffset);

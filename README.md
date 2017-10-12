@@ -11,17 +11,7 @@
 
 ### 2.滑动返回不生效
 
-必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回
-
-### 3.如果发现某些手机底部出现空白区域，麻烦打印以下信息反馈到 [Issue](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/issues/51) 中
-
-```
-android.Build.VERSION.SDK_INT
-
-android.Build.MODEL
-```
-
-可以通过 BGASwipeBackManager.ignoreNavigationBarModels(Arrays.asList("底部出现空白区域的手机对应的 android.Build.MODEL")) 来解决
+必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回
 
 ## 功能介绍
 
@@ -30,6 +20,7 @@ android.Build.MODEL
 - [x] 动态设置是否仅仅跟踪左侧边缘的滑动返回
 - [x] 动态设置是否是微信滑动返回样式
 - [x] 动态设置是否显示滑动返回的阴影效果
+- [x] 支持全屏、横屏和竖屏
 
 ## 效果图与示例 apk
 
@@ -57,7 +48,7 @@ dependencies {
 }
 ```
 
-### 2.必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回
+### 2.必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回
 
 ```java
 public class App extends Application {
@@ -66,8 +57,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        // 必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回
-        BGASwipeBackManager.getInstance().init(this);
+        // 必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回
+        BGASwipeBackHelper.init(this);
     }
 }
 ```
@@ -104,7 +95,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
+        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
         // 在 super.onCreate(savedInstanceState) 之前调用该方法
         initSwipeBackFinish();
         super.onCreate(savedInstanceState);
@@ -116,7 +107,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
     private void initSwipeBackFinish() {
         mSwipeBackHelper = new BGASwipeBackHelper(this, this);
 
-        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
+        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
         // 下面几项可以不配置，这里只是为了讲述接口用法。
 
         // 设置滑动返回是否可用。默认值为 true
@@ -133,6 +124,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
         mSwipeBackHelper.setIsShadowAlphaGradient(true);
         // 设置触发释放后自动滑动返回的阈值，默认值为 0.3f
         mSwipeBackHelper.setSwipeBackThreshold(0.3f);
+        // 设置底部导航条是否悬浮在内容上，默认值为 false
+        mSwipeBackHelper.setIsNavigationBarOverlap(false);
     }
 
     /**

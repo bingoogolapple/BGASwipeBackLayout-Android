@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/MatchMatch.Vertical"
     android:background="@android:color/white">
 
-    <include layout="@layout/inc_toolbar"/>
+    <include layout="@layout/inc_toolbar" />
 
-    <Button
-        style="@style/DemoBtn"
-        android:onClick="testSwipeBack"
-        android:text="测试滑动返回"/>
+    <ScrollView style="@style/MatchMatch">
 
-    <Button
-        style="@style/DemoBtn"
-        android:onClick="testSwipeDelete"
-        android:text="测试滑动删除"/>
+        <LinearLayout style="@style/MatchMatch.Vertical">
 
-    <Button
-        style="@style/DemoBtn"
-        android:onClick="testTranslucent"
-        android:text="TestTranslucent"/>
+            <Button
+                style="@style/DemoBtn"
+                android:onClick="testSwipeBack"
+                android:text="测试滑动返回" />
 
-    <Button
-        style="@style/DemoBtn"
-        android:onClick="testPullRefreshAndWebView"
-        android:text="测试下拉刷新和 WebView"/>
+            <Button
+                style="@style/DemoBtn"
+                android:onClick="testSwipeDelete"
+                android:text="测试滑动删除" />
 
-    <Button
-        style="@style/DemoBtn"
-        android:onClick="testRecyclerView"
-        android:text="测试 RecyclerView"/>
+            <Button
+                style="@style/DemoBtn"
+                android:onClick="testTranslucent"
+                android:text="TestTranslucent" />
 
-    <Button
-        style="@style/DemoBtn"
-        android:onClick="testEditText"
-        android:text="测试 EditText 位于底部的情况"/>
+            <Button
+                style="@style/DemoBtn"
+                android:onClick="testPullRefreshAndWebView"
+                android:text="测试下拉刷新和 WebView" />
+
+            <Button
+                style="@style/DemoBtn"
+                android:onClick="testRecyclerView"
+                android:text="测试 RecyclerView" />
+
+            <Button
+                style="@style/DemoBtn"
+                android:onClick="testEditText"
+                android:text="测试 EditText 位于底部的情况" />
+
+            <Button
+                style="@style/DemoBtn"
+                android:onClick="testNavigationBarOverlap"
+                android:text="测试底部导航条是否悬浮在内容上" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -21,7 +21,7 @@ import cn.bingoogolapple.swipebacklayout.demo.widget.IndexView;
  * 创建时间:17/1/11 下午5:08
  * 描述:测试与 RecyclerView 一起使用
  * <p>
- * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回」
+ * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
  */
 public class RecyclerIndexActivity extends BaseActivity implements BGAOnRVItemClickListener {
     private RecyclerIndexAdapter mAdapter;
