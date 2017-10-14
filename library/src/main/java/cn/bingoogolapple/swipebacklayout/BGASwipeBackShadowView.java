@@ -124,11 +124,7 @@ class BGASwipeBackShadowView extends FrameLayout {
                 mPreDecorView.removeView(mPreContentView);
 
                 addView(mPreContentView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-            } else {
-                Log.d(TAG, "preActivity 为空");
             }
-        } else {
-            Log.d(TAG, "mPreActivity 不为空");
         }
     }
 
@@ -157,32 +153,55 @@ class BGASwipeBackShadowView extends FrameLayout {
     }
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(final Canvas canvas) {
         super.dispatchDraw(canvas);
         if (mIsTranslucent) {
             return;
         }
 
         if (mPreContentView == null && mPreDecorView != null) {
-            // TODO 处理部分 View 多次 draw 时会卡死
+            // TODO 处理部分 View 调用 draw 后立即手指触摸界面会卡死
+//            if (containsProblemView(mPreDecorView)) {
+//                dispatchDrawProblemView(canvas, mPreDecorView);
+//            } else {
+//                mPreDecorView.draw(canvas);
+//            }
+
             mPreDecorView.draw(canvas);
         }
     }
 
-    private boolean isNeedDraw(ViewGroup viewGroup) {
+    private void dispatchDrawProblemView(Canvas canvas, ViewGroup viewGroup) {
+        int count = viewGroup.getChildCount();
+        View childView;
+        for (int i = 0; i < count; i++) {
+            childView = viewGroup.getChildAt(i);
+            if (isNeedIgnore(childView)) {
+                Log.d(TAG, "忽略" + childView.getClass().getSimpleName());
+                continue;
+            } else if (childView instanceof ViewGroup && containsProblemView((ViewGroup) childView)) {
+                dispatchDrawProblemView(canvas, (ViewGroup) childView);
+            } else {
+                childView.draw(canvas);
+                Log.d(TAG, "没忽略" + childView.getClass().getSimpleName());
+            }
+        }
+    }
+
+    private boolean containsProblemView(ViewGroup viewGroup) {
         int childCount = viewGroup.getChildCount();
         View childView;
         for (int i = 0; i < childCount; i++) {
             childView = viewGroup.getChildAt(i);
             if (isNeedIgnore(childView)) {
-                return false;
+                return true;
             } else if (childView instanceof ViewGroup) {
-                if (!isNeedDraw((ViewGroup) childView)) {
-                    return false;
+                if (containsProblemView((ViewGroup) childView)) {
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
     private boolean isNeedIgnore(View view) {
