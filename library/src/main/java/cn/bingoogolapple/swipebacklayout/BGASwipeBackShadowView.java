@@ -1,16 +1,17 @@
 package cn.bingoogolapple.swipebacklayout;
 
 import android.app.Activity;
+import android.graphics.Canvas;
 import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Field;
 
 /**
  * 作者:王浩 邮件:wanghao76@meituan.com
@@ -18,6 +19,7 @@ import java.lang.reflect.Field;
  * 描述:左侧阴影控件
  */
 class BGASwipeBackShadowView extends FrameLayout {
+    private static final String TAG = BGASwipeBackShadowView.class.getSimpleName();
     private Activity mActivity;
     private WeakReference<Activity> mPreActivity;
     private ViewGroup mPreDecorView;
@@ -26,7 +28,7 @@ class BGASwipeBackShadowView extends FrameLayout {
     /**
      * 是否使用透明模式
      */
-    private boolean mIsTranslucent;
+    private boolean mIsTranslucent = true;
     /**
      * 是否显示滑动返回的阴影效果
      */
@@ -122,7 +124,11 @@ class BGASwipeBackShadowView extends FrameLayout {
                 mPreDecorView.removeView(mPreContentView);
 
                 addView(mPreContentView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            } else {
+                Log.d(TAG, "preActivity 为空");
             }
+        } else {
+            Log.d(TAG, "mPreActivity 不为空");
         }
     }
 
@@ -141,8 +147,6 @@ class BGASwipeBackShadowView extends FrameLayout {
         }
 
         if (mPreDecorView != null && mPreContentView != null) {
-            fixTwinkle();
-
             removeView(mPreContentView);
             mPreDecorView.addView(mPreContentView, 0);
 
@@ -152,22 +156,43 @@ class BGASwipeBackShadowView extends FrameLayout {
         }
     }
 
-    /**
-     * 修复滑动返回后闪屏
-     * TODO 还有问题，ClassLoader 无法加载 com.android.internal.policy.PhoneWindow
-     */
-    private void fixTwinkle() {
-        try {
-            Window window = mActivity.getWindow();
-            Class phoneWindowClass = Class.forName("com.android.internal.policy.PhoneWindow");
-            Field isTranslucentField = phoneWindowClass.getDeclaredField("mIsTranslucent");
-            isTranslucentField.setAccessible(true);
-            isTranslucentField.setBoolean(window, true);
-            Log.d("BGA", "动态设置 mIsTranslucent 成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("BGA", "动态设置 mIsTranslucent 失败");
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+        if (mIsTranslucent) {
+            return;
         }
+
+        if (mPreContentView == null && mPreDecorView != null) {
+            // TODO 处理部分 View 多次 draw 时会卡死
+            mPreDecorView.draw(canvas);
+        }
+    }
+
+    private boolean isNeedDraw(ViewGroup viewGroup) {
+        int childCount = viewGroup.getChildCount();
+        View childView;
+        for (int i = 0; i < childCount; i++) {
+            childView = viewGroup.getChildAt(i);
+            if (isNeedIgnore(childView)) {
+                return false;
+            } else if (childView instanceof ViewGroup) {
+                if (!isNeedDraw((ViewGroup) childView)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isNeedIgnore(View view) {
+        if (view instanceof WebView) {
+            return true;
+        }
+        if (view instanceof SurfaceView) {
+            return true;
+        }
+        return false;
     }
 
     void setShadowAlpha(float alpha) {
@@ -202,5 +227,6 @@ class BGASwipeBackShadowView extends FrameLayout {
         } else if (mPreContentView != null) {
             ViewCompat.setTranslationX(mPreContentView, 0);
         }
+        unBindPreActivity();
     }
 }

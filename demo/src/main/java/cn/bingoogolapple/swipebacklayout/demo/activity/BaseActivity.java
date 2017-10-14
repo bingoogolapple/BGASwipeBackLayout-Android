@@ -33,6 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
         // 在 super.onCreate(savedInstanceState) 之前调用该方法
         initSwipeBackFinish();
         super.onCreate(savedInstanceState);
+        Log.d(this.getClass().getSimpleName(), "onCreate");
 
 
         initView(savedInstanceState);
@@ -177,8 +178,14 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(this.getClass().getSimpleName(), "onDestroy");
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
-        Log.i(this.getClass().getSimpleName(), "onStop " + this.getClass().getSimpleName());
+        Log.i(this.getClass().getSimpleName(), "onStop");
     }
 }

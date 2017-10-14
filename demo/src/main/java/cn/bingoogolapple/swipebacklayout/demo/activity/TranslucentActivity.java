@@ -61,6 +61,9 @@ public class TranslucentActivity extends BaseActivity {
             @Override
             public void onRVItemClick(ViewGroup parent, View itemView, int position) {
                 Toast.makeText(parent.getContext(), "点击了条目 " + (position + 1), Toast.LENGTH_SHORT).show();
+                if (position == 0) {
+                    mSwipeBackHelper.forward(RecyclerIndexActivity.class);
+                }
             }
         });
         mContentAdapter.setOnRVItemLongClickListener(new BGAOnRVItemLongClickListener() {
@@ -71,6 +74,7 @@ public class TranslucentActivity extends BaseActivity {
             }
         });
         List<String> data = new ArrayList<>();
+        data.add("RecyclerIndex");
         for (int i = 1; i < 21; i++) {
             data.add("标题" + i);
         }

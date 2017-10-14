@@ -17,13 +17,17 @@
 
     <style name="AppTheme.SwipeBack">
         <!-- 测试透明主题模式 START -->
-        <!--<item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>-->
+        <!--
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        -->
         <!-- 测试透明主题模式 END -->
 
         <!-- 测试全屏 START -->
-        <!--<item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>-->
+        <!--
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        -->
         <!-- 测试全屏 END -->
     </style>
 
@@ -42,7 +46,7 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <!-- 底部导航栏设置成半透明来查看悬浮效果 -->
-        <!--<item name="android:navigationBarColor" tools:targetApi="lollipop">#55cccccc</item>-->
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">#55cccccc</item>
     </style>
 
     <style name="Toolbar">
