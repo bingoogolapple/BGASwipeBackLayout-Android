@@ -35,6 +35,7 @@ import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.FloatRange;
+import android.support.annotation.StyleRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.os.ParcelableCompat;
 import android.support.v4.os.ParcelableCompatCreatorCallbacks;
@@ -191,25 +192,9 @@ public class BGASwipeBackLayout extends ViewGroup {
      */
     private boolean mIsOnlyTrackingLeftEdge = true;
     /**
-     * 是否是微信滑动返回样式
-     */
-    private boolean mIsWeChatStyle = true;
-    /**
-     * 是否显示滑动返回的阴影效果
-     */
-    private boolean mIsNeedShowShadow = true;
-    /**
-     * 阴影区域的透明度是否根据滑动的距离渐变
-     */
-    private boolean mIsShadowAlphaGradient = true;
-    /**
-     * 阴影资源 id
-     */
-    private int mShadowResId = R.drawable.bga_sbl_shadow;
-    /**
      * 滑动返回时的阴影视图
      */
-    private View mShadowView;
+    private BGASwipeBackShadowView mShadowView;
     /**
      * 内容视图
      */
@@ -236,14 +221,15 @@ public class BGASwipeBackLayout extends ViewGroup {
      * 将该滑动返回控件添加到 Activity 上
      *
      * @param activity
+     * @param isTranslucent
      */
-    public void attachToActivity(Activity activity) {
+    void attachToActivity(Activity activity, boolean isTranslucent) {
         mActivity = activity;
 
         setSliderFadeColor(Color.TRANSPARENT);
 
-        mShadowView = new View(activity);
-        setIsNeedShowShadow(mIsNeedShowShadow);
+        mShadowView = new BGASwipeBackShadowView(activity, isTranslucent);
+
         addView(mShadowView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
@@ -258,7 +244,7 @@ public class BGASwipeBackLayout extends ViewGroup {
      *
      * @param swipeBackEnable
      */
-    public void setSwipeBackEnable(boolean swipeBackEnable) {
+    void setSwipeBackEnable(boolean swipeBackEnable) {
         mSwipeBackEnable = swipeBackEnable;
     }
 
@@ -267,41 +253,15 @@ public class BGASwipeBackLayout extends ViewGroup {
      *
      * @param isOnlyTrackingLeftEdge
      */
-    public void setIsOnlyTrackingLeftEdge(boolean isOnlyTrackingLeftEdge) {
+    void setIsOnlyTrackingLeftEdge(boolean isOnlyTrackingLeftEdge) {
         mIsOnlyTrackingLeftEdge = isOnlyTrackingLeftEdge;
     }
 
     /**
-     * 设置是否是微信滑动返回样式。默认值为 true
+     * 设置是否是微信滑动返回样式
      */
-    public void setIsWeChatStyle(boolean isWeChatStyle) {
-        mIsWeChatStyle = isWeChatStyle;
-    }
-
-    /**
-     * 设置阴影资源 id。默认值为 R.drawable.bga_sbl_shadow
-     *
-     * @param shadowResId
-     */
-    public void setShadowResId(@DrawableRes int shadowResId) {
-        mShadowResId = shadowResId;
-        setIsNeedShowShadow(mIsNeedShowShadow);
-    }
-
-    /**
-     * 设置是否显示滑动返回的阴影效果。默认值为 true
-     *
-     * @param isNeedShowShadow
-     */
-    public void setIsNeedShowShadow(boolean isNeedShowShadow) {
-        mIsNeedShowShadow = isNeedShowShadow;
-        if (mShadowView != null) {
-            if (mIsNeedShowShadow) {
-                mShadowView.setBackgroundResource(mShadowResId);
-            } else {
-                mShadowView.setBackgroundResource(android.R.color.transparent);
-            }
-        }
+    void setIsWeChatStyle(boolean isWeChatStyle) {
+        mShadowView.setIsWeChatStyle(isWeChatStyle);
     }
 
     /**
@@ -309,7 +269,7 @@ public class BGASwipeBackLayout extends ViewGroup {
      *
      * @param threshold 触发释放后自动滑动返回的阈值
      */
-    public void setSwipeBackThreshold(@FloatRange(from = 0.0f, to = 1.0f) float threshold) {
+    void setSwipeBackThreshold(@FloatRange(from = 0.0f, to = 1.0f) float threshold) {
         mSwipeBackThreshold = threshold;
     }
 
@@ -318,7 +278,7 @@ public class BGASwipeBackLayout extends ViewGroup {
      *
      * @param overlap
      */
-    public void setIsNavigationBarOverlap(boolean overlap) {
+    void setIsNavigationBarOverlap(boolean overlap) {
         mIsNavigationBarOverlap = overlap;
     }
 
@@ -327,17 +287,8 @@ public class BGASwipeBackLayout extends ViewGroup {
      *
      * @return
      */
-    public boolean isSliding() {
+    boolean isSliding() {
         return this.mIsSliding;
-    }
-
-    /**
-     * 设置阴影区域的透明度是否根据滑动的距离渐变。默认值为 true
-     *
-     * @param isShadowAlphaGradient
-     */
-    public void setIsShadowAlphaGradient(boolean isShadowAlphaGradient) {
-        mIsShadowAlphaGradient = isShadowAlphaGradient;
     }
 
     /**
@@ -347,6 +298,33 @@ public class BGASwipeBackLayout extends ViewGroup {
      */
     private boolean isSwipeBackEnable() {
         return mSwipeBackEnable && BGASwipeBackManager.getInstance().isSwipeBackEnable();
+    }
+
+    /**
+     * 设置阴影资源 id
+     *
+     * @param shadowResId
+     */
+    void setShadowResId(@DrawableRes int shadowResId) {
+        mShadowView.setShadowResId(shadowResId);
+    }
+
+    /**
+     * 设置是否显示滑动返回的阴影效果
+     *
+     * @param isNeedShowShadow
+     */
+    void setIsNeedShowShadow(boolean isNeedShowShadow) {
+        mShadowView.setIsNeedShowShadow(isNeedShowShadow);
+    }
+
+    /**
+     * 设置阴影区域的透明度是否根据滑动的距离渐变
+     *
+     * @param isShadowAlphaGradient
+     */
+    void setIsShadowAlphaGradient(boolean isShadowAlphaGradient) {
+        mShadowView.setIsShadowAlphaGradient(isShadowAlphaGradient);
     }
     // ======================== 新加的 END ========================
 
@@ -487,9 +465,8 @@ public class BGASwipeBackLayout extends ViewGroup {
 
     void dispatchOnPanelSlide(View panel) {
         // ======================== 新加的 START ========================
-        if (mIsWeChatStyle) {
-            BGASwipeBackManager.onPanelSlide(mActivity, mSlideOffset);
-        }
+        mShadowView.setShadowAlpha(1.0f - mSlideOffset);
+        mShadowView.onPanelSlide(mSlideOffset);
         // ======================== 新加的 END ========================
 
         if (mPanelSlideListener != null) {
@@ -497,7 +474,11 @@ public class BGASwipeBackLayout extends ViewGroup {
         }
     }
 
-    void dispatchOnPanelOpened(View panel) {
+    void dispatchOnPanelOpened(final View panel) {
+        // ======================== 新加的 START ========================
+        mShadowView.unBindPreActivity();
+        // ======================== 新加的 END ========================
+
         if (mPanelSlideListener != null) {
             mPanelSlideListener.onPanelOpened(panel);
         }
@@ -506,9 +487,7 @@ public class BGASwipeBackLayout extends ViewGroup {
 
     void dispatchOnPanelClosed(View panel) {
         // ======================== 新加的 START ========================
-        if (mIsWeChatStyle) {
-            BGASwipeBackManager.onPanelClosed(mActivity);
-        }
+        mShadowView.onPanelClosed();
         // ======================== 新加的 END ========================
 
         if (mPanelSlideListener != null) {
@@ -1161,12 +1140,7 @@ public class BGASwipeBackLayout extends ViewGroup {
         }
 
         // ======================== 新加的 START ========================
-        if (mIsNeedShowShadow && mShadowView != null) {
-            if (mIsShadowAlphaGradient) {
-                ViewCompat.setAlpha(mShadowView, 1.0f - mSlideOffset);
-            }
-            ViewCompat.setTranslationX(mShadowView, -mShadowView.getMeasuredWidth() + newLeft);
-        }
+        ViewCompat.setTranslationX(mShadowView, -mShadowView.getMeasuredWidth() + newLeft);
         // ======================== 新加的 END ========================
 
         dispatchOnPanelSlide(mSlideableView);
@@ -1618,6 +1592,7 @@ public class BGASwipeBackLayout extends ViewGroup {
 //            mDragHelper.captureChildView(mSlideableView, pointerId);
 
             if (isSwipeBackEnable()) {
+                mShadowView.bindPreActivity();
                 mDragHelper.captureChildView(mSlideableView, pointerId);
             }
             // ======================== 新加的 END ========================

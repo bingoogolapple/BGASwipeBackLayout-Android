@@ -15,35 +15,34 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!-- 适用于开启滑动返回功能的 Activity -->
-    <style name="AppTheme.Transparent">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
+    <style name="AppTheme.SwipeBack">
+        <!-- 测试透明主题模式 START -->
+        <!--<item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>-->
+        <!-- 测试透明主题模式 END -->
+
+        <!-- 测试全屏 START -->
+        <!--<item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>-->
+        <!-- 测试全屏 END -->
     </style>
 
-    <!-- 适用于欢迎界面避免第一次进来白屏或黑屏 -->
-    <style name="AppTheme.Transparent.Splash">
+    <style name="AppTheme.Splash">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowDisablePreview">true</item>
     </style>
 
-    <style name="AppTheme.Transparent.Splash.Fullscreen">
+    <style name="AppTheme.Splash.Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="AppTheme.Fullscreen">
+    <style name="AppTheme.SwipeBack.FullscreenOverlap">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
-    </style>
-
-    <style name="AppTheme.Transparent.Fullscreen">
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
-
-    <style name="AppTheme.Transparent.Fullscreen.Overlap">
         <!-- 底部导航栏设置成半透明来查看悬浮效果 -->
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">#55cccccc</item>
+        <!--<item name="android:navigationBarColor" tools:targetApi="lollipop">#55cccccc</item>-->
     </style>
 
     <style name="Toolbar">

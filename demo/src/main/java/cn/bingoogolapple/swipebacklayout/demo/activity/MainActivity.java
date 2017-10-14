@@ -37,6 +37,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void processLogic(Bundle savedInstanceState) {
         setSupportActionBar(mToolbar);
+        setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 
     public void testSwipeBack(View v) {

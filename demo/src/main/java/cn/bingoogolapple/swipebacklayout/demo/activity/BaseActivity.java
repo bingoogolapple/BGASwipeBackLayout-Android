@@ -46,7 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
      * 初始化滑动返回。在 super.onCreate(savedInstanceState) 之前调用该方法
      */
     private void initSwipeBackFinish() {
-        mSwipeBackHelper = new BGASwipeBackHelper(this, this);
+        mSwipeBackHelper = new BGASwipeBackHelper(this, this, false);
 
         // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
         // 下面几项可以不配置，这里只是为了讲述接口用法。

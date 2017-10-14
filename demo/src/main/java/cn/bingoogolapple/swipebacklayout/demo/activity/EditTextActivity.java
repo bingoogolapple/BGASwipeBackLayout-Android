@@ -81,6 +81,7 @@ public class EditTextActivity extends BaseActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("测试 EditText 位于底部的情况");
+        setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 
 }

@@ -42,20 +42,25 @@ public class BGASwipeBackHelper {
         BGASwipeBackManager.getInstance().init(application);
     }
 
-    public BGASwipeBackHelper(Activity activity, Delegate delegate) {
+    /**
+     * @param activity
+     * @param delegate
+     * @param isTranslucent 是否使用透明主题模式
+     */
+    public BGASwipeBackHelper(Activity activity, Delegate delegate, boolean isTranslucent) {
         mActivity = activity;
         mDelegate = delegate;
 
-        initSwipeBackFinish();
+        initSwipeBackFinish(isTranslucent);
     }
 
     /**
      * 初始化滑动返回
      */
-    private void initSwipeBackFinish() {
+    private void initSwipeBackFinish(boolean isTranslucent) {
         if (mDelegate.isSupportSwipeBack()) {
             mSwipeBackLayout = new BGASwipeBackLayout(mActivity);
-            mSwipeBackLayout.attachToActivity(mActivity);
+            mSwipeBackLayout.attachToActivity(mActivity, isTranslucent);
             mSwipeBackLayout.setPanelSlideListener(new BGASwipeBackLayout.PanelSlideListener() {
                 @Override
                 public void onPanelSlide(View panel, float slideOffset) {
