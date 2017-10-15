@@ -2,6 +2,8 @@ package cn.bingoogolapple.swipebacklayout.demo;
 
 import android.app.Application;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 
 /**
@@ -18,9 +20,9 @@ public class App extends Application {
         // 必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回
         BGASwipeBackHelper.init(this, null);
 
-//        if (LeakCanary.isInAnalyzerProcess(this)) {
-//            return;
-//        }
-//        LeakCanary.install(this);
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
     }
 }
