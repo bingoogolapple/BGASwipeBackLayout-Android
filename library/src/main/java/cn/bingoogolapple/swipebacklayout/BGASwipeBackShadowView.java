@@ -1,15 +1,16 @@
 package cn.bingoogolapple.swipebacklayout;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewCompat;
-import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import java.lang.ref.WeakReference;
 
@@ -24,6 +25,7 @@ class BGASwipeBackShadowView extends FrameLayout {
     private WeakReference<Activity> mPreActivity;
     private ViewGroup mPreDecorView;
     private View mPreContentView;
+    private ImageView mPreImageView;
     private View mShadowView;
     /**
      * 是否使用透明模式
@@ -120,10 +122,20 @@ class BGASwipeBackShadowView extends FrameLayout {
             if (preActivity != null) {
                 mPreActivity = new WeakReference<>(preActivity);
                 mPreDecorView = (ViewGroup) preActivity.getWindow().getDecorView();
-                mPreContentView = mPreDecorView.getChildAt(0);
-                mPreDecorView.removeView(mPreContentView);
 
-                addView(mPreContentView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                if (containsProblemView(mPreDecorView)) {
+                    if (mPreImageView == null) {
+                        mPreImageView = new ImageView(mActivity);
+                        mPreImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        mPreImageView.setImageBitmap(getBitmap());
+                        addView(mPreImageView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                    }
+                } else {
+                    mPreContentView = mPreDecorView.getChildAt(0);
+                    mPreDecorView.removeView(mPreContentView);
+                    addView(mPreContentView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                }
+
             }
         }
     }
@@ -159,33 +171,25 @@ class BGASwipeBackShadowView extends FrameLayout {
             return;
         }
 
-        if (mPreContentView == null && mPreDecorView != null) {
-            // TODO 处理部分 View 调用 draw 后立即手指触摸界面会卡死
-//            if (containsProblemView(mPreDecorView)) {
-//                dispatchDrawProblemView(canvas, mPreDecorView);
-//            } else {
-//                mPreDecorView.draw(canvas);
-//            }
+        if (mPreImageView != null) {
+            return;
+        }
 
+        // 滑动返回结束后的最后一帧通过 draw 来实现，避免抖动
+        if (mPreContentView == null && mPreDecorView != null) {
             mPreDecorView.draw(canvas);
         }
     }
 
-    private void dispatchDrawProblemView(Canvas canvas, ViewGroup viewGroup) {
-        int count = viewGroup.getChildCount();
-        View childView;
-        for (int i = 0; i < count; i++) {
-            childView = viewGroup.getChildAt(i);
-            if (isNeedIgnore(childView)) {
-                Log.d(TAG, "忽略" + childView.getClass().getSimpleName());
-                continue;
-            } else if (childView instanceof ViewGroup && containsProblemView((ViewGroup) childView)) {
-                dispatchDrawProblemView(canvas, (ViewGroup) childView);
-            } else {
-                childView.draw(canvas);
-                Log.d(TAG, "没忽略" + childView.getClass().getSimpleName());
-            }
-        }
+    private Bitmap getBitmap() {
+        View preContentView = mPreDecorView.getChildAt(0);
+        preContentView.setDrawingCacheEnabled(true);
+        preContentView.buildDrawingCache();
+        Bitmap preContentViewBitmap = preContentView.getDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(preContentViewBitmap, 0, 0, UIUtil.getRealScreenWidth(mActivity), UIUtil.getRealScreenHeight(mActivity) - UIUtil
+                .getNavigationBarHeight(mActivity));
+        preContentView.destroyDrawingCache();
+        return bitmap;
     }
 
     private boolean containsProblemView(ViewGroup viewGroup) {
@@ -233,6 +237,8 @@ class BGASwipeBackShadowView extends FrameLayout {
             BGASwipeBackManager.onPanelSlide(mActivity, slideOffset);
         } else if (mPreContentView != null) {
             ViewCompat.setTranslationX(mPreContentView, (mPreContentView.getMeasuredWidth() / 3.0f) * (1 - slideOffset));
+        } else if (mPreImageView != null) {
+            ViewCompat.setTranslationX(mPreImageView, (mPreImageView.getMeasuredWidth() / 3.0f) * (1 - slideOffset));
         }
     }
 
