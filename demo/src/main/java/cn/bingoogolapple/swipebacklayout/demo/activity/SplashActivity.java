@@ -9,7 +9,7 @@ import cn.bingoogolapple.swipebacklayout.demo.R;
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com
  * 创建时间:17/1/9 上午10:27
- * 描述:「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
+ * 描述:「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回」
  */
 public class SplashActivity extends BaseActivity {
     private TextView mVersionTv;

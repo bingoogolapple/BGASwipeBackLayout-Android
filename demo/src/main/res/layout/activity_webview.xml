@@ -65,11 +65,11 @@
                     android:textSize="14sp"/>
 
                 <TextView
-                    android:id="@+id/praise"
+                    android:id="@+id/to_transparent"
                     style="@style/AutoWrap"
                     android:gravity="center"
                     android:padding="@dimen/size_level1"
-                    android:text="赞"
+                    android:text="TestTranslucent"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"/>
             </LinearLayout>

@@ -22,7 +22,7 @@ import cn.bingoogolapple.swipebacklayout.demo.adapter.ContentAdapter;
  * 创建时间:16/12/28 上午1:06
  * 描述:Test Translucent StatusBar
  * <p>
- * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
+ * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回」
  */
 public class TranslucentActivity extends BaseActivity {
     private ContentAdapter mContentAdapter;
@@ -61,6 +61,9 @@ public class TranslucentActivity extends BaseActivity {
             @Override
             public void onRVItemClick(ViewGroup parent, View itemView, int position) {
                 Toast.makeText(parent.getContext(), "点击了条目 " + (position + 1), Toast.LENGTH_SHORT).show();
+                if (position == 0) {
+                    mSwipeBackHelper.forward(RecyclerIndexActivity.class);
+                }
             }
         });
         mContentAdapter.setOnRVItemLongClickListener(new BGAOnRVItemLongClickListener() {
@@ -71,6 +74,7 @@ public class TranslucentActivity extends BaseActivity {
             }
         });
         List<String> data = new ArrayList<>();
+        data.add("RecyclerIndex");
         for (int i = 1; i < 21; i++) {
             data.add("标题" + i);
         }

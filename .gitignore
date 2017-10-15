@@ -42,4 +42,4 @@ proguard/
 
 *.keystore
 
-captures
+captures/

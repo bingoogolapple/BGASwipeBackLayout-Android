@@ -20,9 +20,13 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewCompat;
+import android.view.SurfaceView;
 import android.view.View;
+import android.webkit.WebView;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -33,6 +37,11 @@ import java.util.Stack;
 class BGASwipeBackManager implements Application.ActivityLifecycleCallbacks {
     private static final BGASwipeBackManager sInstance = new BGASwipeBackManager();
     private Stack<Activity> mActivityStack = new Stack<>();
+    private Set<Class<? extends View>> mProblemViewClassSet = new HashSet<>();
+    /**
+     * 是否使用透明主题模式
+     */
+    private boolean mIsTranslucent = false;
 
     public static BGASwipeBackManager getInstance() {
         return sInstance;
@@ -41,8 +50,15 @@ class BGASwipeBackManager implements Application.ActivityLifecycleCallbacks {
     private BGASwipeBackManager() {
     }
 
-    public void init(Application application) {
+    public void init(Application application, boolean isTranslucent, List<Class<? extends View>> problemViewClassList) {
         application.registerActivityLifecycleCallbacks(this);
+        mIsTranslucent = isTranslucent;
+
+        mProblemViewClassSet.add(WebView.class);
+        mProblemViewClassSet.add(SurfaceView.class);
+        if (problemViewClassList != null) {
+            mProblemViewClassSet.addAll(problemViewClassList);
+        }
     }
 
     @Override
@@ -87,9 +103,15 @@ class BGASwipeBackManager implements Application.ActivityLifecycleCallbacks {
             if (mActivityStack.size() > 1) {
                 activity = mActivityStack.get(mActivityStack.size() - 2);
 
-                // 处理屏幕旋转后 mActivityStack 中顺序错乱
                 if (currentActivity.equals(activity)) {
-                    activity = mActivityStack.lastElement();
+                    int index = mActivityStack.indexOf(currentActivity);
+                    if (index > 0) {
+                        // 处理内存泄漏或最后一个 Activity 正在 finishing 的情况
+                        activity = mActivityStack.get(index - 1);
+                    } else if (mActivityStack.size() == 2) {
+                        // 处理屏幕旋转后 mActivityStack 中顺序错乱
+                        activity = mActivityStack.lastElement();
+                    }
                 }
             }
         } catch (Exception e) {
@@ -106,25 +128,11 @@ class BGASwipeBackManager implements Application.ActivityLifecycleCallbacks {
         return mActivityStack.size() > 1;
     }
 
-    public static void onPanelSlide(Activity currentActivity, float slideOffset) {
-        try {
-            Activity activity = getInstance().getPenultimateActivity(currentActivity);
-            if (activity != null) {
-                View decorView = activity.getWindow().getDecorView();
-                ViewCompat.setTranslationX(decorView, -(decorView.getMeasuredWidth() / 3.0f) * (1 - slideOffset));
-            }
-        } catch (Exception e) {
-        }
+    public boolean isProblemView(View view) {
+        return mProblemViewClassSet.contains(view.getClass());
     }
 
-    public static void onPanelClosed(Activity currentActivity) {
-        try {
-            Activity activity = getInstance().getPenultimateActivity(currentActivity);
-            if (activity != null) {
-                View decorView = activity.getWindow().getDecorView();
-                ViewCompat.setTranslationX(decorView, 0);
-            }
-        } catch (Exception e) {
-        }
+    public boolean isTranslucent() {
+        return mIsTranslucent;
     }
 }

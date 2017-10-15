@@ -5,7 +5,6 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import cn.bingoogolapple.progressbar.BGAProgressBar;
 import cn.bingoogolapple.refreshlayout.BGAMoocStyleRefreshViewHolder;
@@ -17,7 +16,7 @@ import cn.bingoogolapple.swipebacklayout.demo.R;
  * 创建时间:16/12/28 上午10:10
  * 描述:测试下拉刷新、WebView等
  * <p>
- * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
+ * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回」
  */
 public class WebViewActivity extends BaseActivity implements BGARefreshLayout.BGARefreshLayoutDelegate {
     private BGARefreshLayout mRefreshLayout;
@@ -57,7 +56,7 @@ public class WebViewActivity extends BaseActivity implements BGARefreshLayout.BG
         });
         findViewById(R.id.transparent).setOnClickListener(this);
         findViewById(R.id.not_transparent).setOnClickListener(this);
-        findViewById(R.id.praise).setOnClickListener(this);
+        findViewById(R.id.to_transparent).setOnClickListener(this);
     }
 
     @Override
@@ -94,8 +93,8 @@ public class WebViewActivity extends BaseActivity implements BGARefreshLayout.BG
             setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         } else if (v.getId() == R.id.not_transparent) {
             setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark), 0);
-        } else if (v.getId() == R.id.praise) {
-            Toast.makeText(this, "谢谢你的赞", Toast.LENGTH_SHORT).show();
+        } else if (v.getId() == R.id.to_transparent) {
+            mSwipeBackHelper.forward(TranslucentActivity.class);
         }
     }
 
