@@ -22,7 +22,7 @@ import cn.bingoogolapple.swipebacklayout.demo.fragment.ContentFragment;
  * 创建时间:16/12/27 下午5:35
  * 描述:测试滑动返回布局的接口
  * <p>
- * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
+ * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回」
  */
 public class TestActivity extends BaseActivity {
     private TabLayout mTabLayout;

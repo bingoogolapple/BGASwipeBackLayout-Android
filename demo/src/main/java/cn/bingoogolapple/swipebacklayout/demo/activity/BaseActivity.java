@@ -21,7 +21,7 @@ import cn.bingoogolapple.swipebacklayout.demo.R;
  * 创建时间:16/12/27 下午5:35
  * 描述:开发者可将该类中的某些方法拷贝到自己的 BaseActivity 中封装成适合自己项目的滑动返回基类
  * <p>
- * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
+ * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回」
  */
 public abstract class BaseActivity extends AppCompatActivity implements BGASwipeBackHelper.Delegate, View.OnClickListener {
     protected BGASwipeBackHelper mSwipeBackHelper;
@@ -29,7 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
+        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回」
         // 在 super.onCreate(savedInstanceState) 之前调用该方法
         initSwipeBackFinish();
         super.onCreate(savedInstanceState);
@@ -47,9 +47,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
      * 初始化滑动返回。在 super.onCreate(savedInstanceState) 之前调用该方法
      */
     private void initSwipeBackFinish() {
-        mSwipeBackHelper = new BGASwipeBackHelper(this, this, false);
+        mSwipeBackHelper = new BGASwipeBackHelper(this, this);
 
-        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
+        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回」
         // 下面几项可以不配置，这里只是为了讲述接口用法。
 
         // 设置滑动返回是否可用。默认值为 true

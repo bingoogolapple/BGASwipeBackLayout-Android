@@ -25,10 +25,7 @@ class BGASwipeBackShadowView extends FrameLayout {
     private View mPreContentView;
     private ImageView mPreImageView;
     private View mShadowView;
-    /**
-     * 是否使用透明模式
-     */
-    private boolean mIsTranslucent = true;
+
     /**
      * 是否显示滑动返回的阴影效果
      */
@@ -46,10 +43,9 @@ class BGASwipeBackShadowView extends FrameLayout {
      */
     private boolean mIsWeChatStyle = true;
 
-    BGASwipeBackShadowView(Activity activity, boolean isTranslucent) {
+    BGASwipeBackShadowView(Activity activity) {
         super(activity);
         mActivity = activity;
-        mIsTranslucent = isTranslucent;
     }
 
     /**
@@ -89,7 +85,7 @@ class BGASwipeBackShadowView extends FrameLayout {
     }
 
     private void updateShadow() {
-        if (mIsTranslucent) {
+        if (BGASwipeBackManager.getInstance().isTranslucent()) {
             if (mIsNeedShowShadow) {
                 setBackgroundResource(mShadowResId);
             } else {
@@ -111,7 +107,7 @@ class BGASwipeBackShadowView extends FrameLayout {
     }
 
     void bindPreActivity() {
-        if (mIsTranslucent) {
+        if (BGASwipeBackManager.getInstance().isTranslucent()) {
             return;
         }
 
@@ -128,7 +124,7 @@ class BGASwipeBackShadowView extends FrameLayout {
     }
 
     void unBindPreActivity(boolean isNeedAddImageView) {
-        if (mIsTranslucent) {
+        if (BGASwipeBackManager.getInstance().isTranslucent()) {
             return;
         }
 
@@ -161,7 +157,7 @@ class BGASwipeBackShadowView extends FrameLayout {
     @Override
     protected void dispatchDraw(final Canvas canvas) {
         super.dispatchDraw(canvas);
-        if (mIsTranslucent) {
+        if (BGASwipeBackManager.getInstance().isTranslucent()) {
             return;
         }
 
@@ -209,7 +205,7 @@ class BGASwipeBackShadowView extends FrameLayout {
 
     void setShadowAlpha(float alpha) {
         if (mIsNeedShowShadow && mIsShadowAlphaGradient) {
-            if (mIsTranslucent) {
+            if (BGASwipeBackManager.getInstance().isTranslucent()) {
                 ViewCompat.setAlpha(this, alpha);
             } else if (mShadowView != null) {
                 ViewCompat.setAlpha(mShadowView, alpha);
@@ -222,10 +218,21 @@ class BGASwipeBackShadowView extends FrameLayout {
             return;
         }
 
-        if (mIsTranslucent) {
-            BGASwipeBackManager.onPanelSlide(mActivity, slideOffset);
+        if (BGASwipeBackManager.getInstance().isTranslucent()) {
+            onPanelSlide(mActivity, slideOffset);
         } else if (mPreContentView != null) {
             ViewCompat.setTranslationX(mPreContentView, (mPreContentView.getMeasuredWidth() / 3.0f) * (1 - slideOffset));
+        }
+    }
+
+    private void onPanelSlide(Activity currentActivity, float slideOffset) {
+        try {
+            Activity preActivity = BGASwipeBackManager.getInstance().getPenultimateActivity(currentActivity);
+            if (preActivity != null) {
+                View decorView = preActivity.getWindow().getDecorView();
+                ViewCompat.setTranslationX(decorView, -(decorView.getMeasuredWidth() / 3.0f) * (1 - slideOffset));
+            }
+        } catch (Exception e) {
         }
     }
 
@@ -234,11 +241,22 @@ class BGASwipeBackShadowView extends FrameLayout {
             return;
         }
 
-        if (mIsTranslucent) {
-            BGASwipeBackManager.onPanelClosed(mActivity);
+        if (BGASwipeBackManager.getInstance().isTranslucent()) {
+            onPanelClosed(mActivity);
         } else if (mPreContentView != null) {
             ViewCompat.setTranslationX(mPreContentView, 0);
         }
         unBindPreActivity(false);
+    }
+
+    private void onPanelClosed(Activity currentActivity) {
+        try {
+            Activity preActivity = BGASwipeBackManager.getInstance().getPenultimateActivity(currentActivity);
+            if (preActivity != null) {
+                View decorView = preActivity.getWindow().getDecorView();
+                ViewCompat.setTranslationX(decorView, 0);
+            }
+        } catch (Exception e) {
+        }
     }
 }

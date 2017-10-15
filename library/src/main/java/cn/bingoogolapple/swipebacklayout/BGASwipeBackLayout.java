@@ -221,14 +221,13 @@ public class BGASwipeBackLayout extends ViewGroup {
      * 将该滑动返回控件添加到 Activity 上
      *
      * @param activity
-     * @param isTranslucent
      */
-    void attachToActivity(Activity activity, boolean isTranslucent) {
+    void attachToActivity(Activity activity) {
         mActivity = activity;
 
         setSliderFadeColor(Color.TRANSPARENT);
 
-        mShadowView = new BGASwipeBackShadowView(activity, isTranslucent);
+        mShadowView = new BGASwipeBackShadowView(activity);
 
         addView(mShadowView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 

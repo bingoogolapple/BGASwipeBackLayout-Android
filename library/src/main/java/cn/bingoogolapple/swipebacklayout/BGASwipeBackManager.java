@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewCompat;
 import android.view.SurfaceView;
 import android.view.View;
 import android.webkit.WebView;
@@ -39,6 +38,10 @@ class BGASwipeBackManager implements Application.ActivityLifecycleCallbacks {
     private static final BGASwipeBackManager sInstance = new BGASwipeBackManager();
     private Stack<Activity> mActivityStack = new Stack<>();
     private Set<Class<? extends View>> mProblemViewClassSet = new HashSet<>();
+    /**
+     * 是否使用透明主题模式
+     */
+    private boolean mIsTranslucent = false;
 
     public static BGASwipeBackManager getInstance() {
         return sInstance;
@@ -47,8 +50,10 @@ class BGASwipeBackManager implements Application.ActivityLifecycleCallbacks {
     private BGASwipeBackManager() {
     }
 
-    public void init(Application application, List<Class<? extends View>> problemViewClassList) {
+    public void init(Application application, boolean isTranslucent, List<Class<? extends View>> problemViewClassList) {
         application.registerActivityLifecycleCallbacks(this);
+        mIsTranslucent = isTranslucent;
+
         mProblemViewClassSet.add(WebView.class);
         mProblemViewClassSet.add(SurfaceView.class);
         if (problemViewClassList != null) {
@@ -127,25 +132,7 @@ class BGASwipeBackManager implements Application.ActivityLifecycleCallbacks {
         return mProblemViewClassSet.contains(view.getClass());
     }
 
-    public static void onPanelSlide(Activity currentActivity, float slideOffset) {
-        try {
-            Activity activity = getInstance().getPenultimateActivity(currentActivity);
-            if (activity != null) {
-                View decorView = activity.getWindow().getDecorView();
-                ViewCompat.setTranslationX(decorView, -(decorView.getMeasuredWidth() / 3.0f) * (1 - slideOffset));
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    public static void onPanelClosed(Activity currentActivity) {
-        try {
-            Activity activity = getInstance().getPenultimateActivity(currentActivity);
-            if (activity != null) {
-                View decorView = activity.getWindow().getDecorView();
-                ViewCompat.setTranslationX(decorView, 0);
-            }
-        } catch (Exception e) {
-        }
+    public boolean isTranslucent() {
+        return mIsTranslucent;
     }
 }

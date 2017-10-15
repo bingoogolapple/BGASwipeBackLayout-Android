@@ -22,7 +22,7 @@ import cn.bingoogolapple.swipebacklayout.demo.adapter.ContentAdapter;
  * 创建时间:16/12/28 上午1:06
  * 描述:Test Translucent StatusBar
  * <p>
- * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
+ * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回」
  */
 public class TranslucentActivity extends BaseActivity {
     private ContentAdapter mContentAdapter;

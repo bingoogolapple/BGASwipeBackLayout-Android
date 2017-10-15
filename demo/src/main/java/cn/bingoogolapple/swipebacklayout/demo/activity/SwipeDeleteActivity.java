@@ -20,7 +20,7 @@ import cn.bingoogolapple.swipebacklayout.demo.util.DataUtil;
  * 创建时间:17/1/11 上午2:46
  * 描述:测试与滑动删除一起使用
  * <p>
- * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
+ * 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回」
  */
 public class SwipeDeleteActivity extends BaseActivity implements BGAOnRVItemClickListener, BGAOnRVItemLongClickListener, BGAOnItemChildClickListener, BGAOnItemChildLongClickListener {
     private SwipeDeleteAdapter mAdapter;

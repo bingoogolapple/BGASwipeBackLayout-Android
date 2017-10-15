@@ -5,17 +5,18 @@
 
 ## 常见问题与反馈
 
-### 1.滑动返回时看见了 Launcher
+### 1.使用透明主题模式时，滑动返回看见了 Launcher
 
 保证栈底 Activity 的主题是不透明的。例如 demo 中的首个 Activity 是 SplashActivity，进入主界面后 SplashActivity 就销毁了，此时 MainActivity 就是栈底 Activity，需保证 MainActivity 的主题不透明
 
-### 2.滑动返回不生效
+### 2.使用非透明主题模式时，滑动返回结束时立即触摸界面应用程序崩溃
 
-必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回
+把该崩溃界面里比较特殊的 View 的 class 添加到集合中作为「BGASwipeBackHelper.init」的第3个参数，例如地图控件。目前在库中已经添加了 WebView 和 SurfaceView，不用再次添加这两个了
 
 ## 功能介绍
 
 - [x] 通过修改 support-v4 包中 SlidingPaneLayout 的源码来实现滑动返回布局
+- [x] 支持非透明主题滑动返回，不影响 Activity 生命周期
 - [x] 动态设置滑动返回是否可用
 - [x] 动态设置是否仅仅跟踪左侧边缘的滑动返回
 - [x] 动态设置是否是微信滑动返回样式
@@ -48,7 +49,7 @@ dependencies {
 }
 ```
 
-### 2.必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回
+### 2.必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回
 
 ```java
 public class App extends Application {
@@ -57,45 +58,27 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        // 必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回
-        BGASwipeBackHelper.init(this);
+        /**
+         * 必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回
+         * 第一个参数：应用程序上下文
+         * 第二个参数：是否使用透明主题模式，建议传入 false 来使用非透明主题模式
+         * 第三个参数：使用非透明主题时，如果发现滑动返回后立即触摸界面时应用崩溃，请把该界面里比较特殊的 View 的 class 添加到该集合中，目前在库中已经添加了 WebView 和 SurfaceView
+         */
+        BGASwipeBackHelper.init(this, false, null);
     }
 }
 ```
 
-### 3.为需要支持滑动返回的 Activity 设置透明主题 AppTheme.Transparent
-
-```xml
-<!-- 这里面的内容改成你自己项目里的 -->
-<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-    <!--colorPrimaryDark对应状态栏的颜色-->
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <!--colorPrimary对应ActionBar的颜色-->
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <!-- 底部导航栏的颜色 -->
-    <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigationBarColor</item>
-    <item name="android:windowBackground">@color/windowBackground</item>
-    <!--colorAccent 对应EditText编辑时、RadioButton选中、CheckBox等选中时的颜色-->
-    <item name="colorAccent">@color/colorAccent</item>
-</style>
-
-<!-- 用于开启滑动返回功能的 Activity -->
-<style name="AppTheme.Transparent">
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:windowIsTranslucent">true</item>
-</style>
-```
-
-### 4.将下面的代码拷贝到你自己的 BaseActivity 中，建议参考 demo 里的这个 [BaseActivity](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/blob/master/demo/src/main/java/cn/bingoogolapple/swipebacklayout/demo/activity/BaseActivity.java) 来设置界面跳转动画
+### 3.将下面的代码拷贝到你自己的 BaseActivity 中，建议参考 demo 里的这个 [BaseActivity](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/blob/master/demo/src/main/java/cn/bingoogolapple/swipebacklayout/demo/activity/BaseActivity.java) 来设置界面跳转动画
 
 ```java
-public abstract class BaseActivity extends AppCompatActivity implements BGASwipeBackHelper.Delegate, View.OnClickListener {
+public abstract class BaseActivity extends AppCompatActivity implements BGASwipeBackHelper.Delegate {
     protected BGASwipeBackHelper mSwipeBackHelper;
     protected Toolbar mToolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
+        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回」
         // 在 super.onCreate(savedInstanceState) 之前调用该方法
         initSwipeBackFinish();
         super.onCreate(savedInstanceState);
@@ -107,7 +90,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
     private void initSwipeBackFinish() {
         mSwipeBackHelper = new BGASwipeBackHelper(this, this);
 
-        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回」
+        // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回」
         // 下面几项可以不配置，这里只是为了讲述接口用法。
 
         // 设置滑动返回是否可用。默认值为 true
@@ -171,6 +154,20 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
         mSwipeBackHelper.backward();
     }
 }
+```
+
+### 4.仅在第2步骤中设置为透明主题模式 true 时，为需要支持滑动返回的 Activity 设置透明主题 AppTheme.SwipeBack
+
+```xml
+<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- 你应用的主题 -->
+</style>
+
+<!-- 用于在第2步骤中设置透明主题模式时，开启滑动返回功能的 Activity -->
+<style name="AppTheme.SwipeBack">
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowIsTranslucent">true</item>
+</style>
 ```
 
 ### 5.强烈强烈强烈建议把 [BGASwipeBackHelper](https://github.com/bingoogolapple/BGASwipeBackLayout-Android/blob/master/library/src/main/java/cn/bingoogolapple/swipebacklayout/BGASwipeBackHelper.java) 里的每个方法的注释看一遍，只看注释就好
