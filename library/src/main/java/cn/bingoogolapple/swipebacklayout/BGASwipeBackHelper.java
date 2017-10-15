@@ -23,6 +23,8 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.FloatRange;
 import android.view.View;
 
+import java.util.List;
+
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com
  * 创建时间:17/1/4 下午3:44
@@ -37,9 +39,12 @@ public class BGASwipeBackHelper {
      * 必须在 Application 的 onCreate 方法中调用
      *
      * @param application
+     * @param problemViewClassList 使用非透明主题时，如果发现滑动返回后立即触摸界面时应用崩溃，
+     *                             请把该界面里比较特殊的 View 的 class 添加到该集合中，
+     *                             目前在库中已经添加了 WebView 和 SurfaceView
      */
-    public static void init(Application application) {
-        BGASwipeBackManager.getInstance().init(application);
+    public static void init(Application application, List<Class<? extends View>> problemViewClassList) {
+        BGASwipeBackManager.getInstance().init(application, problemViewClassList);
     }
 
     /**

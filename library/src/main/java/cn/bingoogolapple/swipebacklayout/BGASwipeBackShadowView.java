@@ -5,10 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewCompat;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -122,25 +120,14 @@ class BGASwipeBackShadowView extends FrameLayout {
             if (preActivity != null) {
                 mPreActivity = new WeakReference<>(preActivity);
                 mPreDecorView = (ViewGroup) preActivity.getWindow().getDecorView();
-
-                if (containsProblemView(mPreDecorView)) {
-                    if (mPreImageView == null) {
-                        mPreImageView = new ImageView(mActivity);
-                        mPreImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                        mPreImageView.setImageBitmap(getBitmap());
-                        addView(mPreImageView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-                    }
-                } else {
-                    mPreContentView = mPreDecorView.getChildAt(0);
-                    mPreDecorView.removeView(mPreContentView);
-                    addView(mPreContentView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-                }
-
+                mPreContentView = mPreDecorView.getChildAt(0);
+                mPreDecorView.removeView(mPreContentView);
+                addView(mPreContentView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             }
         }
     }
 
-    void unBindPreActivity() {
+    void unBindPreActivity(boolean isNeedAddImageView) {
         if (mIsTranslucent) {
             return;
         }
@@ -155,6 +142,13 @@ class BGASwipeBackShadowView extends FrameLayout {
         }
 
         if (mPreDecorView != null && mPreContentView != null) {
+            if (isNeedAddImageView && mPreImageView == null && containsProblemView((ViewGroup) mPreContentView)) {
+                mPreImageView = new ImageView(mActivity);
+                mPreImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                mPreImageView.setImageBitmap(getBitmap(mPreContentView));
+                addView(mPreImageView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            }
+
             removeView(mPreContentView);
             mPreDecorView.addView(mPreContentView, 0);
 
@@ -181,39 +175,34 @@ class BGASwipeBackShadowView extends FrameLayout {
         }
     }
 
-    private Bitmap getBitmap() {
-        View preContentView = mPreDecorView.getChildAt(0);
-        preContentView.setDrawingCacheEnabled(true);
-        preContentView.buildDrawingCache();
-        Bitmap preContentViewBitmap = preContentView.getDrawingCache();
-        Bitmap bitmap = Bitmap.createBitmap(preContentViewBitmap, 0, 0, UIUtil.getRealScreenWidth(mActivity), UIUtil.getRealScreenHeight(mActivity) - UIUtil
-                .getNavigationBarHeight(mActivity));
-        preContentView.destroyDrawingCache();
+    private Bitmap getBitmap(View view) {
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache(), 0, 0,
+                UIUtil.getRealScreenWidth(mActivity),
+                UIUtil.getRealScreenHeight(mActivity) - UIUtil.getNavigationBarHeight(mActivity));
+        view.destroyDrawingCache();
         return bitmap;
     }
 
+    /**
+     * 该 ViewGroup 中是否包含导致多次 draw 后应用崩溃的 View
+     *
+     * @param viewGroup
+     * @return
+     */
     private boolean containsProblemView(ViewGroup viewGroup) {
         int childCount = viewGroup.getChildCount();
         View childView;
         for (int i = 0; i < childCount; i++) {
             childView = viewGroup.getChildAt(i);
-            if (isNeedIgnore(childView)) {
+            if (BGASwipeBackManager.getInstance().isProblemView(childView)) {
                 return true;
             } else if (childView instanceof ViewGroup) {
                 if (containsProblemView((ViewGroup) childView)) {
                     return true;
                 }
             }
-        }
-        return false;
-    }
-
-    private boolean isNeedIgnore(View view) {
-        if (view instanceof WebView) {
-            return true;
-        }
-        if (view instanceof SurfaceView) {
-            return true;
         }
         return false;
     }
@@ -237,8 +226,6 @@ class BGASwipeBackShadowView extends FrameLayout {
             BGASwipeBackManager.onPanelSlide(mActivity, slideOffset);
         } else if (mPreContentView != null) {
             ViewCompat.setTranslationX(mPreContentView, (mPreContentView.getMeasuredWidth() / 3.0f) * (1 - slideOffset));
-        } else if (mPreImageView != null) {
-            ViewCompat.setTranslationX(mPreImageView, (mPreImageView.getMeasuredWidth() / 3.0f) * (1 - slideOffset));
         }
     }
 
@@ -252,6 +239,6 @@ class BGASwipeBackShadowView extends FrameLayout {
         } else if (mPreContentView != null) {
             ViewCompat.setTranslationX(mPreContentView, 0);
         }
-        unBindPreActivity();
+        unBindPreActivity(false);
     }
 }

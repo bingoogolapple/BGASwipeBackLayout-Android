@@ -475,14 +475,14 @@ public class BGASwipeBackLayout extends ViewGroup {
     }
 
     void dispatchOnPanelOpened(final View panel) {
-        // ======================== 新加的 START ========================
-        mShadowView.unBindPreActivity();
-        // ======================== 新加的 END ========================
-
         if (mPanelSlideListener != null) {
             mPanelSlideListener.onPanelOpened(panel);
         }
         sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
+
+        // ======================== 新加的 START ========================
+        mShadowView.unBindPreActivity(true);
+        // ======================== 新加的 END ========================
     }
 
     void dispatchOnPanelClosed(View panel) {

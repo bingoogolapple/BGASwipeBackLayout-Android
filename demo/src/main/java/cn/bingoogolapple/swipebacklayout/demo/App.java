@@ -16,6 +16,11 @@ public class App extends Application {
         super.onCreate();
 
         // 必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init(this) 来初始化滑动返回
-        BGASwipeBackHelper.init(this);
+        BGASwipeBackHelper.init(this, null);
+
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            return;
+//        }
+//        LeakCanary.install(this);
     }
 }
