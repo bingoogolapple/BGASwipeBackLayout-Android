@@ -1523,6 +1523,9 @@ public class BGASwipeBackLayout extends ViewGroup {
 
         @Override
         public void onViewCaptured(View capturedChild, int activePointerId) {
+            if (isSwipeBackEnable()) {
+                mShadowView.bindPreActivity();
+            }
             // Make all child views visible in preparation for sliding things around
             setAllChildrenVisible();
         }
@@ -1591,7 +1594,6 @@ public class BGASwipeBackLayout extends ViewGroup {
 //            mDragHelper.captureChildView(mSlideableView, pointerId);
 
             if (isSwipeBackEnable()) {
-                mShadowView.bindPreActivity();
                 mDragHelper.captureChildView(mSlideableView, pointerId);
             }
             // ======================== 新加的 END ========================
