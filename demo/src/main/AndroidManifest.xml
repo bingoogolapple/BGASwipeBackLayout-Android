@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="cn.bingoogolapple.swipebacklayout.demo">
+    package="cn.bingoogolapple.swipebacklayout.demo">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".App"
@@ -16,51 +16,51 @@
             android:theme="@style/AppTheme.Splash.Fullscreen"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name=".activity.TestActivity"
             android:theme="@style/AppTheme.SwipeBack"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
             android:name=".activity.TranslucentActivity"
             android:theme="@style/AppTheme.SwipeBack"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name=".activity.WebViewActivity"
             android:theme="@style/AppTheme.SwipeBack"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name=".activity.SwipeDeleteActivity"
             android:theme="@style/AppTheme.SwipeBack"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name=".activity.RecyclerIndexActivity"
             android:theme="@style/AppTheme.SwipeBack"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name=".activity.EditTextActivity"
             android:theme="@style/AppTheme.SwipeBack"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
             android:name=".activity.MovieActivity"
             android:theme="@style/AppTheme.SwipeBack.FullscreenOverlap"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>
