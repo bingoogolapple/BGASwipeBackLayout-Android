@@ -38,10 +38,6 @@ class BGASwipeBackManager implements Application.ActivityLifecycleCallbacks {
     private static final BGASwipeBackManager sInstance = new BGASwipeBackManager();
     private Stack<Activity> mActivityStack = new Stack<>();
     private Set<Class<? extends View>> mProblemViewClassSet = new HashSet<>();
-    /**
-     * 是否使用透明主题模式
-     */
-    private boolean mIsTranslucent = false;
 
     public static BGASwipeBackManager getInstance() {
         return sInstance;
@@ -50,9 +46,8 @@ class BGASwipeBackManager implements Application.ActivityLifecycleCallbacks {
     private BGASwipeBackManager() {
     }
 
-    public void init(Application application, boolean isTranslucent, List<Class<? extends View>> problemViewClassList) {
+    public void init(Application application, List<Class<? extends View>> problemViewClassList) {
         application.registerActivityLifecycleCallbacks(this);
-        mIsTranslucent = isTranslucent;
 
         mProblemViewClassSet.add(WebView.class);
         mProblemViewClassSet.add(SurfaceView.class);
@@ -128,11 +123,13 @@ class BGASwipeBackManager implements Application.ActivityLifecycleCallbacks {
         return mActivityStack.size() > 1;
     }
 
+    /**
+     * 某个 view 是否会导致滑动返回后立即触摸界面时应用崩溃
+     *
+     * @param view
+     * @return
+     */
     public boolean isProblemView(View view) {
         return mProblemViewClassSet.contains(view.getClass());
-    }
-
-    public boolean isTranslucent() {
-        return mIsTranslucent;
     }
 }
