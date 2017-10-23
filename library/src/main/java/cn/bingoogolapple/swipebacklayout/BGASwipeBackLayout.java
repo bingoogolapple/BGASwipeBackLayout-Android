@@ -1523,9 +1523,11 @@ public class BGASwipeBackLayout extends ViewGroup {
 
         @Override
         public void onViewCaptured(View capturedChild, int activePointerId) {
+            // ======================== 新加的 START ========================
             if (isSwipeBackEnable()) {
                 mShadowView.bindPreActivity();
             }
+            // ======================== 新加的 END ========================
             // Make all child views visible in preparation for sliding things around
             setAllChildrenVisible();
         }

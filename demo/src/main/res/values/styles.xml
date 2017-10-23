@@ -15,20 +15,20 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- 测试非透明主题模式 -->
     <style name="AppTheme.SwipeBack">
-        <!-- 测试透明主题模式 START -->
-        <!--
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
-        -->
-        <!-- 测试透明主题模式 END -->
-
         <!-- 测试全屏 START -->
         <!--
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
         -->
         <!-- 测试全屏 END -->
+    </style>
+
+    <!-- 测试透明主题模式 -->
+    <style name="AppTheme.SwipeBack.Translucent">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="AppTheme.Splash">

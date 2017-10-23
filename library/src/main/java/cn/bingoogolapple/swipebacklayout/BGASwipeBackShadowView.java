@@ -1,6 +1,7 @@
 package cn.bingoogolapple.swipebacklayout;
 
 import android.app.Activity;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.support.annotation.DrawableRes;
@@ -43,9 +44,17 @@ class BGASwipeBackShadowView extends FrameLayout {
      */
     private boolean mIsWeChatStyle = true;
 
+    private boolean mIsCurrentActivityTranslucent;
+
     BGASwipeBackShadowView(Activity activity) {
         super(activity);
         mActivity = activity;
+
+        TypedArray typedArray = mActivity.getTheme().obtainStyledAttributes(new int[]{
+                android.R.attr.windowIsTranslucent
+        });
+        mIsCurrentActivityTranslucent = typedArray.getBoolean(0, false);
+        typedArray.recycle();
     }
 
     /**
@@ -85,7 +94,7 @@ class BGASwipeBackShadowView extends FrameLayout {
     }
 
     private void updateShadow() {
-        if (BGASwipeBackManager.getInstance().isTranslucent()) {
+        if (mIsCurrentActivityTranslucent) {
             if (mIsNeedShowShadow) {
                 setBackgroundResource(mShadowResId);
             } else {
@@ -107,7 +116,7 @@ class BGASwipeBackShadowView extends FrameLayout {
     }
 
     void bindPreActivity() {
-        if (BGASwipeBackManager.getInstance().isTranslucent()) {
+        if (mIsCurrentActivityTranslucent) {
             return;
         }
 
@@ -124,7 +133,7 @@ class BGASwipeBackShadowView extends FrameLayout {
     }
 
     void unBindPreActivity(boolean isNeedAddImageView) {
-        if (BGASwipeBackManager.getInstance().isTranslucent()) {
+        if (mIsCurrentActivityTranslucent) {
             return;
         }
 
@@ -157,7 +166,7 @@ class BGASwipeBackShadowView extends FrameLayout {
     @Override
     protected void dispatchDraw(final Canvas canvas) {
         super.dispatchDraw(canvas);
-        if (BGASwipeBackManager.getInstance().isTranslucent()) {
+        if (mIsCurrentActivityTranslucent) {
             return;
         }
 
@@ -165,7 +174,7 @@ class BGASwipeBackShadowView extends FrameLayout {
             return;
         }
 
-        // 滑动返回结束后的最后一帧通过 draw 来实现，避免抖动
+        // add 和 remove 方式时，滑动返回结束后的最后一帧通过 draw 来实现，避免抖动
         if (mPreContentView == null && mPreDecorView != null) {
             mPreDecorView.draw(canvas);
         }
@@ -205,7 +214,7 @@ class BGASwipeBackShadowView extends FrameLayout {
 
     void setShadowAlpha(float alpha) {
         if (mIsNeedShowShadow && mIsShadowAlphaGradient) {
-            if (BGASwipeBackManager.getInstance().isTranslucent()) {
+            if (mIsCurrentActivityTranslucent) {
                 ViewCompat.setAlpha(this, alpha);
             } else if (mShadowView != null) {
                 ViewCompat.setAlpha(mShadowView, alpha);
@@ -218,7 +227,7 @@ class BGASwipeBackShadowView extends FrameLayout {
             return;
         }
 
-        if (BGASwipeBackManager.getInstance().isTranslucent()) {
+        if (mIsCurrentActivityTranslucent) {
             onPanelSlide(mActivity, slideOffset);
         } else if (mPreContentView != null) {
             ViewCompat.setTranslationX(mPreContentView, (mPreContentView.getMeasuredWidth() / 3.0f) * (1 - slideOffset));
@@ -241,7 +250,7 @@ class BGASwipeBackShadowView extends FrameLayout {
             return;
         }
 
-        if (BGASwipeBackManager.getInstance().isTranslucent()) {
+        if (mIsCurrentActivityTranslucent) {
             onPanelClosed(mActivity);
         } else if (mPreContentView != null) {
             ViewCompat.setTranslationX(mPreContentView, 0);
