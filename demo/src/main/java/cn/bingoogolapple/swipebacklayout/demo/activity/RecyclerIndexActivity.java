@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cn.bingoogolapple.androidcommon.adapter.BGADivider;
-import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
-import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewScrollHelper;
+import cn.bingoogolapple.baseadapter.BGADivider;
+import cn.bingoogolapple.baseadapter.BGAOnRVItemClickListener;
+import cn.bingoogolapple.baseadapter.BGARecyclerViewScrollHelper;
 import cn.bingoogolapple.swipebacklayout.demo.R;
 import cn.bingoogolapple.swipebacklayout.demo.adapter.RecyclerIndexAdapter;
 import cn.bingoogolapple.swipebacklayout.demo.util.DataUtil;
@@ -69,7 +69,7 @@ public class RecyclerIndexActivity extends BaseActivity implements BGAOnRVItemCl
                 .setMarginRightResource(R.dimen.size_level9)
                 .setDelegate(new BGADivider.SuspensionCategoryDelegate() {
                     @Override
-                    protected boolean isCategory(int position) {
+                    protected boolean isCategoryFistItem(int position) {
                         return mAdapter.isCategory(position);
                     }
 

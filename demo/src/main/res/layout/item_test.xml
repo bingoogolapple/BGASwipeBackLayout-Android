@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 style="@style/MatchWrap"
-                android:background="@drawable/bga_adapter_white_gray"
+                android:background="@drawable/bga_baseadapter_white_gray"
                 android:paddingBottom="@dimen/size_level2"
                 android:paddingLeft="@dimen/size_level4"
                 android:paddingRight="@dimen/size_level4"
