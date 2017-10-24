@@ -25,7 +25,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bga_adapter_white_gray"
+        android:background="@drawable/bga_baseadapter_white_gray"
         android:padding="@dimen/size_level2">
 
         <ImageView

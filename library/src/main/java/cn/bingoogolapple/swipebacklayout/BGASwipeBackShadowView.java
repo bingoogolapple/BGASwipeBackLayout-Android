@@ -224,6 +224,9 @@ class BGASwipeBackShadowView extends FrameLayout {
 
     void onPanelSlide(float slideOffset) {
         if (!mIsWeChatStyle) {
+            if (!mIsCurrentActivityTranslucent && mPreContentView != null) {
+                ViewCompat.setTranslationX(mPreContentView, mPreContentView.getMeasuredWidth() * (1 - slideOffset));
+            }
             return;
         }
 

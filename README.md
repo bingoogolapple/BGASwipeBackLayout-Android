@@ -160,7 +160,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
 ## demo 中用到的第三方库
 
 * [StatusBarUtil](https://github.com/laobie/StatusBarUtil) A util for setting status bar style on Android App
-* [BGAAdapter-Android](https://github.com/bingoogolapple/BGAAdapter-Android) 在 AdapterView 和 RecyclerView 中通用的 Adapter 和 ViewHolder。RecyclerView 支持 DataBinding 、多种 Item 类型、添加 Header 和 Footer。RecyclerView 竖直方向通用分割线 BGADivider
+* [BGABaseAdapter-Android](https://github.com/bingoogolapple/BGABaseAdapter-Android) 在 AdapterView 和 RecyclerView 中通用的 Adapter 和 ViewHolder。RecyclerView 支持 DataBinding 、多种 Item 类型、添加 Header 和 Footer。RecyclerView 竖直方向通用分割线 BGADivider，吸顶分类
 * [BGAProgressBar-Android](https://github.com/bingoogolapple/BGAProgressBar-Android) 带百分比数字的水平、圆形进度条
 * [BGARefreshLayout-Android](https://github.com/bingoogolapple/BGARefreshLayout-Android) 多种下拉刷新效果、上拉加载更多、可配置自定义头部广告位
 * [BGASwipeItemLayout-Android](https://github.com/bingoogolapple/BGASwipeItemLayout-Android) 类似 iOS 带弹簧效果的左右滑动控件，可作为 AbsListView 和 RecyclerView 的 item
