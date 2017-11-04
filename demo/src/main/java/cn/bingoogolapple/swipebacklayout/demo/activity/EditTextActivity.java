@@ -14,7 +14,7 @@ import android.widget.Toast;
 import cn.bingoogolapple.baseadapter.BGADivider;
 import cn.bingoogolapple.baseadapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.baseadapter.BGAOnRVItemLongClickListener;
-import cn.bingoogolapple.baseadapter.BGARecyclerViewScrollHelper;
+import cn.bingoogolapple.baseadapter.BGARVVerticalScrollHelper;
 import cn.bingoogolapple.swipebacklayout.demo.R;
 import cn.bingoogolapple.swipebacklayout.demo.adapter.ContentAdapter;
 
@@ -26,7 +26,7 @@ public class EditTextActivity extends BaseActivity {
     private RecyclerView mContentRv;
     private ContentAdapter mContentAdapter;
     private EditText mMsgEt;
-    private BGARecyclerViewScrollHelper mRecyclerViewScrollHelper;
+    private BGARVVerticalScrollHelper mRecyclerViewScrollHelper;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class EditTextActivity extends BaseActivity {
             }
         });
 
-        mRecyclerViewScrollHelper = BGARecyclerViewScrollHelper.newInstance(mContentRv);
+        mRecyclerViewScrollHelper = BGARVVerticalScrollHelper.newInstance(mContentRv);
         mMsgEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

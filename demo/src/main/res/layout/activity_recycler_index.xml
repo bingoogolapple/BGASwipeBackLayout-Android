@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               style="@style/MatchMatch.Vertical"
               android:background="@android:color/white">
@@ -12,7 +13,8 @@
             android:id="@+id/rv_recyclerindexview_data"
             style="@style/MatchMatch"
             android:overScrollMode="never"
-            android:scrollbars="none"/>
+            android:scrollbars="none"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
         <TextView
             android:id="@+id/tv_recyclerindexview_tip"

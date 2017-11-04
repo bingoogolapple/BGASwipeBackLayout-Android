@@ -20,6 +20,7 @@ import java.lang.ref.WeakReference;
  */
 class BGASwipeBackShadowView extends FrameLayout {
     private static final String TAG = BGASwipeBackShadowView.class.getSimpleName();
+    private static final float WE_CHAT_STYLE_MAX_OFFSET = 0.75f;
     private Activity mActivity;
     private WeakReference<Activity> mPreActivity;
     private ViewGroup mPreDecorView;
@@ -223,17 +224,16 @@ class BGASwipeBackShadowView extends FrameLayout {
     }
 
     void onPanelSlide(float slideOffset) {
-        if (!mIsWeChatStyle) {
-            if (!mIsCurrentActivityTranslucent && mPreContentView != null) {
+        if (mIsWeChatStyle) { // 微信滑动返回样式的情况
+            if (mIsCurrentActivityTranslucent) { // 透明主题
+                onPanelSlide(mActivity, slideOffset);
+            } else if (mPreContentView != null) { // 非透明主题
+                ViewCompat.setTranslationX(mPreContentView, (mPreContentView.getMeasuredWidth() * WE_CHAT_STYLE_MAX_OFFSET) * (1 - slideOffset));
+            }
+        } else { // 非微信滑动返回样式的情况
+            if (!mIsCurrentActivityTranslucent && mPreContentView != null) { // 只有非透明主题时才移动
                 ViewCompat.setTranslationX(mPreContentView, mPreContentView.getMeasuredWidth() * (1 - slideOffset));
             }
-            return;
-        }
-
-        if (mIsCurrentActivityTranslucent) {
-            onPanelSlide(mActivity, slideOffset);
-        } else if (mPreContentView != null) {
-            ViewCompat.setTranslationX(mPreContentView, (mPreContentView.getMeasuredWidth() / 3.0f) * (1 - slideOffset));
         }
     }
 
@@ -242,21 +242,23 @@ class BGASwipeBackShadowView extends FrameLayout {
             Activity preActivity = BGASwipeBackManager.getInstance().getPenultimateActivity(currentActivity);
             if (preActivity != null) {
                 View decorView = preActivity.getWindow().getDecorView();
-                ViewCompat.setTranslationX(decorView, -(decorView.getMeasuredWidth() / 3.0f) * (1 - slideOffset));
+                ViewCompat.setTranslationX(decorView, -decorView.getMeasuredWidth() * (1 - WE_CHAT_STYLE_MAX_OFFSET) * (1 - slideOffset));
             }
         } catch (Exception e) {
         }
     }
 
     void onPanelClosed() {
-        if (!mIsWeChatStyle) {
-            return;
-        }
-
-        if (mIsCurrentActivityTranslucent) {
-            onPanelClosed(mActivity);
-        } else if (mPreContentView != null) {
-            ViewCompat.setTranslationX(mPreContentView, 0);
+        if (mIsWeChatStyle) { // 微信滑动返回样式的情况
+            if (mIsCurrentActivityTranslucent) { // 透明主题
+                onPanelClosed(mActivity);
+            } else if (mPreContentView != null) { // 非透明主题
+                ViewCompat.setTranslationX(mPreContentView, 0);
+            }
+        } else { // 非微信滑动返回样式的情况
+            if (!mIsCurrentActivityTranslucent && mPreContentView != null) { // 只有非透明主题时才移动
+                ViewCompat.setTranslationX(mPreContentView, 0);
+            }
         }
         unBindPreActivity(false);
     }
