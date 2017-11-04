@@ -1,7 +1,6 @@
 package cn.bingoogolapple.swipebacklayout.demo.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.Toast;
 
 import cn.bingoogolapple.baseadapter.BGADivider;
 import cn.bingoogolapple.baseadapter.BGAOnRVItemClickListener;
-import cn.bingoogolapple.baseadapter.BGARecyclerViewScrollHelper;
+import cn.bingoogolapple.baseadapter.BGARVVerticalScrollHelper;
 import cn.bingoogolapple.swipebacklayout.demo.R;
 import cn.bingoogolapple.swipebacklayout.demo.adapter.RecyclerIndexAdapter;
 import cn.bingoogolapple.swipebacklayout.demo.util.DataUtil;
@@ -26,10 +25,9 @@ import cn.bingoogolapple.swipebacklayout.demo.widget.IndexView;
 public class RecyclerIndexActivity extends BaseActivity implements BGAOnRVItemClickListener {
     private RecyclerIndexAdapter mAdapter;
     private RecyclerView mDataRv;
-    private LinearLayoutManager mLayoutManager;
     private IndexView mIndexView;
     private TextView mTipTv;
-    private BGARecyclerViewScrollHelper mRecyclerViewScrollHelper;
+    private BGARVVerticalScrollHelper mRecyclerViewScrollHelper;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -45,6 +43,35 @@ public class RecyclerIndexActivity extends BaseActivity implements BGAOnRVItemCl
         mAdapter = new RecyclerIndexAdapter(mDataRv);
         mAdapter.setOnRVItemClickListener(this);
 
+        final BGADivider.StickyDelegate stickyDelegate = new BGADivider.StickyDelegate() {
+            @Override
+            protected boolean isCategoryFistItem(int position) {
+                return mAdapter.isCategory(position);
+            }
+
+            @Override
+            protected String getCategoryName(int position) {
+                return mAdapter.getItem(position).topc;
+            }
+
+            @Override
+            protected int getFirstVisibleItemPosition() {
+                return mRecyclerViewScrollHelper.findFirstVisibleItemPosition();
+            }
+        };
+
+        mDataRv.addItemDecoration(BGADivider.newBitmapDivider()
+                .setStartSkipCount(0)
+                .setMarginLeftResource(R.dimen.size_level3)
+                .setMarginRightResource(R.dimen.size_level9)
+                .setDelegate(stickyDelegate));
+        mRecyclerViewScrollHelper = BGARVVerticalScrollHelper.newInstance(mDataRv, new BGARVVerticalScrollHelper.SimpleDelegate() {
+            @Override
+            public int getCategoryHeight() {
+                return stickyDelegate.getCategoryHeight();
+            }
+        });
+
         mIndexView.setDelegate(new IndexView.Delegate() {
             @Override
             public void onIndexViewSelectedChanged(IndexView indexView, String text) {
@@ -54,7 +81,6 @@ public class RecyclerIndexActivity extends BaseActivity implements BGAOnRVItemCl
                 }
             }
         });
-        mRecyclerViewScrollHelper = BGARecyclerViewScrollHelper.newInstance(mDataRv);
     }
 
     @Override
@@ -62,31 +88,6 @@ public class RecyclerIndexActivity extends BaseActivity implements BGAOnRVItemCl
         initToolbar();
 
         mIndexView.setTipTv(mTipTv);
-
-        mDataRv.addItemDecoration(BGADivider.newBitmapDivider()
-                .setStartSkipCount(0)
-                .setMarginLeftResource(R.dimen.size_level3)
-                .setMarginRightResource(R.dimen.size_level9)
-                .setDelegate(new BGADivider.SuspensionCategoryDelegate() {
-                    @Override
-                    protected boolean isCategoryFistItem(int position) {
-                        return mAdapter.isCategory(position);
-                    }
-
-                    @Override
-                    protected String getCategoryName(int position) {
-                        return mAdapter.getItem(position).topc;
-                    }
-
-                    @Override
-                    protected int getFirstVisibleItemPosition() {
-                        return mLayoutManager.findFirstVisibleItemPosition();
-                    }
-                }));
-
-        mLayoutManager = new LinearLayoutManager(this);
-        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mDataRv.setLayoutManager(mLayoutManager);
 
         mAdapter.setData(DataUtil.loadIndexModelData());
         mDataRv.setAdapter(mAdapter);
