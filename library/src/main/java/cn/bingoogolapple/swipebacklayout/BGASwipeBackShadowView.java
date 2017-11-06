@@ -127,8 +127,10 @@ class BGASwipeBackShadowView extends FrameLayout {
                 mPreActivity = new WeakReference<>(preActivity);
                 mPreDecorView = (ViewGroup) preActivity.getWindow().getDecorView();
                 mPreContentView = mPreDecorView.getChildAt(0);
+                int width = mPreContentView.getWidth();
+                int height = mPreContentView.getHeight();
                 mPreDecorView.removeView(mPreContentView);
-                addView(mPreContentView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                addView(mPreContentView, 0, new LayoutParams(width, height));
             }
         }
     }
