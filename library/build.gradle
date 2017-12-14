@@ -8,10 +8,14 @@ android {
         minSdkVersion ANDROID_BUILD_MIN_SDK_VERSION as int
         targetSdkVersion ANDROID_BUILD_TARGET_SDK_VERSION as int
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
-    provided 'com.android.support:support-v4:25.3.1'
+    compileOnly 'com.android.support:support-v4:27.0.2'
 }
 
 // gradle clean build bintrayUpload
