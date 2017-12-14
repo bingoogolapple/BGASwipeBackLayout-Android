@@ -5,44 +5,43 @@
 
     <include layout="@layout/inc_toolbar" />
 
-    <ScrollView style="@style/MatchMatch">
+    <LinearLayout
+        style="@style/MatchMatch.Vertical"
+        android:gravity="center_vertical">
 
-        <LinearLayout style="@style/MatchMatch.Vertical">
+        <Button
+            style="@style/DemoBtn"
+            android:onClick="testSwipeBack"
+            android:text="测试滑动返回" />
 
-            <Button
-                style="@style/DemoBtn"
-                android:onClick="testSwipeBack"
-                android:text="测试滑动返回" />
+        <Button
+            style="@style/DemoBtn"
+            android:onClick="testSwipeDelete"
+            android:text="测试滑动删除" />
 
-            <Button
-                style="@style/DemoBtn"
-                android:onClick="testSwipeDelete"
-                android:text="测试滑动删除" />
+        <Button
+            style="@style/DemoBtn"
+            android:onClick="testTranslucent"
+            android:text="TestTranslucent" />
 
-            <Button
-                style="@style/DemoBtn"
-                android:onClick="testTranslucent"
-                android:text="TestTranslucent" />
+        <Button
+            style="@style/DemoBtn"
+            android:onClick="testPullRefreshAndWebView"
+            android:text="测试下拉刷新和 WebView" />
 
-            <Button
-                style="@style/DemoBtn"
-                android:onClick="testPullRefreshAndWebView"
-                android:text="测试下拉刷新和 WebView" />
+        <Button
+            style="@style/DemoBtn"
+            android:onClick="testRecyclerView"
+            android:text="测试 RecyclerView" />
 
-            <Button
-                style="@style/DemoBtn"
-                android:onClick="testRecyclerView"
-                android:text="测试 RecyclerView" />
+        <Button
+            style="@style/DemoBtn"
+            android:onClick="testEditText"
+            android:text="测试 EditText 位于底部的情况" />
 
-            <Button
-                style="@style/DemoBtn"
-                android:onClick="testEditText"
-                android:text="测试 EditText 位于底部的情况" />
-
-            <Button
-                style="@style/DemoBtn"
-                android:onClick="testNavigationBarOverlap"
-                android:text="测试底部导航条是否悬浮在内容上" />
-        </LinearLayout>
-    </ScrollView>
+        <Button
+            style="@style/DemoBtn"
+            android:onClick="testNavigationBarOverlap"
+            android:text="测试底部导航条是否悬浮在内容上" />
+    </LinearLayout>
 </LinearLayout>
