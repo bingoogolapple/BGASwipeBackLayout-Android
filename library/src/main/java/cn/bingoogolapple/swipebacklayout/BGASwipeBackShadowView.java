@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.lang.ref.WeakReference;
 
@@ -60,8 +62,6 @@ class BGASwipeBackShadowView extends FrameLayout {
 
     /**
      * 设置是否显示滑动返回的阴影效果。默认值为 true
-     *
-     * @param isNeedShowShadow
      */
     void setIsNeedShowShadow(boolean isNeedShowShadow) {
         mIsNeedShowShadow = isNeedShowShadow;
@@ -70,8 +70,6 @@ class BGASwipeBackShadowView extends FrameLayout {
 
     /**
      * 设置阴影资源 id。默认值为 R.drawable.bga_sbl_shadow
-     *
-     * @param shadowResId
      */
     void setShadowResId(@DrawableRes int shadowResId) {
         mShadowResId = shadowResId;
@@ -80,8 +78,6 @@ class BGASwipeBackShadowView extends FrameLayout {
 
     /**
      * 设置阴影区域的透明度是否根据滑动的距离渐变。默认值为 true
-     *
-     * @param isShadowAlphaGradient
      */
     void setIsShadowAlphaGradient(boolean isShadowAlphaGradient) {
         mIsShadowAlphaGradient = isShadowAlphaGradient;
@@ -156,7 +152,28 @@ class BGASwipeBackShadowView extends FrameLayout {
             }
 
             removeView(mPreContentView);
-            mPreDecorView.addView(mPreContentView, 0);
+
+            ViewGroup.LayoutParams lp = null;
+            if (!(mPreContentView instanceof BGASwipeBackLayout)) {
+                int width = mPreDecorView.getWidth();
+                int height = mPreDecorView.getHeight() - UIUtil.getNavigationBarHeight(activity);
+                if (!UIUtil.isPortrait(activity)) {
+                    width = mPreDecorView.getWidth() - UIUtil.getNavigationBarHeight(activity);
+                    height = mPreDecorView.getHeight();
+                }
+                if (mPreDecorView instanceof FrameLayout) {
+                    lp = new FrameLayout.LayoutParams(width, height);
+                } else if (mPreDecorView instanceof LinearLayout) {
+                    lp = new LinearLayout.LayoutParams(width, height);
+                } else if (mPreDecorView instanceof RelativeLayout) {
+                    lp = new RelativeLayout.LayoutParams(width, height);
+                }
+            }
+            if (lp == null) {
+                mPreDecorView.addView(mPreContentView, 0);
+            } else {
+                mPreDecorView.addView(mPreContentView, 0, lp);
+            }
 
             mPreContentView = null;
             mPreActivity.clear();
@@ -193,9 +210,6 @@ class BGASwipeBackShadowView extends FrameLayout {
 
     /**
      * 该 ViewGroup 中是否包含导致多次 draw 后应用崩溃的 View
-     *
-     * @param viewGroup
-     * @return
      */
     private boolean containsProblemView(ViewGroup viewGroup) {
         int childCount = viewGroup.getChildCount();
