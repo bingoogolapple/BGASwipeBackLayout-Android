@@ -20,6 +20,7 @@ package cn.bingoogolapple.swipebacklayout;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -32,10 +33,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.Settings;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.FloatRange;
-import android.support.annotation.StyleRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.os.ParcelableCompat;
 import android.support.v4.os.ParcelableCompatCreatorCallbacks;
@@ -45,6 +46,7 @@ import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v4.widget.ViewDragHelper;
+import android.telephony.PhoneStateListener;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -52,6 +54,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 
 import java.lang.reflect.Field;
@@ -215,12 +218,39 @@ public class BGASwipeBackLayout extends ViewGroup {
      * 是否正在滑动
      */
     private boolean mIsSliding;
-    //===========================新增END=======================
+    /**
+     * 是否有导航栏，默认为 true（只针对能动态设置导航栏是否显示的设备）
+     */
+    private boolean mHasNavigationBar = true;
+
+//    private OnSystemUiVisibilityChangeListener mOnSystemUiVisibilityChangeListener = new View.OnSystemUiVisibilityChangeListener() {
+//        @Override
+//        public void onSystemUiVisibilityChange(int visibility) {
+//            mHasNavigationBar = visibility != 2;
+//            requestLayout();
+//        }
+//    };
+
+    private ContentObserver mBarHideEnableObserver = new ContentObserver(null) {
+        @Override
+        public void onChange(boolean selfChange) {
+            refreshHasNavigationBar();
+        }
+    };
+
+    private void refreshHasNavigationBar() {
+        try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                int enable = Settings.Global.getInt(mActivity.getContentResolver(), "navigationbar_hide_bar_enabled");
+                mHasNavigationBar = enable != 1;
+            }
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 将该滑动返回控件添加到 Activity 上
-     *
-     * @param activity
      */
     void attachToActivity(Activity activity) {
         mActivity = activity;
@@ -240,8 +270,6 @@ public class BGASwipeBackLayout extends ViewGroup {
 
     /**
      * 设置滑动返回是否可用。默认值为 true
-     *
-     * @param swipeBackEnable
      */
     void setSwipeBackEnable(boolean swipeBackEnable) {
         mSwipeBackEnable = swipeBackEnable;
@@ -249,8 +277,6 @@ public class BGASwipeBackLayout extends ViewGroup {
 
     /**
      * 设置是否仅仅跟踪左侧边缘的滑动返回。默认值为 true
-     *
-     * @param isOnlyTrackingLeftEdge
      */
     void setIsOnlyTrackingLeftEdge(boolean isOnlyTrackingLeftEdge) {
         mIsOnlyTrackingLeftEdge = isOnlyTrackingLeftEdge;
@@ -274,8 +300,6 @@ public class BGASwipeBackLayout extends ViewGroup {
 
     /**
      * 设置底部导航条是否悬浮在内容上
-     *
-     * @param overlap
      */
     void setIsNavigationBarOverlap(boolean overlap) {
         mIsNavigationBarOverlap = overlap;
@@ -283,8 +307,6 @@ public class BGASwipeBackLayout extends ViewGroup {
 
     /**
      * 是否正在滑动
-     *
-     * @return
      */
     boolean isSliding() {
         return this.mIsSliding;
@@ -292,8 +314,6 @@ public class BGASwipeBackLayout extends ViewGroup {
 
     /**
      * 滑动返回是否可用
-     *
-     * @return
      */
     private boolean isSwipeBackEnable() {
         return mSwipeBackEnable && BGASwipeBackManager.getInstance().isSwipeBackEnable();
@@ -301,8 +321,6 @@ public class BGASwipeBackLayout extends ViewGroup {
 
     /**
      * 设置阴影资源 id
-     *
-     * @param shadowResId
      */
     void setShadowResId(@DrawableRes int shadowResId) {
         mShadowView.setShadowResId(shadowResId);
@@ -310,8 +328,6 @@ public class BGASwipeBackLayout extends ViewGroup {
 
     /**
      * 设置是否显示滑动返回的阴影效果
-     *
-     * @param isNeedShowShadow
      */
     void setIsNeedShowShadow(boolean isNeedShowShadow) {
         mShadowView.setIsNeedShowShadow(isNeedShowShadow);
@@ -319,8 +335,6 @@ public class BGASwipeBackLayout extends ViewGroup {
 
     /**
      * 设置阴影区域的透明度是否根据滑动的距离渐变
-     *
-     * @param isShadowAlphaGradient
      */
     void setIsShadowAlphaGradient(boolean isShadowAlphaGradient) {
         mShadowView.setIsShadowAlphaGradient(isShadowAlphaGradient);
@@ -573,6 +587,11 @@ public class BGASwipeBackLayout extends ViewGroup {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mFirstLayout = true;
+        refreshHasNavigationBar();
+//        mActivity.getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(mOnSystemUiVisibilityChangeListener);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            mActivity.getContentResolver().registerContentObserver(Settings.Global.getUriFor("navigationbar_hide_bar_enabled"), true, mBarHideEnableObserver);
+        }
     }
 
     @Override
@@ -585,6 +604,10 @@ public class BGASwipeBackLayout extends ViewGroup {
             dlr.run();
         }
         mPostedRunnables.clear();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            mActivity.getContentResolver().unregisterContentObserver(mBarHideEnableObserver);
+        }
     }
 
     @Override
@@ -639,11 +662,11 @@ public class BGASwipeBackLayout extends ViewGroup {
         }
 
         // ======================== 新加的 START ========================
-        if (!mIsNavigationBarOverlap && UIUtil.isPortrait(mActivity)) {
+        if (!mIsNavigationBarOverlap && UIUtil.isPortrait(mActivity) && mHasNavigationBar) {
             maxLayoutHeight -= UIUtil.getNavigationBarHeight(mActivity);
         }
 
-        if (mIsNavigationBarOverlap && !UIUtil.isPortrait(mActivity)) {
+        if (mIsNavigationBarOverlap && !UIUtil.isPortrait(mActivity) && mHasNavigationBar) {
             widthSize += UIUtil.getNavigationBarHeight(mActivity);
         }
         // ======================== 新加的 END ========================
@@ -1793,7 +1816,7 @@ public class BGASwipeBackLayout extends ViewGroup {
 
         @Override
         public boolean onRequestSendAccessibilityEvent(ViewGroup host, View child,
-                                                       AccessibilityEvent event) {
+                AccessibilityEvent event) {
             if (!filter(child)) {
                 return super.onRequestSendAccessibilityEvent(host, child, event);
             }
@@ -1810,7 +1833,7 @@ public class BGASwipeBackLayout extends ViewGroup {
          * Leave it private here as it's not general-purpose useful.
          */
         private void copyNodeInfoNoChildren(AccessibilityNodeInfoCompat dest,
-                                            AccessibilityNodeInfoCompat src) {
+                AccessibilityNodeInfoCompat src) {
             final Rect rect = mTmpRect;
 
             src.getBoundsInParent(rect);
