@@ -19,6 +19,8 @@ package cn.bingoogolapple.swipebacklayout;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -51,6 +53,7 @@ class UIUtil {
             navigationBarHeight = resources.getDimensionPixelSize(resourceId);
         }
         return navigationBarHeight;
+//        return 0;
     }
 
     /**
@@ -70,8 +73,26 @@ class UIUtil {
      * @return
      */
     private static boolean isNavigationBarVisible(Activity activity) {
-        View decorView = activity.getWindow().getDecorView();
-        return (decorView.getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) != 2;
+//        View decorView = activity.getWindow().getDecorView();
+//        return (decorView.getSystemUiVisibility() & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) != 2;
+
+        boolean show = false;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            Display display = activity.getWindow().getWindowManager().getDefaultDisplay();
+            Point point = new Point();
+            display.getRealSize(point);
+            View decorView = activity.getWindow().getDecorView();
+            Configuration conf = activity.getResources().getConfiguration();
+            if (Configuration.ORIENTATION_LANDSCAPE == conf.orientation) {
+                View contentView = decorView.findViewById(android.R.id.content);
+                show = (point.x != contentView.getWidth());
+            } else {
+                Rect rect = new Rect();
+                decorView.getWindowVisibleDisplayFrame(rect);
+                show = (rect.bottom != point.y);
+            }
+        }
+        return show;
     }
 
     /**
