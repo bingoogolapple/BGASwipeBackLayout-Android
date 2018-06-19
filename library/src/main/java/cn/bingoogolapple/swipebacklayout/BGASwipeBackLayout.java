@@ -46,7 +46,6 @@ import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v4.widget.ViewDragHelper;
-import android.telephony.PhoneStateListener;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -54,8 +53,8 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -238,15 +237,42 @@ public class BGASwipeBackLayout extends ViewGroup {
         }
     };
 
+    private void toast(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
     private void refreshHasNavigationBar() {
-        try {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                int enable = Settings.Global.getInt(mActivity.getContentResolver(), "navigationbar_hide_bar_enabled");
-                mHasNavigationBar = enable != 1;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            String navigationBarFlag = Settings.Global.getString(mActivity.getContentResolver(), "policy_control");
+            Log.d("BGABGA", "policy_control is " + navigationBarFlag);
+            if (navigationBarFlag != null) {
+                toast("policy_control is " + navigationBarFlag);
+                mHasNavigationBar = !"immersive.navigation=*".equals(navigationBarFlag);
             }
-        } catch (Settings.SettingNotFoundException e) {
-            e.printStackTrace();
+
+            navigationBarFlag = Settings.Global.getString(mActivity.getContentResolver(), "navigationbar_is_min");
+            Log.d("BGABGA", "华为 P9 " + navigationBarFlag);
+            if (navigationBarFlag != null) {
+                toast("华为 P9 " + navigationBarFlag);
+                mHasNavigationBar = !"1".equals(navigationBarFlag);
+            }
+
+            navigationBarFlag = Settings.Global.getString(mActivity.getContentResolver(), "navigationbar_hide_bar_enabled");
+            Log.d("BGABGA", "三星 S8 " + navigationBarFlag);
+            if (navigationBarFlag != null) {
+                toast("三星 S8 " + navigationBarFlag);
+                mHasNavigationBar = !"1".equals(navigationBarFlag);
+            }
         }
+
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+//            getContentResolver().registerContentObserver(Settings.System.getUriFor
+//                    ("navigationbar_is_min"), true, mNavigationBarObserver);
+//        } else {
+//            getContentResolver().registerContentObserver(Settings.Global.getUriFor
+//                    ("navigationbar_is_min"), true, mNavigationBarObserver);
+//
+//        }
     }
 
     /**
@@ -591,6 +617,9 @@ public class BGASwipeBackLayout extends ViewGroup {
 //        mActivity.getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(mOnSystemUiVisibilityChangeListener);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             mActivity.getContentResolver().registerContentObserver(Settings.Global.getUriFor("navigationbar_hide_bar_enabled"), true, mBarHideEnableObserver);
+            mActivity.getContentResolver().registerContentObserver(Settings.Global.getUriFor("navigationbar_is_min"), true, mBarHideEnableObserver);
+
+            mActivity.getContentResolver().registerContentObserver(Settings.Global.getUriFor("policy_control"), true, mBarHideEnableObserver);
         }
     }
 
