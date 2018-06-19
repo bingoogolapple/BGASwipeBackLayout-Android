@@ -217,63 +217,6 @@ public class BGASwipeBackLayout extends ViewGroup {
      * 是否正在滑动
      */
     private boolean mIsSliding;
-    /**
-     * 是否有导航栏，默认为 true（只针对能动态设置导航栏是否显示的设备）
-     */
-    private boolean mHasNavigationBar = true;
-
-//    private OnSystemUiVisibilityChangeListener mOnSystemUiVisibilityChangeListener = new View.OnSystemUiVisibilityChangeListener() {
-//        @Override
-//        public void onSystemUiVisibilityChange(int visibility) {
-//            mHasNavigationBar = visibility != 2;
-//            requestLayout();
-//        }
-//    };
-
-    private ContentObserver mBarHideEnableObserver = new ContentObserver(null) {
-        @Override
-        public void onChange(boolean selfChange) {
-            refreshHasNavigationBar();
-        }
-    };
-
-    private void toast(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-    }
-
-    private void refreshHasNavigationBar() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            String navigationBarFlag = Settings.Global.getString(mActivity.getContentResolver(), "policy_control");
-            Log.d("BGABGA", "policy_control is " + navigationBarFlag);
-            if (navigationBarFlag != null) {
-                toast("policy_control is " + navigationBarFlag);
-                mHasNavigationBar = !"immersive.navigation=*".equals(navigationBarFlag);
-            }
-
-            navigationBarFlag = Settings.Global.getString(mActivity.getContentResolver(), "navigationbar_is_min");
-            Log.d("BGABGA", "华为 P9 " + navigationBarFlag);
-            if (navigationBarFlag != null) {
-                toast("华为 P9 " + navigationBarFlag);
-                mHasNavigationBar = !"1".equals(navigationBarFlag);
-            }
-
-            navigationBarFlag = Settings.Global.getString(mActivity.getContentResolver(), "navigationbar_hide_bar_enabled");
-            Log.d("BGABGA", "三星 S8 " + navigationBarFlag);
-            if (navigationBarFlag != null) {
-                toast("三星 S8 " + navigationBarFlag);
-                mHasNavigationBar = !"1".equals(navigationBarFlag);
-            }
-        }
-
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
-//            getContentResolver().registerContentObserver(Settings.System.getUriFor
-//                    ("navigationbar_is_min"), true, mNavigationBarObserver);
-//        } else {
-//            getContentResolver().registerContentObserver(Settings.Global.getUriFor
-//                    ("navigationbar_is_min"), true, mNavigationBarObserver);
-//
-//        }
-    }
 
     /**
      * 将该滑动返回控件添加到 Activity 上
@@ -613,14 +556,6 @@ public class BGASwipeBackLayout extends ViewGroup {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mFirstLayout = true;
-        refreshHasNavigationBar();
-//        mActivity.getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(mOnSystemUiVisibilityChangeListener);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            mActivity.getContentResolver().registerContentObserver(Settings.Global.getUriFor("navigationbar_hide_bar_enabled"), true, mBarHideEnableObserver);
-            mActivity.getContentResolver().registerContentObserver(Settings.Global.getUriFor("navigationbar_is_min"), true, mBarHideEnableObserver);
-
-            mActivity.getContentResolver().registerContentObserver(Settings.Global.getUriFor("policy_control"), true, mBarHideEnableObserver);
-        }
     }
 
     @Override
@@ -633,10 +568,6 @@ public class BGASwipeBackLayout extends ViewGroup {
             dlr.run();
         }
         mPostedRunnables.clear();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            mActivity.getContentResolver().unregisterContentObserver(mBarHideEnableObserver);
-        }
     }
 
     @Override
@@ -691,11 +622,11 @@ public class BGASwipeBackLayout extends ViewGroup {
         }
 
         // ======================== 新加的 START ========================
-        if (!mIsNavigationBarOverlap && UIUtil.isPortrait(mActivity) && mHasNavigationBar) {
+        if (!mIsNavigationBarOverlap && UIUtil.isPortrait(mActivity)) {
             maxLayoutHeight -= UIUtil.getNavigationBarHeight(mActivity);
         }
 
-        if (mIsNavigationBarOverlap && !UIUtil.isPortrait(mActivity) && mHasNavigationBar) {
+        if (mIsNavigationBarOverlap && !UIUtil.isPortrait(mActivity)) {
             widthSize += UIUtil.getNavigationBarHeight(mActivity);
         }
         // ======================== 新加的 END ========================

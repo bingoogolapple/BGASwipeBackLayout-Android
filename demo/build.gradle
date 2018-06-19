@@ -15,11 +15,11 @@ android {
 dependencies {
     // 下面两个依赖是必须的
     implementation 'com.android.support:support-v4:27.1.1'
-//    implementation 'cn.bingoogolapple:bga-swipebacklayout:1.1.9@aar'
+    implementation 'cn.bingoogolapple:bga-swipebacklayout:1.1.9@aar'
     // 上面两个依赖是必须的
 
 
-    implementation project(':library')
+//    implementation project(':library')
 
 
     // 下面的依赖不是必须的，只是为了方便演示 demo
