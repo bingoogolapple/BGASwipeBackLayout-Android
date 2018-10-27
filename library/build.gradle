@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion ANDROID_BUILD_SDK_VERSION as int
-    buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
         minSdkVersion ANDROID_BUILD_MIN_SDK_VERSION as int
@@ -15,7 +14,7 @@ android {
 }
 
 dependencies {
-    compileOnly 'com.android.support:support-v4:27.1.1'
+    compileOnly 'com.android.support:support-v4:28.0.0'
 }
 
 // ./gradlew :library:clean :library:build :library:bintrayUpload -PpublishAar

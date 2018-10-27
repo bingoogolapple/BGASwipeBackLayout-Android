@@ -41,9 +41,6 @@ class UIUtil {
 
     /**
      * 获取底部导航栏高度
-     *
-     * @param activity
-     * @return
      */
     public static int getNavigationBarHeight(Activity activity) {
         int navigationBarHeight = 0;
@@ -58,9 +55,6 @@ class UIUtil {
 
     /**
      * 是否为竖屏
-     *
-     * @param activity
-     * @return
      */
     public static boolean isPortrait(Activity activity) {
         return activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
@@ -68,9 +62,6 @@ class UIUtil {
 
     /**
      * 手机具有底部导航栏时，底部导航栏是否可见
-     *
-     * @param activity
-     * @return
      */
     private static boolean isNavigationBarVisible(Activity activity) {
 //        View decorView = activity.getWindow().getDecorView();
@@ -85,7 +76,9 @@ class UIUtil {
             Configuration conf = activity.getResources().getConfiguration();
             if (Configuration.ORIENTATION_LANDSCAPE == conf.orientation) {
                 View contentView = decorView.findViewById(android.R.id.content);
-                show = (point.x != contentView.getWidth());
+                if (contentView != null) {
+                    show = (point.x != contentView.getWidth());
+                }
             } else {
                 Rect rect = new Rect();
                 decorView.getWindowVisibleDisplayFrame(rect);
@@ -97,9 +90,6 @@ class UIUtil {
 
     /**
      * 检测是否具有底部导航栏
-     *
-     * @param activity
-     * @return
      */
     private static boolean checkDeviceHasNavigationBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -138,9 +128,6 @@ class UIUtil {
 
     /**
      * 获取屏幕高度，包括底部导航栏
-     *
-     * @param activity
-     * @return
      */
     public static int getRealScreenHeight(Activity activity) {
         WindowManager windowManager = activity.getWindowManager();
@@ -156,9 +143,6 @@ class UIUtil {
 
     /**
      * 获取屏幕宽度，不包括右侧导航栏
-     *
-     * @param activity
-     * @return
      */
     public static int getRealScreenWidth(Activity activity) {
         WindowManager windowManager = activity.getWindowManager();
