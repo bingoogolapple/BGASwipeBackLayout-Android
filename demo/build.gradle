@@ -13,23 +13,23 @@ android {
 
 dependencies {
     // 下面两个依赖是必须的
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'cn.bingoogolapple:bga-swipebacklayout:1.2.0@aar'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+//    implementation 'cn.bingoogolapple:bga-swipebacklayout:2.0.0@aar'
     // 上面两个依赖是必须的
 
 
-//    implementation project(':library')
+    implementation project(':library')
 
 
     // 下面的依赖不是必须的，只是为了方便演示 demo
-    implementation 'cn.bingoogolapple:bga-baseadapter:1.2.9@aar'
+    implementation 'cn.bingoogolapple:bga-baseadapter:2.0.0@aar'
     implementation 'cn.bingoogolapple:bga-refreshlayout:1.1.8@aar'
     implementation 'cn.bingoogolapple:bga-progressbar:1.0.1@aar'
     implementation 'cn.bingoogolapple:bga-swipeitemlayout:1.0.4@aar'
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support:palette-v7:28.0.0'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.palette:palette:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.jaeger.statusbaruitl:library:1.4.0'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
 }
