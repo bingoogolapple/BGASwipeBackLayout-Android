@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.support.annotation.DrawableRes;
-import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -14,6 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.lang.ref.WeakReference;
+
+import androidx.annotation.DrawableRes;
+import androidx.core.view.ViewCompat;
 
 /**
  * 作者:王浩 邮件:wanghao76@meituan.com
