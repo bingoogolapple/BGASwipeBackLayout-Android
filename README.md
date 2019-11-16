@@ -40,7 +40,7 @@
 ### 1.添加 Gradle 依赖
 
 * androidx 项目用 [![Download](https://api.bintray.com/packages/bingoogolapple/maven/bga-swipebacklayout/images/download.svg)](https://bintray.com/bingoogolapple/maven/bga-swipebacklayout/_latestVersion) bga-swipebacklayout 后面的「latestVersion」指的是左边这个 Download 徽章后面的「数字」，请自行替换。
-* 非 androidx 项目用 1.2.0 版本
+* 非 androidx 项目用 1.2.1 版本
 
 ```groovy
 dependencies {
