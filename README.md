@@ -39,16 +39,13 @@
 
 ### 1.添加 Gradle 依赖
 
-* androidx 项目用 [![Download](https://api.bintray.com/packages/bingoogolapple/maven/bga-swipebacklayout/images/download.svg)](https://bintray.com/bingoogolapple/maven/bga-swipebacklayout/_latestVersion) bga-swipebacklayout 后面的「latestVersion」指的是左边这个 Download 徽章后面的「数字」，请自行替换。
-* 非 androidx 项目用 1.2.1 版本
+* 把 `maven { url 'https://jitpack.io' }` 添加到 root build.gradle 的 repositories 中
+* 在 app build.gradle 中添加如下依赖，末尾的「latestVersion」指的是徽章 [![](https://jitpack.io/v/bingoogolapple/BGASwipeBackLayout-Android.svg)](https://jitpack.io/#bingoogolapple/BGASwipeBackLayout-Android) 里的版本名称，请自行替换
 
 ```groovy
-dependencies {
-    implementation 'cn.bingoogolapple:bga-swipebacklayout:latestVersion@aar'
-
-    // 换成己工程里依赖的 support-v4 的版本
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-}
+implementation 'com.github.bingoogolapple:BGASwipeBackLayout-Android:latestVersion'
+// 换成己工程里依赖的 support-v4 的版本
+implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 ```
 
 ### 2.必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回
