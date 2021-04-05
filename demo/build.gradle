@@ -14,15 +14,15 @@ android {
 dependencies {
     // 下面两个依赖是必须的
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'cn.bingoogolapple:bga-swipebacklayout:2.0.1@aar'
+    // implementation 'com.github.bingoogolapple:BGASwipeBackLayout-Android:2.0.2'
     // 上面两个依赖是必须的
 
 
-//    implementation project(':library')
+    implementation project(':library')
 
 
     // 下面的依赖不是必须的，只是为了方便演示 demo
-    implementation 'cn.bingoogolapple:bga-baseadapter:2.0.0@aar'
+    implementation 'com.github.bingoogolapple:BGABaseAdapter-Android:2.0.1'
     implementation 'cn.bingoogolapple:bga-refreshlayout:1.1.8@aar'
     implementation 'cn.bingoogolapple:bga-progressbar:1.0.1@aar'
     implementation 'cn.bingoogolapple:bga-swipeitemlayout:1.0.4@aar'
