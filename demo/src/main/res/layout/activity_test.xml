@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/MatchMatch.Vertical"
     android:background="@android:color/white"
     android:fitsSystemWindows="true">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         style="@style/MatchWrap"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <include layout="@layout/inc_toolbar"/>
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             style="@style/MatchWrap"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
@@ -21,7 +21,7 @@
             app:tabMode="fixed"
             app:tabSelectedTextColor="#cccccc"
             app:tabTextColor="@android:color/white"/>
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         style="@style/MatchMatch"
@@ -32,40 +32,40 @@
             style="@style/MatchMatch.Vertical"
             android:gravity="center_horizontal">
 
-            <android.support.v4.view.ViewPager
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"/>
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/onlyTrackingLeftEdgeSwitch"
                 style="@style/WrapWrap"
                 android:checked="true"
                 android:padding="@dimen/size_level3"
                 android:text="仅仅跟踪左侧边缘的滑动返回"/>
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/swipeBackEnableSwitch"
                 style="@style/WrapWrap"
                 android:checked="true"
                 android:padding="@dimen/size_level3"
                 android:text="滑动返回可用"/>
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/weChatStyleSwitch"
                 style="@style/WrapWrap"
                 android:checked="true"
                 android:padding="@dimen/size_level3"
                 android:text="微信滑动返回样式"/>
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/needShowShadowSwitch"
                 style="@style/WrapWrap"
                 android:checked="true"
                 android:padding="@dimen/size_level3"
                 android:text="显示滑动返回的阴影效果"/>
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/shadowAlphaGradientSwitch"
                 style="@style/WrapWrap"
                 android:checked="true"
@@ -103,4 +103,4 @@
 
         </LinearLayout>
     </ScrollView>
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -106,7 +106,7 @@ class UIUtil {
             return (realWidth - displayWidth) > 0 || (realHeight - displayHeight) > 0;
         } else {
             boolean hasNavigationBar = false;
-            Resources resources = activity.getResources();
+            Resources resources = Resources.getSystem();
             int id = resources.getIdentifier("config_showNavigationBar", "bool", "android");
             if (id > 0) {
                 hasNavigationBar = resources.getBoolean(id);

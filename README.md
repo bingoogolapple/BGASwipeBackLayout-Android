@@ -38,15 +38,14 @@
 ![BGASwipeBackLayoutDemo apk 文件二维码](https://cloud.githubusercontent.com/assets/8949716/21510942/c8e9c9e0-ccd4-11e6-9757-bbc6653cccdb.png)
 
 ### 1.添加 Gradle 依赖
-[![Download](https://api.bintray.com/packages/bingoogolapple/maven/bga-swipebacklayout/images/download.svg)](https://bintray.com/bingoogolapple/maven/bga-swipebacklayout/_latestVersion) bga-swipebacklayout 后面的「latestVersion」指的是左边这个 Download 徽章后面的「数字」，请自行替换。
+
+* 把 `maven { url 'https://jitpack.io' }` 添加到 root build.gradle 的 repositories 中
+* 在 app build.gradle 中添加如下依赖，末尾的「latestVersion」指的是徽章 [![](https://jitpack.io/v/bingoogolapple/BGASwipeBackLayout-Android.svg)](https://jitpack.io/#bingoogolapple/BGASwipeBackLayout-Android) 里的版本名称，请自行替换
 
 ```groovy
-dependencies {
-    compile 'cn.bingoogolapple:bga-swipebacklayout:latestVersion@aar'
-
-    // 换成己工程里依赖的 support-v4 的版本
-    compile 'com.android.support:support-v4:25.2.0'
-}
+implementation 'com.github.bingoogolapple:BGASwipeBackLayout-Android:latestVersion'
+// 换成己工程里依赖的 support-v4 的版本
+implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 ```
 
 ### 2.必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回
@@ -170,9 +169,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
 
 ## 关于我
 
-| 个人主页 | 邮箱 | BGA系列开源库QQ群
-| ------------- | ------------ | ------------ |
-| <a  href="http://www.bingoogolapple.cn" target="_blank">bingoogolapple.cn</a>  | <a href="mailto:bingoogolapple@gmail.com" target="_blank">bingoogolapple@gmail.com</a> | ![BGA_CODE_CLUB](http://bgashare.bingoogolapple.cn/BGA_CODE_CLUB.png?imageView2/2/w/200) |
+| 个人主页 | 邮箱 | BGA 系列开源库 QQ 群 | GitHub 喵(专注于 GitHub 等一切与程序员有关的内容) |
+| ------------- | ------------ | ------------ | ------------ |
+| <a  href="http://www.bingoogolapple.cn" target="_blank">bingoogolapple.cn</a>  | <a href="mailto:bingoogolapple@gmail.com" target="_blank">bingoogolapple@gmail.com</a> | ![BGA_CODE_CLUB](http://bgashare.bingoogolapple.cn/BGA_CODE_CLUB.png?imageView2/2/w/200) | ![GitHub喵](https://user-images.githubusercontent.com/8949716/99201262-1fd55200-27e5-11eb-8097-c06d2497f477.jpeg) |
 
 ## 打赏支持
 
