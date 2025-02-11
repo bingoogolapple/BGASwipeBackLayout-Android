@@ -44,7 +44,7 @@ class UIUtil {
      */
     public static int getNavigationBarHeight(Activity activity) {
         int navigationBarHeight = 0;
-        Resources resources = activity.getResources();
+        Resources resources = Resources.getSystem();
         int resourceId = resources.getIdentifier(isPortrait(activity) ? "navigation_bar_height" : "navigation_bar_height_landscape", "dimen", "android");
         if (resourceId > 0 && checkDeviceHasNavigationBar(activity) && isNavigationBarVisible(activity)) {
             navigationBarHeight = resources.getDimensionPixelSize(resourceId);
